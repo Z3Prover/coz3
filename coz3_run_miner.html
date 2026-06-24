@@ -1476,6 +1476,42 @@
       }
     }
 
+    async function fetchReportList(baseUrl) {
+      // Prefer a manifest (GitHub Pages has no directory autoindex); fall back
+      // to parsing an Apache-style directory listing (legacy self-hosted
+      // server at /var/www/html/z3).
+      try {
+        const manifestUrl = new URL('run-miner-manifest.json', baseUrl).toString();
+        const res = await fetch(manifestUrl, { cache: 'no-store' });
+        if (res.ok) {
+          const manifest = await res.json();
+          const files = Array.isArray(manifest.files) ? manifest.files : [];
+          const seen = new Set();
+          const out = [];
+          for (const name of files) {
+            const isLatest = name === 'run-miner-report.md';
+            const isVersioned = /^run-miner-\d+-report\.md$/.test(name);
+            if (!isLatest && !isVersioned) continue;
+            const url = new URL(name, baseUrl).toString();
+            if (seen.has(url)) continue;
+            seen.add(url);
+            out.push({ name, url, key: reportSortKey(name) });
+          }
+          out.sort((a, b) => b.key - a.key || a.name.localeCompare(b.name));
+          return out;
+        }
+      } catch {
+        // Ignore and fall back to the autoindex listing.
+      }
+
+      const res = await fetch(baseUrl);
+      if (!res.ok) {
+        throw new Error('Failed to load listing (' + res.status + ')');
+      }
+      const html = await res.text();
+      return parseReportLinks(html, baseUrl);
+    }
+
     async function refreshReports() {
       const refreshBtn = document.getElementById('refresh-btn');
       const openLatestBtn = document.getElementById('open-latest-btn');
@@ -1489,13 +1525,7 @@
 
         setStatus('Loading report list...');
 
-        const res = await fetch(baseUrl);
-        if (!res.ok) {
-          throw new Error('Failed to load listing (' + res.status + ')');
-        }
-
-        const html = await res.text();
-        const allReports = parseReportLinks(html, baseUrl);
+        const allReports = await fetchReportList(baseUrl);
 
         // Filter reports by date range
         setStatus('Filtering reports by date range...');
