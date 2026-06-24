@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoZ3 &middot; Z3 Benchmark Results</title>
+  <style>
+    :root {
+      --bg: #f6f4ef;
+      --panel: #fffdf8;
+      --panel-2: #f0ebe1;
+      --ink: #1e2128;
+      --muted: #5e6673;
+      --accent: #0a7a66;
+      --line: #d8d2c7;
+      --shadow: 0 6px 20px rgba(26, 25, 19, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 5% 5%, #fff, transparent 45%),
+                  radial-gradient(circle at 85% 15%, #f8efe2, transparent 42%),
+                  linear-gradient(160deg, #f3f0e8, #f2f5ef);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 16px 48px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #203349, #1f6156 70%);
+      color: #f8fbff;
+      border-radius: 14px;
+      padding: 28px 24px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero-text {
+      flex: 1 1 320px;
+      min-width: 0;
+    }
+
+    .hero-img {
+      flex: 0 0 auto;
+      width: 160px;
+      max-width: 40%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+      color: #d5e8f1;
+      font-size: 1rem;
+      max-width: 60ch;
+    }
+
+    .cards {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 140ms ease, box-shadow 140ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(26, 25, 19, 0.14);
+    }
+
+    .card-icon {
+      font-size: 1.6rem;
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      background: #e9f4f1;
+      color: #0f5d50;
+      margin-bottom: 14px;
+    }
+
+    .card h2 {
+      margin: 0 0 6px;
+      font-size: 1.12rem;
+      color: #1c3856;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .card .go {
+      margin-top: 14px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .links {
+      margin-top: 26px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .links h3 {
+      margin: 0 0 10px;
+      font-size: 0.98rem;
+      color: var(--ink);
+    }
+
+    .links ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .links li {
+      margin: 6px 0;
+      font-size: 0.92rem;
+    }
+
+    .link {
+      color: #215f9f;
+      text-decoration: none;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 28px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="hero">
+      <div class="hero-text">
+        <h1>CoZ3 &middot; Z3 Benchmark Results</h1>
+        <p>Automated testing, minimization, and performance tracking for Z3. Pick a
+          dashboard below to explore mined runs or compare run statistics side by side.</p>
+      </div>
+      <img class="hero-img" src="assets/Kooza3.png" alt="CoZ3 mascot" />
+    </div>
+
+    <div class="cards">
+      <a class="card" href="coz3_run_miner.html">
+        <div class="card-icon">&#9935;</div>
+        <h2>CoZ3 Run Miner Dashboard</h2>
+        <p>Browse mined Ramon runs, known errors, unknown benchmarks, and fixed
+          queries aggregated across recent reports.</p>
+        <span class="go">Open dashboard &rarr;</span>
+      </a>
+
+      <a class="card" href="compare_stats.html">
+        <div class="card-icon">&#128202;</div>
+        <h2>Compare Stats</h2>
+        <p>Select two run reports and compare their solver statistics, charts, and
+          metadata side by side.</p>
+        <span class="go">Open comparison &rarr;</span>
+      </a>
+    </div>
+
+    <div class="links">
+      <h3>Related resources</h3>
+      <ul>
+        <li><a class="link" href="https://github.com/Z3Prover/bench">Z3Prover/bench</a> &mdash; benchmark and tooling repository</li>
+        <li><a class="link" href="https://github.com/mtzguido/z3-ramon-results">z3-ramon-results</a> &mdash; published Ramon result artifacts</li>
+        <li><a class="link" href="https://github.com/Z3Prover/z3">Z3Prover/z3</a> &mdash; the Z3 theorem prover</li>
+      </ul>
+    </div>
+
+    <footer>CoZ3 benchmark results &middot; hosted on mtzguido</footer>
+  </div>
+</body>
+
+</html>
