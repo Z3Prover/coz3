@@ -1,5 +1,6 @@
 {
   "files": [
-    "run-0000-regex-equivalence-master-stats.md"
+    "run-0000-regex-equivalence-master-stats.md",
+    "run-0001-regex-equivalence-derive-stats.md"
   ]
 }
