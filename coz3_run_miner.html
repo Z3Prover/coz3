@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoZ3 Run Miner Dashboard</title>
+  <style>
+    :root {
+      --bg: #f6f4ef;
+      --panel: #fffdf8;
+      --panel-2: #f0ebe1;
+      --ink: #1e2128;
+      --muted: #5e6673;
+      --accent: #0a7a66;
+      --line: #d8d2c7;
+      --shadow: 0 6px 20px rgba(26, 25, 19, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at 5% 5%, #fff, transparent 45%),
+                  radial-gradient(circle at 85% 15%, #f8efe2, transparent 42%),
+                  linear-gradient(160deg, #f3f0e8, #f2f5ef);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 22px 14px 40px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #203349, #1f6156 70%);
+      color: #f8fbff;
+      border-radius: 14px;
+      padding: 20px 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.35rem, 2.3vw, 2rem);
+    }
+
+    .hero p {
+      margin: 8px 0 0;
+      color: #d5e8f1;
+      font-size: 0.95rem;
+    }
+
+    .hero a.back-link {
+      color: #cfe7ef;
+      text-decoration: none;
+      font-size: 0.85rem;
+    }
+
+    .hero a.back-link:hover {
+      text-decoration: underline;
+    }
+
+    .hero-counters {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 6px;
+    }
+
+    .hero-counter {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 8px;
+      padding: 6px 8px;
+      min-height: 44px;
+    }
+
+    .hero-counter-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.02em;
+      color: #d6e7ef;
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .hero-counter-value {
+      margin-top: 2px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+
+    .controls {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1fr 190px;
+      gap: 10px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font: inherit;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      align-items: end;
+      justify-content: end;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: 0;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font: inherit;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 120ms ease, opacity 120ms ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: wait;
+      transform: none;
+    }
+
+    .primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .secondary {
+      background: var(--panel-2);
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .status {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      min-height: 1.2em;
+    }
+
+    .layout {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .panel h2 {
+      margin: 0;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.98rem;
+      background: #faf7f0;
+    }
+
+    .panel-body {
+      padding: 10px 12px;
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      max-height: 70vh;
+      overflow: auto;
+    }
+
+    .list li {
+      margin: 0;
+      border-bottom: 1px solid #ece7dd;
+    }
+
+    .list button {
+      width: 100%;
+      text-align: left;
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      border-radius: 0;
+      padding: 9px 4px;
+      font-weight: 500;
+    }
+
+    .list button:hover {
+      transform: none;
+      background: #f8f4eb;
+    }
+
+    .list button.active {
+      background: #e9f4f1;
+      color: #0f5d50;
+      font-weight: 700;
+    }
+
+    .link {
+      color: #215f9f;
+      text-decoration: none;
+      font-size: 0.86rem;
+    }
+
+    .link:hover {
+      text-decoration: underline;
+    }
+
+    .report-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .markdown {
+      margin: 0;
+      background: #f7fbff;
+      color: #1b2432;
+      border: 1px solid #d8e4ef;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      max-height: 72vh;
+      overflow: auto;
+    }
+
+    .markdown h1,
+    .markdown h2,
+    .markdown h3,
+    .markdown h4 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: #1c3856;
+      line-height: 1.25;
+    }
+
+    .markdown h2,
+    .markdown h3,
+    .markdown h4 {
+      margin-top: 18px;
+    }
+
+    .markdown p {
+      margin: 9px 0;
+    }
+
+    .markdown ul,
+    .markdown ol {
+      margin: 8px 0;
+      padding-left: 22px;
+    }
+
+    .markdown li {
+      margin: 4px 0;
+    }
+
+    .markdown code {
+      font-family: "IBM Plex Mono", Consolas, monospace;
+      background: #e9f1f8;
+      color: #1a3b5d;
+      padding: 0 4px;
+      border-radius: 4px;
+      font-size: 0.86em;
+    }
+
+    .markdown pre {
+      background: #10161b;
+      color: #d5e9f9;
+      border-radius: 8px;
+      padding: 10px;
+      overflow: auto;
+      margin: 10px 0;
+    }
+
+    .markdown pre code {
+      background: transparent;
+      color: inherit;
+      padding: 0;
+    }
+
+    .markdown blockquote {
+      margin: 10px 0;
+      border-left: 3px solid #91b4d5;
+      padding: 4px 10px;
+      color: #3c536b;
+      background: #eef5fb;
+    }
+
+    .markdown a {
+      color: #155ea4;
+      text-decoration: none;
+    }
+
+    .markdown a:hover {
+      text-decoration: underline;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .known-errors-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .known-errors-table th,
+    .known-errors-table td {
+      text-align: left;
+      border-bottom: 1px solid #e8edf2;
+      padding: 7px 6px;
+      vertical-align: top;
+    }
+
+    .known-errors-table th {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #49617b;
+    }
+
+    .known-errors-meta {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .scrollable-section {
+      max-height: 360px;
+      overflow: auto;
+    }
+
+    @media (max-width: 960px) {
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-row {
+        justify-content: flex-start;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .list {
+        max-height: 280px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="hero">
+      <h1>CoZ3 Run Miner Dashboard</h1>
+      <a class="back-link" href="home.html">&larr; Back to CoZ3 home</a>
+      <div class="hero-counters" aria-label="Summary counters">
+        <div class="hero-counter">
+          <div class="hero-counter-label">#Errors</div>
+          <div id="counter-errors" class="hero-counter-value">-</div>
+        </div>
+        <div class="hero-counter">
+          <div class="hero-counter-label">#Unknowns</div>
+          <div id="counter-unknowns" class="hero-counter-value">-</div>
+        </div>
+        <div class="hero-counter">
+          <div class="hero-counter-label">#Anomallies</div>
+          <div id="counter-anomallies" class="hero-counter-value">-</div>
+        </div>
+        <div class="hero-counter">
+          <div class="hero-counter-label">#Fixed</div>
+          <div id="counter-fixed" class="hero-counter-value">-</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+        <div class="field">
+          <label for="date-from">Consider reports from</label>
+          <input id="date-from" type="date" />
+        </div>
+        <div class="field">
+          <label for="date-to">through</label>
+          <input id="date-to" type="date" />
+        </div>
+      </div>
+      <div class="btn-row">
+        <button id="refresh-btn" class="primary" type="button">Refresh list</button>
+        <button id="open-latest-btn" class="secondary" type="button">Open latest</button>
+      </div>
+    </div>
+
+    <div id="status" class="status">Idle.</div>
+
+    <section class="panel" style="margin-top: 10px;">
+      <h2>Known errors</h2>
+      <div class="panel-body">
+        <div id="known-errors-meta" class="known-errors-meta">Not computed yet.</div>
+        <div id="known-errors-content" class="empty scrollable-section">Refresh the report list to build aggregate known errors.</div>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top: 10px;">
+      <h2>Known benchmarks returning unknown</h2>
+      <div class="panel-body">
+        <div id="known-unknown-meta" class="known-errors-meta">Not computed yet.</div>
+        <div id="known-unknown-content" class="empty scrollable-section">Refresh the report list to aggregate unknown benchmarks.</div>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top: 10px;">
+      <h2>Fixed queries</h2>
+      <div class="panel-body">
+        <div id="fixed-queries-meta" class="known-errors-meta">Not computed yet.</div>
+        <div id="fixed-queries-content" class="empty scrollable-section">Refresh the report list to detect fixed queries.</div>
+      </div>
+    </section>
+
+    <div class="layout">
+      <section class="panel">
+        <h2>Available Reports</h2>
+        <div class="panel-body">
+          <ul id="report-list" class="list"></ul>
+          <div id="list-empty" class="empty" hidden>No reports found.</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Report Content</h2>
+        <div class="panel-body">
+          <div class="report-header">
+            <div id="current-report">No report selected.</div>
+            <a id="raw-link" class="link" href="#" target="_blank" rel="noopener" hidden>Open raw file</a>
+          </div>
+          <div id="report-content" class="markdown">Choose a report from the list.</div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+  <script>
+    const BASE_URL = './';
+    let reports = [];
+    let currentReportUrl = '';
+    const reportDetailsCache = new Map();
+
+    function setStatus(message) {
+      document.getElementById('status').textContent = message;
+    }
+
+    function setCounter(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = value;
+    }
+
+    function initializeDateRange() {
+      const today = new Date();
+      const weekAgo = new Date(today);
+      weekAgo.setDate(weekAgo.getDate() - 7);
+
+      const toDateStr = today.toISOString().split('T')[0];
+      const fromDateStr = weekAgo.toISOString().split('T')[0];
+
+      document.getElementById('date-to').value = toDateStr;
+      document.getElementById('date-from').value = fromDateStr;
+    }
+
+    function extractDateFromReport(text) {
+      const match = text.match(/# CoZ3 run miner report \((\d{4}-\d{2}-\d{2})/);
+      if (!match) return null;
+      try {
+        return new Date(match[1] + 'T00:00:00Z');
+      } catch {
+        return null;
+      }
+    }
+
+    function isDateInRange(reportDate, fromStr, toStr) {
+      if (!reportDate) return true;
+      const from = fromStr ? new Date(fromStr + 'T00:00:00Z') : new Date(0);
+      const to = toStr ? new Date(toStr + 'T23:59:59Z') : new Date();
+      return reportDate >= from && reportDate <= to;
+    }
+
+    function reportSortKey(name) {
+      if (name === 'run-miner-report.md') {
+        return Number.MAX_SAFE_INTEGER;
+      }
+      const m = /^run-miner-(\d+)-report\.md$/.exec(name);
+      return m ? Number.parseInt(m[1], 10) : -1;
+    }
+
+    function parseReportLinks(html, baseUrl) {
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const anchors = Array.from(doc.querySelectorAll('a'));
+      const seen = new Set();
+      const out = [];
+
+      for (const a of anchors) {
+        let href = a.getAttribute('href');
+        if (!href) continue;
+        href = href.split('#', 1)[0].split('?', 1)[0];
+        if (!href) continue;
+
+        let url;
+        try {
+          url = new URL(href, baseUrl).toString();
+        } catch {
+          continue;
+        }
+
+        const name = decodeURIComponent(url.split('/').pop() || '');
+        const isLatest = name === 'run-miner-report.md';
+        const isVersioned = /^run-miner-\d+-report\.md$/.test(name);
+        if (!isLatest && !isVersioned) continue;
+        if (seen.has(url)) continue;
+
+        seen.add(url);
+        out.push({ name, url, key: reportSortKey(name) });
+      }
+
+      out.sort((a, b) => b.key - a.key || a.name.localeCompare(b.name));
+      return out;
+    }
+
+    function getBugsSection(text) {
+      const start = text.search(/^##\s+Bugs\s*\(ERRORS\s*>\s*0\)\s*$/m);
+      if (start < 0) return text;
+      const rest = text.slice(start);
+      const endMatch = rest.slice(1).match(/\n##\s+/m);
+      if (!endMatch) return rest;
+      const end = start + 1 + endMatch.index;
+      return text.slice(start, end);
+    }
+
+    function getUnknownSection(text) {
+      const start = text.search(/^##\s+Benchmarks\s+returning\s+unknown\s*$/mi);
+      if (start < 0) return '';
+      const rest = text.slice(start);
+      const endMatch = rest.slice(1).match(/\n##\s+/m);
+      if (!endMatch) return rest;
+      const end = start + 1 + endMatch.index;
+      return text.slice(start, end);
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function parseQueryList(line) {
+      const queries = [];
+      const fromBackticks = Array.from(line.matchAll(/`([^`]+)`/g)).map((m) => m[1].trim()).filter(Boolean);
+      if (fromBackticks.length) {
+        return fromBackticks;
+      }
+
+      const idx = line.indexOf(':');
+      if (idx < 0) return queries;
+      const tail = line.slice(idx + 1).trim();
+      if (!tail || tail.startsWith('(not available')) return queries;
+
+      for (const part of tail.split(',')) {
+        const q = part.trim();
+        if (!q || q.startsWith('(+')) continue;
+        queries.push(q.replace(/^`|`$/g, ''));
+      }
+      return queries;
+    }
+
+    function parseDateValue(raw) {
+      if (!raw || typeof raw !== 'string') return null;
+      const d = new Date(raw);
+      if (Number.isNaN(d.getTime())) return null;
+      return d;
+    }
+
+    function detailsNameForReportName(reportName) {
+      if (reportName === 'run-miner-report.md') {
+        return 'run-miner-details.json';
+      }
+      const m = /^(run-miner-\d+)-report\.md$/.exec(reportName);
+      return m ? m[1] + '-details.json' : '';
+    }
+
+    function detailsUrlForReport(report) {
+      const detailsName = detailsNameForReportName(report.name);
+      if (!detailsName) return '';
+      try {
+        const u = new URL(report.url);
+        u.pathname = u.pathname.replace(/[^/]+$/, detailsName);
+        return u.toString();
+      } catch {
+        return '';
+      }
+    }
+
+    async function loadReportDetails(report) {
+      const url = detailsUrlForReport(report);
+      if (!url) return null;
+      if (reportDetailsCache.has(url)) {
+        return reportDetailsCache.get(url);
+      }
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) {
+          reportDetailsCache.set(url, null);
+          return null;
+        }
+        const data = await res.json();
+        reportDetailsCache.set(url, data);
+        return data;
+      } catch {
+        reportDetailsCache.set(url, null);
+        return null;
+      }
+    }
+
+    function toDateKey(date) {
+      if (!(date instanceof Date) || Number.isNaN(date.getTime())) {
+        return '';
+      }
+      return date.toISOString().split('T')[0];
+    }
+
+    function recordBenchmarkQuery(map, benchmarkSet, query, reportName, reportDate) {
+      const bench = (benchmarkSet || '(unknown benchmark set)').trim();
+      const q = (query || '(unknown query)').trim();
+      const key = bench.toLowerCase() + '||' + q.toLowerCase();
+      const dateKey = toDateKey(reportDate);
+      if (!map.has(key)) {
+        map.set(key, {
+          benchmarkSet: bench,
+          query: q,
+          reports: new Set(),
+          latestDate: dateKey,
+        });
+      }
+
+      const entry = map.get(key);
+      entry.reports.add(reportName);
+      if (dateKey && (!entry.latestDate || dateKey > entry.latestDate)) {
+        entry.latestDate = dateKey;
+      }
+    }
+
+    function extractKnownErrorsFromReport(map, reportName, reportDate, text) {
+      const bugs = getBugsSection(text);
+      const lines = bugs.split('\n');
+
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const bug = line.match(/^\s*-\s+.*?inputs\s+`([^`]+)`\s+[^\n]*ERRORS\s+`?(\d+)`?(?:\s*\(([^)]*)\))?/i);
+        if (!bug) continue;
+
+        const benchmarkSet = bug[1].trim();
+        const totalErrors = Number.parseInt(bug[2], 10);
+        if (!Number.isFinite(totalErrors) || totalErrors <= 0) continue;
+
+        let queries = [];
+        for (let j = i + 1; j < lines.length; j++) {
+          const next = lines[j];
+          if (/^\s*-\s+\[/.test(next) || /^##\s+/.test(next)) {
+            break;
+          }
+          if (/^\s*-\s+Error queries:/.test(next)) {
+            queries = parseQueryList(next);
+            break;
+          }
+        }
+
+        if (!queries.length) {
+          recordBenchmarkQuery(map, benchmarkSet, '(error query not listed)', reportName, reportDate);
+          continue;
+        }
+
+        for (const query of queries) {
+          recordBenchmarkQuery(map, benchmarkSet, query, reportName, reportDate);
+        }
+      }
+    }
+
+    function extractKnownErrorsFromDetails(map, reportName, reportDate, details) {
+      if (!details || !Array.isArray(details.bugs)) return;
+
+      for (const bug of details.bugs) {
+        const benchmarkSet = String((bug && bug.inputs) || '').trim();
+        if (!benchmarkSet) continue;
+
+        const queries = Array.isArray(bug.error_queries)
+          ? bug.error_queries.map((q) => String(q || '').trim()).filter(Boolean)
+          : [];
+
+        if (!queries.length) {
+          recordBenchmarkQuery(map, benchmarkSet, '(error query not listed)', reportName, reportDate);
+          continue;
+        }
+
+        for (const query of queries) {
+          recordBenchmarkQuery(map, benchmarkSet, query, reportName, reportDate);
+        }
+      }
+    }
+
+    function renderKnownErrorsTable(aggregate, scanned, failed) {
+      const meta = document.getElementById('known-errors-meta');
+      const body = document.getElementById('known-errors-content');
+      meta.textContent = 'Scanned ' + scanned + ' report(s), failed to load ' + failed + '.';
+
+      if (!aggregate.length) {
+        body.className = 'empty scrollable-section';
+        body.textContent = 'No known errors found across the available reports.';
+        return;
+      }
+
+      let html = '<table class="known-errors-table"><thead><tr>' +
+        '<th>Benchmark Set</th><th>Query</th><th>Reports Affected</th><th>Latest affected report date</th></tr></thead><tbody>';
+
+      for (const row of aggregate) {
+        html += '<tr>' +
+          '<td>' + escapeHtml(row.benchmarkSet) + '</td>' +
+          '<td>' + escapeHtml(row.query) + '</td>' +
+          '<td>' + row.reports + '</td>' +
+          '<td>' + escapeHtml(row.latestDate || 'Unknown') + '</td>' +
+          '</tr>';
+      }
+      html += '</tbody></table>';
+
+      body.className = 'scrollable-section';
+      body.innerHTML = html;
+    }
+
+    async function refreshKnownErrors(fixedKeys = new Set()) {
+      const meta = document.getElementById('known-errors-meta');
+      const body = document.getElementById('known-errors-content');
+
+      if (!reports.length) {
+        meta.textContent = 'No reports available.';
+        body.className = 'empty scrollable-section';
+        body.textContent = 'No known errors found across the available reports.';
+        setCounter('counter-errors', '0');
+        return;
+      }
+
+      meta.textContent = 'Computing known errors...';
+      body.className = 'empty scrollable-section';
+      body.textContent = 'Scanning reports for error breakdowns...';
+
+      const errorMap = new Map();
+      let scanned = 0;
+      let failed = 0;
+
+      for (const report of reports) {
+        try {
+          const details = await loadReportDetails(report);
+          if (details) {
+            const reportDate = report.date || parseDateValue(details.generated_at) || null;
+            extractKnownErrorsFromDetails(errorMap, report.name, reportDate, details);
+            scanned += 1;
+            continue;
+          }
+
+          const res = await fetch(report.url);
+          if (!res.ok) {
+            failed += 1;
+            continue;
+          }
+          const text = await res.text();
+          const reportDate = extractDateFromReport(text) || report.date || null;
+          extractKnownErrorsFromReport(errorMap, report.name, reportDate, text);
+          scanned += 1;
+        } catch (_) {
+          failed += 1;
+        }
+      }
+
+      const aggregate = Array.from(errorMap.values())
+        .map((entry) => ({
+          benchmarkSet: entry.benchmarkSet,
+          query: entry.query,
+          reports: entry.reports.size,
+          latestDate: entry.latestDate,
+        }))
+        .sort((a, b) => b.reports - a.reports || a.benchmarkSet.localeCompare(b.benchmarkSet) || a.query.localeCompare(b.query));
+
+      const unfixedErrors = aggregate.filter((row) => !fixedKeys.has(issuePairKey(row.benchmarkSet, row.query)));
+      setCounter('counter-errors', String(unfixedErrors.length));
+      renderKnownErrorsTable(unfixedErrors, scanned, failed);
+    }
+
+    function extractUnknownBenchmarksFromReport(map, reportName, reportDate, text) {
+      const unknown = getUnknownSection(text);
+      if (!unknown) return;
+
+      const lines = unknown.split('\n');
+      for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const m = line.match(/^\s*-\s+.*?inputs\s+`([^`]+)`\s+[^\n]*UNKNOWN\s+`?(\d+)`?/i);
+        if (!m) continue;
+
+        const benchmark = m[1].trim();
+        if (!benchmark) continue;
+
+        let queries = [];
+        for (let j = i + 1; j < lines.length; j++) {
+          const next = lines[j];
+          if (/^\s*-\s+\[/.test(next) || /^##\s+/.test(next)) {
+            break;
+          }
+          if (/^\s*-\s+Unknown queries:/.test(next)) {
+            queries = parseQueryList(next);
+            break;
+          }
+        }
+
+        if (!queries.length) {
+          queries = ['(unknown query not listed)'];
+        }
+
+        for (const query of queries) {
+          const q = query.trim() || '(unknown query not listed)';
+          const key = benchmark.toLowerCase() + '||' + q.toLowerCase();
+          const dateKey = toDateKey(reportDate);
+          if (!map.has(key)) {
+            map.set(key, {
+              benchmark,
+              query: q,
+              reports: new Set(),
+              latestDate: dateKey,
+            });
+          }
+
+          const entry = map.get(key);
+          entry.reports.add(reportName);
+          if (dateKey && (!entry.latestDate || dateKey > entry.latestDate)) {
+            entry.latestDate = dateKey;
+          }
+        }
+      }
+    }
+
+    function extractUnknownBenchmarksFromDetails(map, reportName, reportDate, details) {
+      if (!details || !Array.isArray(details.unknowns)) return;
+
+      for (const item of details.unknowns) {
+        const benchmark = String((item && item.inputs) || '').trim();
+        if (!benchmark) continue;
+
+        const queries = Array.isArray(item.unknown_queries)
+          ? item.unknown_queries.map((q) => String(q || '').trim()).filter(Boolean)
+          : [];
+        const effectiveQueries = queries.length ? queries : ['(unknown query not listed)'];
+
+        for (const query of effectiveQueries) {
+          const q = query.trim() || '(unknown query not listed)';
+          const key = benchmark.toLowerCase() + '||' + q.toLowerCase();
+          const dateKey = toDateKey(reportDate);
+          if (!map.has(key)) {
+            map.set(key, {
+              benchmark,
+              query: q,
+              reports: new Set(),
+              latestDate: dateKey,
+            });
+          }
+
+          const entry = map.get(key);
+          entry.reports.add(reportName);
+          if (dateKey && (!entry.latestDate || dateKey > entry.latestDate)) {
+            entry.latestDate = dateKey;
+          }
+        }
+      }
+    }
+
+    function issueKey(benchmark, query, kind) {
+      return benchmark.toLowerCase() + '||' + query.toLowerCase() + '||' + kind;
+    }
+
+    function issuePairKey(benchmark, query) {
+      return benchmark.toLowerCase() + '||' + query.toLowerCase();
+    }
+
+    function extractIssuesFromDetails(details) {
+      const issueSet = new Set();
+      const keyMeta = new Map();
+      const benchmarkUrls = new Map();
+      const inReportResolutions = new Map();
+
+      const runs = Array.isArray(details && details.runs) ? details.runs : [];
+      if (runs.length) {
+        const latestByPair = new Map();
+        const latestProblematicByPair = new Map();
+        const benchmarkLatest = new Map();
+
+        function toRunSortInfo(run, index) {
+          const dateRaw = String((run && run.date) || '').trim();
+          const parsedDate = Date.parse(dateRaw);
+          const dateMs = Number.isFinite(parsedDate) ? parsedDate : null;
+
+          const url = String((run && run.url) || '').trim();
+          const idMatch = url.match(/run-(\d+)/i);
+          const runId = idMatch ? Number.parseInt(idMatch[1], 10) : null;
+
+          return {
+            dateMs,
+            runId: Number.isFinite(runId) ? runId : null,
+            index,
+          };
+        }
+
+        function isNewerRun(nextInfo, prevInfo) {
+          if (!prevInfo) return true;
+
+          const nextHasDate = Number.isFinite(nextInfo && nextInfo.dateMs);
+          const prevHasDate = Number.isFinite(prevInfo && prevInfo.dateMs);
+          if (nextHasDate && prevHasDate && nextInfo.dateMs !== prevInfo.dateMs) {
+            return nextInfo.dateMs > prevInfo.dateMs;
+          }
+          if (nextHasDate !== prevHasDate) {
+            return nextHasDate;
+          }
+
+          const nextHasId = Number.isFinite(nextInfo && nextInfo.runId);
+          const prevHasId = Number.isFinite(prevInfo && prevInfo.runId);
+          if (nextHasId && prevHasId && nextInfo.runId !== prevInfo.runId) {
+            return nextInfo.runId > prevInfo.runId;
+          }
+          if (nextHasId !== prevHasId) {
+            return nextHasId;
+          }
+
+          return (nextInfo && nextInfo.index) > (prevInfo && prevInfo.index);
+        }
+
+        for (let runIndex = 0; runIndex < runs.length; runIndex++) {
+          const run = runs[runIndex];
+          const benchmarkSet = String((run && run.inputs) || '').trim();
+          if (!benchmarkSet) continue;
+
+          const evidenceUrl = String((run && run.url) || '').trim();
+          const runSortInfo = toRunSortInfo(run, runIndex);
+          const prevBenchmark = benchmarkLatest.get(benchmarkSet);
+          if (evidenceUrl && isNewerRun(runSortInfo, prevBenchmark && prevBenchmark.sortInfo)) {
+            benchmarkLatest.set(benchmarkSet, { url: evidenceUrl, sortInfo: runSortInfo });
+            benchmarkUrls.set(benchmarkSet, evidenceUrl);
+          }
+
+          const rows = Array.isArray(run && run.benchmark_rows) ? run.benchmark_rows : [];
+          for (const row of rows) {
+            const query = String((row && row.query) || '').trim();
+            if (!query) continue;
+
+            const key = issuePairKey(benchmarkSet, query);
+            const status = String((row && row.status) || '').toLowerCase();
+            const rcValue = Number.parseInt(String((row && row.rc) ?? ''), 10);
+            const isUnknown = status === 'unknown';
+            const isErrorByStatus = status === 'error' || status.startsWith('error-') || status.startsWith('bug');
+            const isErrorByRc = Number.isFinite(rcValue) && rcValue !== 0;
+            const isProblematic = isUnknown || isErrorByStatus || isErrorByRc;
+            const kind = isUnknown ? 'unknown' : 'error';
+
+            const prevPair = latestByPair.get(key);
+            if (!prevPair || isNewerRun(runSortInfo, prevPair.sortInfo)) {
+              latestByPair.set(key, {
+                benchmark: benchmarkSet,
+                query,
+                isProblematic,
+                kind,
+                sortInfo: runSortInfo,
+                evidenceUrl,
+              });
+            }
+
+            if (isProblematic) {
+              const prevProblematic = latestProblematicByPair.get(key);
+              if (!prevProblematic || isNewerRun(runSortInfo, prevProblematic.sortInfo)) {
+                latestProblematicByPair.set(key, {
+                  benchmark: benchmarkSet,
+                  query,
+                  kind,
+                  sortInfo: runSortInfo,
+                  evidenceUrl,
+                });
+              }
+            }
+          }
+        }
+
+        for (const latest of latestByPair.values()) {
+          const key = issuePairKey(latest.benchmark, latest.query);
+
+          if (latest.isProblematic) {
+            issueSet.add(key);
+            if (!keyMeta.has(key)) {
+              keyMeta.set(key, { benchmark: latest.benchmark, query: latest.query, kinds: new Set([latest.kind]) });
+            } else {
+              keyMeta.get(key).kinds.add(latest.kind);
+            }
+            continue;
+          }
+
+          const latestProblematic = latestProblematicByPair.get(key);
+          if (latestProblematic && isNewerRun(latest.sortInfo, latestProblematic.sortInfo)) {
+            const kinds = new Set([latestProblematic.kind]);
+            inReportResolutions.set(key, {
+              benchmark: latest.benchmark,
+              query: latest.query,
+              kinds,
+              evidenceBeforeUrl: latestProblematic.evidenceUrl || '',
+              evidenceAfterUrl: latest.evidenceUrl || '',
+            });
+          }
+        }
+
+        return { issueSet, keyMeta, benchmarkUrls, inReportResolutions };
+      }
+
+      if (details && Array.isArray(details.bugs)) {
+        for (const bug of details.bugs) {
+          const benchmark = String((bug && bug.inputs) || '').trim();
+          if (!benchmark) continue;
+
+          const bugUrl = String((bug && bug.url) || '').trim();
+          if (bugUrl && !benchmarkUrls.has(benchmark)) {
+            benchmarkUrls.set(benchmark, bugUrl);
+          }
+
+          const queries = Array.isArray(bug.error_queries)
+            ? bug.error_queries.map((q) => String(q || '').trim()).filter(Boolean)
+            : [];
+          for (const query of queries) {
+            const key = issuePairKey(benchmark, query);
+            issueSet.add(key);
+            if (!keyMeta.has(key)) {
+              keyMeta.set(key, { benchmark, query, kinds: new Set(['error']) });
+            } else {
+              keyMeta.get(key).kinds.add('error');
+            }
+          }
+        }
+      }
+
+      if (details && Array.isArray(details.unknowns)) {
+        for (const item of details.unknowns) {
+          const benchmark = String((item && item.inputs) || '').trim();
+          if (!benchmark) continue;
+
+          const itemUrl = String((item && item.url) || '').trim();
+          if (itemUrl && !benchmarkUrls.has(benchmark)) {
+            benchmarkUrls.set(benchmark, itemUrl);
+          }
+
+          const queries = Array.isArray(item.unknown_queries)
+            ? item.unknown_queries.map((q) => String(q || '').trim()).filter(Boolean)
+            : [];
+          for (const query of queries) {
+            const key = issuePairKey(benchmark, query);
+            issueSet.add(key);
+            if (!keyMeta.has(key)) {
+              keyMeta.set(key, { benchmark, query, kinds: new Set(['unknown']) });
+            } else {
+              keyMeta.get(key).kinds.add('unknown');
+            }
+          }
+        }
+      }
+
+      return { issueSet, keyMeta, benchmarkUrls, inReportResolutions };
+    }
+
+    function renderFixedQueriesTable(aggregate, scanned, failed) {
+      const meta = document.getElementById('fixed-queries-meta');
+      const body = document.getElementById('fixed-queries-content');
+      meta.textContent = 'Scanned ' + scanned + ' report(s), failed to load ' + failed + '.';
+
+      if (!aggregate.length) {
+        body.className = 'empty scrollable-section';
+        body.textContent = 'No fixed queries detected across the available reports.';
+        return;
+      }
+
+      let html = '<table class="known-errors-table"><thead><tr>' +
+        '<th>Benchmark set</th><th>Query</th><th>Error/Unknown</th><th>Date identified</th><th>Date fixed</th><th>Justification</th></tr></thead><tbody>';
+
+      for (const row of aggregate) {
+        const beforeLink = row.evidenceBeforeUrl
+          ? '<a class="link" href="' + escapeHtml(row.evidenceBeforeUrl) + '" target="_blank" rel="noopener">before</a>'
+          : 'Unknown';
+        const afterLink = row.evidenceAfterUrl
+          ? '<a class="link" href="' + escapeHtml(row.evidenceAfterUrl) + '" target="_blank" rel="noopener">after</a>'
+          : 'Unknown';
+
+        html += '<tr>' +
+          '<td>' + escapeHtml(row.benchmark) + '</td>' +
+          '<td>' + escapeHtml(row.query) + '</td>' +
+          '<td>' + escapeHtml(row.kind) + '</td>' +
+          '<td>' + escapeHtml(row.dateIdentified || 'Unknown') + '</td>' +
+          '<td>' + escapeHtml(row.dateFixed || 'Unknown') + '</td>' +
+          '<td class="fixed-justification">' + beforeLink + ' to ' + afterLink + '</td>' +
+          '</tr>';
+      }
+
+      html += '</tbody></table>';
+      body.className = 'scrollable-section';
+      body.innerHTML = html;
+    }
+
+    async function refreshFixedQueries() {
+      const meta = document.getElementById('fixed-queries-meta');
+      const body = document.getElementById('fixed-queries-content');
+
+      if (!reports.length) {
+        meta.textContent = 'No reports available.';
+        body.className = 'empty scrollable-section';
+        body.textContent = 'No fixed queries detected across the available reports.';
+        setCounter('counter-fixed', '0');
+        return new Set();
+      }
+
+      meta.textContent = 'Computing fixed queries...';
+      body.className = 'empty scrollable-section';
+      body.textContent = 'Scanning reports for fixed queries...';
+
+      const snapshots = [];
+      let scanned = 0;
+      let failed = 0;
+
+      for (const report of reports) {
+        try {
+          const details = await loadReportDetails(report);
+          const reportDate = toDateKey(report.date);
+          if (!details || !reportDate) {
+            failed += 1;
+            continue;
+          }
+
+          const extracted = extractIssuesFromDetails(details);
+          snapshots.push({
+            reportDate,
+            reportName: report.name,
+            issueSet: extracted.issueSet,
+            keyMeta: extracted.keyMeta,
+            benchmarkUrls: extracted.benchmarkUrls,
+            inReportResolutions: extracted.inReportResolutions,
+          });
+          scanned += 1;
+        } catch (_) {
+          failed += 1;
+        }
+      }
+
+      snapshots.sort((a, b) => a.reportDate.localeCompare(b.reportDate) || a.reportName.localeCompare(b.reportName));
+
+      const aggregate = [];
+      const allKeys = new Set();
+      const metaByKey = new Map();
+
+      for (const snap of snapshots) {
+        for (const key of snap.issueSet) {
+          allKeys.add(key);
+          if (!metaByKey.has(key) && snap.keyMeta.has(key)) {
+            metaByKey.set(key, snap.keyMeta.get(key));
+          }
+        }
+        if (snap.inReportResolutions instanceof Map) {
+          for (const [key, resolution] of snap.inReportResolutions.entries()) {
+            allKeys.add(key);
+            if (!metaByKey.has(key)) {
+              metaByKey.set(key, {
+                benchmark: resolution.benchmark,
+                query: resolution.query,
+                kinds: new Set(resolution.kinds || ['unknown']),
+              });
+            }
+          }
+        }
+      }
+
+      for (const key of allKeys) {
+        const presence = snapshots.map((snap) => snap.issueSet.has(key));
+        const firstPresent = presence.indexOf(true);
+
+        let lastPresent = -1;
+        if (firstPresent >= 0) {
+          for (let i = firstPresent; i < presence.length; i++) {
+            if (presence[i]) {
+              lastPresent = i;
+            }
+          }
+        }
+
+        const metaRow = metaByKey.get(key);
+        if (!metaRow) continue;
+
+        let firstResolved = -1;
+        if (lastPresent >= 0) {
+          for (let i = lastPresent + 1; i < snapshots.length; i++) {
+            const snap = snapshots[i];
+            if (!snap.benchmarkUrls.has(metaRow.benchmark)) {
+              continue;
+            }
+            if (snap.issueSet.has(key)) {
+              continue;
+            }
+            firstResolved = i;
+            break;
+          }
+        }
+
+        if (firstResolved >= 0) {
+          const identifiedDate = snapshots[firstPresent].reportDate;
+          const fixedDate = snapshots[firstResolved].reportDate;
+
+          aggregate.push({
+            benchmark: metaRow.benchmark,
+            query: metaRow.query,
+            kind: Array.from(metaRow.kinds || []).sort().join('/') || 'unknown',
+            dateIdentified: identifiedDate,
+            dateFixed: fixedDate,
+            evidenceBeforeUrl: snapshots[lastPresent].benchmarkUrls.get(metaRow.benchmark) || '',
+            evidenceAfterUrl: snapshots[firstResolved].benchmarkUrls.get(metaRow.benchmark) || '',
+          });
+        }
+
+        for (let i = 0; i < snapshots.length; i++) {
+          const snap = snapshots[i];
+          if (!(snap.inReportResolutions instanceof Map) || !snap.inReportResolutions.has(key)) {
+            continue;
+          }
+          const resolution = snap.inReportResolutions.get(key);
+          aggregate.push({
+            benchmark: resolution.benchmark,
+            query: resolution.query,
+            kind: Array.from(resolution.kinds || []).sort().join('/') || 'unknown',
+            dateIdentified: snap.reportDate,
+            dateFixed: snap.reportDate,
+            evidenceBeforeUrl: resolution.evidenceBeforeUrl || snap.benchmarkUrls.get(resolution.benchmark) || '',
+            evidenceAfterUrl: resolution.evidenceAfterUrl || snap.benchmarkUrls.get(resolution.benchmark) || '',
+          });
+          break;
+        }
+      }
+
+      aggregate.sort((a, b) => (b.dateFixed || '').localeCompare(a.dateFixed || '') ||
+        a.benchmark.localeCompare(b.benchmark) ||
+        a.query.localeCompare(b.query));
+
+      const deduped = [];
+      const seenRows = new Set();
+      for (const row of aggregate) {
+        const key = issuePairKey(row.benchmark, row.query);
+        if (seenRows.has(key)) continue;
+        seenRows.add(key);
+        deduped.push(row);
+      }
+
+      const finalAggregate = deduped
+        .sort((a, b) => (b.dateFixed || '').localeCompare(a.dateFixed || '') ||
+          a.benchmark.localeCompare(b.benchmark) ||
+          a.query.localeCompare(b.query));
+
+      setCounter('counter-fixed', String(finalAggregate.length));
+      renderFixedQueriesTable(finalAggregate, scanned, failed);
+      return new Set(finalAggregate.map((row) => issuePairKey(row.benchmark, row.query)));
+    }
+
+    function renderKnownUnknownBenchmarksTable(aggregate, scanned, failed) {
+      const meta = document.getElementById('known-unknown-meta');
+      const body = document.getElementById('known-unknown-content');
+      meta.textContent = 'Scanned ' + scanned + ' report(s), failed to load ' + failed + '.';
+
+      if (!aggregate.length) {
+        body.className = 'empty scrollable-section';
+        body.textContent = 'No benchmarks returning UNKNOWN found across the available reports.';
+        return;
+      }
+
+      let html = '<table class="known-errors-table"><thead><tr>' +
+        '<th>Benchmark Set</th><th>Query</th><th>Reports Affected</th><th>Latest affected report date</th></tr></thead><tbody>';
+
+      for (const row of aggregate) {
+        html += '<tr>' +
+          '<td>' + escapeHtml(row.benchmark) + '</td>' +
+          '<td>' + escapeHtml(row.query) + '</td>' +
+          '<td>' + row.reports + '</td>' +
+          '<td>' + escapeHtml(row.latestDate || 'Unknown') + '</td>' +
+          '</tr>';
+      }
+
+      html += '</tbody></table>';
+      body.className = 'scrollable-section';
+      body.innerHTML = html;
+    }
+
+    async function refreshKnownUnknownBenchmarks(fixedKeys = new Set()) {
+      const meta = document.getElementById('known-unknown-meta');
+      const body = document.getElementById('known-unknown-content');
+
+      if (!reports.length) {
+        meta.textContent = 'No reports available.';
+        body.className = 'empty scrollable-section';
+        body.textContent = 'No benchmarks returning UNKNOWN found across the available reports.';
+        setCounter('counter-unknowns', '0');
+        return;
+      }
+
+      meta.textContent = 'Computing unknown benchmarks...';
+      body.className = 'empty scrollable-section';
+      body.textContent = 'Scanning reports for UNKNOWN benchmark entries...';
+
+      const unknownMap = new Map();
+      let scanned = 0;
+      let failed = 0;
+
+      for (const report of reports) {
+        try {
+          const details = await loadReportDetails(report);
+          if (details) {
+            const reportDate = report.date || parseDateValue(details.generated_at) || null;
+            extractUnknownBenchmarksFromDetails(unknownMap, report.name, reportDate, details);
+            scanned += 1;
+            continue;
+          }
+
+          const res = await fetch(report.url);
+          if (!res.ok) {
+            failed += 1;
+            continue;
+          }
+          const text = await res.text();
+          const reportDate = extractDateFromReport(text) || report.date || null;
+          extractUnknownBenchmarksFromReport(unknownMap, report.name, reportDate, text);
+          scanned += 1;
+        } catch (_) {
+          failed += 1;
+        }
+      }
+
+      const aggregate = Array.from(unknownMap.values())
+        .map((entry) => ({
+          benchmark: entry.benchmark,
+          query: entry.query,
+          reports: entry.reports.size,
+          latestDate: entry.latestDate,
+        }))
+        .sort((a, b) => b.reports - a.reports || a.benchmark.localeCompare(b.benchmark) || a.query.localeCompare(b.query));
+
+      const unfixedUnknowns = aggregate.filter((row) => !fixedKeys.has(issuePairKey(row.benchmark, row.query)));
+      setCounter('counter-unknowns', String(unfixedUnknowns.length));
+      renderKnownUnknownBenchmarksTable(unfixedUnknowns, scanned, failed);
+    }
+
+    function renderReportList() {
+      const list = document.getElementById('report-list');
+      const empty = document.getElementById('list-empty');
+      list.innerHTML = '';
+
+      if (!reports.length) {
+        empty.hidden = false;
+        return;
+      }
+      empty.hidden = true;
+
+      for (const r of reports) {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.textContent = r.name;
+        if (r.url === currentReportUrl) {
+          btn.classList.add('active');
+        }
+        btn.addEventListener('click', () => openReport(r));
+        li.appendChild(btn);
+        list.appendChild(li);
+      }
+    }
+
+    function renderMarkdown(text) {
+      const content = document.getElementById('report-content');
+      if (!window.marked || !window.DOMPurify) {
+        content.textContent = text;
+        return;
+      }
+
+      marked.setOptions({
+        gfm: true,
+        breaks: true,
+        headerIds: false,
+        mangle: false,
+      });
+
+      const html = marked.parse(text);
+      content.innerHTML = DOMPurify.sanitize(html);
+    }
+
+    async function openReport(report) {
+      try {
+        setStatus('Loading ' + report.name + '...');
+        const res = await fetch(report.url);
+        if (!res.ok) {
+          throw new Error('Failed to load report (' + res.status + ')');
+        }
+        const text = await res.text();
+        currentReportUrl = report.url;
+        document.getElementById('current-report').textContent = report.name;
+        renderMarkdown(text);
+
+        const raw = document.getElementById('raw-link');
+        raw.href = report.url;
+        raw.hidden = false;
+
+        renderReportList();
+        setStatus('Loaded ' + report.name + '.');
+      } catch (err) {
+        setStatus('Failed: ' + err.message);
+      }
+    }
+
+    async function refreshReports() {
+      const refreshBtn = document.getElementById('refresh-btn');
+      const openLatestBtn = document.getElementById('open-latest-btn');
+      refreshBtn.disabled = true;
+      openLatestBtn.disabled = true;
+
+      try {
+        const baseUrl = new URL(BASE_URL, window.location.href).toString();
+        const fromDate = document.getElementById('date-from').value;
+        const toDate = document.getElementById('date-to').value;
+
+        setStatus('Loading report list...');
+
+        const res = await fetch(baseUrl);
+        if (!res.ok) {
+          throw new Error('Failed to load listing (' + res.status + ')');
+        }
+
+        const html = await res.text();
+        const allReports = parseReportLinks(html, baseUrl);
+
+        // Filter reports by date range
+        setStatus('Filtering reports by date range...');
+        const filtered = [];
+        for (const r of allReports) {
+          try {
+            const res = await fetch(r.url);
+            if (!res.ok) continue;
+            const text = await res.text();
+            const reportDate = extractDateFromReport(text);
+            if (isDateInRange(reportDate, fromDate, toDate)) {
+              r.date = reportDate;
+              filtered.push(r);
+            }
+          } catch {
+            // If we can't fetch, include it anyway
+            filtered.push(r);
+          }
+        }
+
+        reports = filtered;
+        renderReportList();
+        const fixedKeys = await refreshFixedQueries();
+        await Promise.all([refreshKnownErrors(fixedKeys), refreshKnownUnknownBenchmarks(fixedKeys)]);
+
+        if (!reports.length) {
+          currentReportUrl = '';
+          document.getElementById('current-report').textContent = 'No report selected.';
+          document.getElementById('report-content').textContent = 'No reports found in the selected date range.';
+          document.getElementById('raw-link').hidden = true;
+          setStatus('No reports found in the selected date range.');
+          return;
+        }
+
+        const keepCurrent = reports.find((r) => r.url === currentReportUrl);
+        if (keepCurrent) {
+          await openReport(keepCurrent);
+        } else {
+          await openReport(reports[0]);
+        }
+      } catch (err) {
+        setStatus('Failed: ' + err.message);
+      } finally {
+        refreshBtn.disabled = false;
+        openLatestBtn.disabled = false;
+      }
+    }
+
+    async function openLatestReport() {
+      if (!reports.length) {
+        await refreshReports();
+        return;
+      }
+      const latest = reports.find((r) => r.name === 'run-miner-report.md') || reports[0];
+      await openReport(latest);
+    }
+
+    document.getElementById('refresh-btn').addEventListener('click', refreshReports);
+    document.getElementById('open-latest-btn').addEventListener('click', openLatestReport);
+    document.getElementById('date-from').addEventListener('change', refreshReports);
+    document.getElementById('date-to').addEventListener('change', refreshReports);
+
+    window.addEventListener('load', () => {
+      initializeDateRange();
+      refreshReports();
+    });
+  </script>
+</body>
+</html>
