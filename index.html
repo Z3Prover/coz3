@@ -1,0 +1,2089 @@
+<!DOCTYPE
+    html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        CoZ3 &middot; Compare Stats
+    </title>
+    <style>
+        :root {
+            --bg: #f6f4ef;
+            --panel: #fffdf8;
+            --panel-2: #f0ebe1;
+            --ink: #1e2128;
+            --muted: #5e6673;
+            --accent: #0a7a66;
+            --line: #d8d2c7;
+            --shadow: 0 6px 20px rgba(26, 25, 19, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+            color: var(--ink);
+            background: radial-gradient(circle at 5% 5%, #fff, transparent 45%),
+                        radial-gradient(circle at 85% 15%, #f8efe2, transparent 42%),
+                        linear-gradient(160deg, #f3f0e8, #f2f5ef);
+            min-height: 100vh;
+        }
+
+        .page {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 22px 14px 40px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #203349, #1f6156 70%);
+            color: #f8fbff;
+            border-radius: 14px;
+            padding: 20px 18px;
+            box-shadow: var(--shadow);
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(1.35rem, 2.3vw, 2rem);
+        }
+
+        .hero p {
+            margin: 8px 0 0;
+            color: #d5e8f1;
+            font-size: 0.95rem;
+        }
+
+        .hero a.back-link {
+            color: #cfe7ef;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .hero a.back-link:hover {
+            text-decoration: underline;
+        }
+
+        .panel {
+            margin-top: 12px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 14px;
+        }
+
+        #main-container {
+            display: flex;
+            margin-bottom: 0;
+        }
+
+        #file-list-container {
+            height: 15em;
+            flex: 1;
+            min-width: 200px;
+            overflow: auto;
+            resize: horizontal;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: #fff;
+            padding: 10px;
+            margin-right: 20px;
+        }
+
+        #file-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        #file-list ul.group-children {
+            list-style: none;
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        #file-list li.group {
+            margin: 2px 0;
+        }
+
+        #file-list label {
+            display: block;
+            padding: 3px 4px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #file-list label:hover {
+            background: #f8f4eb;
+        }
+
+        .group-header {
+            cursor: pointer;
+            font-weight: bold;
+            user-select: none;
+            color: #1c3856;
+        }
+
+        .group-header .caret {
+            display: inline-block;
+            width: 1em;
+            text-align: center;
+            color: var(--accent);
+        }
+
+        #search-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            flex-shrink: 0;
+        }
+
+        #search-input {
+            width: 200px;
+            padding: 8px 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            font: inherit;
+            background: #fff;
+            color: var(--ink);
+        }
+
+        button {
+            border: 0;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 120ms ease, opacity 120ms ease;
+            background: var(--accent);
+            color: #fff;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        .search-button {
+            margin-bottom: 5px;
+            width: 100px;
+            background: var(--panel-2);
+            color: var(--ink);
+            border: 1px solid var(--line);
+        }
+
+        #group-by {
+            width: 210px;
+            padding: 6px 8px;
+            margin-bottom: 5px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            font: inherit;
+            background: #fff;
+            color: var(--ink);
+        }
+
+        .group-button {
+            padding: 5px 8px;
+            margin-right: 4px;
+            font-size: 11px;
+            background: var(--panel-2);
+            color: var(--ink);
+            border: 1px solid var(--line);
+        }
+
+        #delete-button {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        label {
+            font-size: 0.82rem;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        #meta-progress {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 6px;
+        }
+
+        #statsChart {
+            margin-top: 12px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 10px;
+        }
+
+        #message {
+            margin-top: 12px;
+        }
+
+        table {
+            border-collapse: collapse;
+            background: var(--panel);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            font-size: 0.9rem;
+        }
+
+        table, th, td {
+            border-color: var(--line) !important;
+        }
+
+        th {
+            background: #faf7f0;
+            color: #1c3856;
+            padding: 6px 10px;
+            text-align: left;
+        }
+
+        td {
+            padding: 5px 10px;
+        }
+
+        tr:nth-child(even) td {
+            background: #f8f6f0;
+        }
+
+        .highlight {
+            background-color: #fff1a8;
+        }
+
+        .current-highlight {
+            background-color: #FF9632;
+        }
+
+        .table-controls {
+            margin: 10px 0;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+    <div class="hero">
+        <h1>Compare Stats</h1>
+        <p>Select exactly two reports to compare their solver statistics.</p>
+        <a class="back-link" href="home.html">&larr; Back to CoZ3 home</a>
+    </div>
+
+    <div class="panel"
+        id="main-container">
+        <div
+            id="file-list-container">
+            <ul
+                id="file-list">
+            </ul>
+        </div>
+
+        <div
+            id="search-container">
+            <input
+                type="text"
+                id="search-input"
+                placeholder="Find a job..."
+                onkeydown="if(event.key==='Enter') { if(matches.length > 0) findNext(); else findFiles(); }">
+            <button
+                class="search-button"
+                onclick="findFiles()">Find</button>
+            <button
+                class="search-button"
+                onclick="findNext()">Next</button>
+            <button
+                class="search-button"
+                onclick="findPrevious()">Previous</button>
+
+            <label for="group-by" style="margin-top: 10px; font-size: 12px;">Group by:</label>
+            <select id="group-by" onchange="onGroupByChange()">
+                <option value="none">No grouping</option>
+                <option value="date">Date (run #)</option>
+                <option value="repo">User (Z3 repo)</option>
+                <option value="inputs">Benchmark (Z3 inputs)</option>
+                <option value="branch">Z3 branch</option>
+                <option value="runner">Runner</option>
+                <option value="commit">Z3 commit (short)</option>
+            </select>
+            <div>
+                <button class="group-button" onclick="expandAllGroups()">Expand all</button>
+                <button class="group-button" onclick="collapseAllGroups()">Collapse all</button>
+            </div>
+            <span id="meta-progress"></span>
+
+            <!-- Move the delete button below the 'Previous' button -->
+            <div id="delete-button-container" style="margin-top: 10px;">
+                <button id="delete-button" onclick="confirmDeletion()">Open in GitHub</button>
+            </div>
+        </div>
+    </div>
+
+    <canvas
+        id="statsChart"
+        width="400"
+        height="200"></canvas>
+    <p
+        id="message">
+    </p>
+    </div>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // ---- File list model and grouping state ----
+        // allFiles: [{ name, runNum, metadata?: {...} }]
+        let allFiles = [];
+        let metadataCache = {};
+        const METADATA_CACHE_KEY = 'compare_stats.metadataCache.v1';
+        let metaLoadedCount = 0;
+        const META_CONCURRENCY = 8;
+        // Only fetch the first chunk of each stats file. The <pre>...</pre>
+        // metadata block sits at the top of every file (typically < 1 KB).
+        // Stats files are routinely 200 KB – 3.5 MB, so range-limiting is
+        // a 100-1000x bandwidth saving.
+        const META_RANGE_BYTES = 4096;
+
+        // Track which groups the user has expanded so re-renders during
+        // background metadata loading do not destroy their navigation state.
+        let expandedGroups = new Set();
+        let lastGroupCriterion = null;
+
+        let renderScheduled = false;
+        let metaWorker = null;
+
+        // Load metadata cache from localStorage
+        try {
+            const raw = localStorage.getItem(METADATA_CACHE_KEY);
+            if (raw) metadataCache = JSON.parse(raw) || {};
+        } catch (e) {
+            metadataCache = {};
+        }
+
+        function saveMetadataCache() {
+            try {
+                localStorage.setItem(METADATA_CACHE_KEY, JSON.stringify(metadataCache));
+            } catch (e) {
+                // Quota exceeded or storage unavailable — fail silently.
+            }
+        }
+
+        // Extract run number (NNNN) from a name like "run-0010-qfbvsls-stats.md".
+        function extractRunNum(name) {
+            const m = name.match(/run-(\d+)-/);
+            return m ? parseInt(m[1], 10) : null;
+        }
+
+        // Parse the <pre>...</pre> metadata block from a stats file body.
+        // Returns an object with keys: description, tag, runner, repo,
+        // commit, branch, options, inputs, commitMessage.
+        // (Same logic also runs inside the worker; kept on the main thread
+        // for tests / fallback when Web Workers aren't available.)
+        function parseMetadata(body) {
+            const meta = {};
+            const preStart = body.indexOf('<pre>');
+            const preEnd = body.indexOf('</pre>', preStart >= 0 ? preStart : 0);
+            if (preStart < 0) return meta;
+            // If </pre> isn't in the truncated body, parse what we have.
+            const block = preEnd >= 0
+                ? body.substring(preStart + 5, preEnd)
+                : body.substring(preStart + 5);
+            const lines = block.split('\n');
+            const map = {
+                'Job description': 'description',
+                'Job tag': 'tag',
+                'Runner': 'runner',
+                'Z3 repo': 'repo',
+                'Z3 commit': 'commit',
+                'Z3 branch': 'branch',
+                'Z3 options': 'options',
+                'Z3 inputs': 'inputs',
+                'Z3 commit message': 'commitMessage'
+            };
+            for (const line of lines) {
+                const idx = line.indexOf(':');
+                if (idx <= 0) continue;
+                const key = line.substring(0, idx).trim();
+                if (!(key in map)) continue;
+                meta[map[key]] = line.substring(idx + 1).trim();
+            }
+            return meta;
+        }
+
+        // Source of the Web Worker that fetches+parses stats-file metadata
+        // off the main thread. It receives {files: [names]} and posts back
+        // {type: 'meta', name, metadata} for each file and {type: 'done'}
+        // when finished.
+        const META_WORKER_SOURCE = `
+            const CONCURRENCY = ${META_CONCURRENCY};
+            const RANGE_BYTES = ${META_RANGE_BYTES};
+
+            function parseMetadata(body) {
+                const meta = {};
+                const preStart = body.indexOf('<pre>');
+                if (preStart < 0) return meta;
+                const preEnd = body.indexOf('</pre>', preStart);
+                const block = preEnd >= 0
+                    ? body.substring(preStart + 5, preEnd)
+                    : body.substring(preStart + 5);
+                const lines = block.split('\\n');
+                const map = {
+                    'Job description': 'description',
+                    'Job tag': 'tag',
+                    'Runner': 'runner',
+                    'Z3 repo': 'repo',
+                    'Z3 commit': 'commit',
+                    'Z3 branch': 'branch',
+                    'Z3 options': 'options',
+                    'Z3 inputs': 'inputs',
+                    'Z3 commit message': 'commitMessage'
+                };
+                for (const line of lines) {
+                    const idx = line.indexOf(':');
+                    if (idx <= 0) continue;
+                    const key = line.substring(0, idx).trim();
+                    if (!(key in map)) continue;
+                    meta[map[key]] = line.substring(idx + 1).trim();
+                }
+                return meta;
+            }
+
+            self.onmessage = (e) => {
+                const msg = e.data || {};
+                if (msg.command !== 'fetch') return;
+                const queue = (msg.files || []).slice();
+                let active = 0;
+
+                const pump = () => {
+                    while (active < CONCURRENCY && queue.length > 0) {
+                        const name = queue.shift();
+                        active++;
+                        fetch(name, {
+                            headers: { 'Range': 'bytes=0-' + (RANGE_BYTES - 1) }
+                        })
+                        .then(r => r.text())
+                        .then(body => {
+                            self.postMessage({ type: 'meta', name, metadata: parseMetadata(body) });
+                        })
+                        .catch(() => {
+                            self.postMessage({ type: 'meta', name, metadata: {} });
+                        })
+                        .finally(() => {
+                            active--;
+                            if (queue.length === 0 && active === 0) {
+                                self.postMessage({ type: 'done' });
+                            }
+                            pump();
+                        });
+                    }
+                };
+                if (queue.length === 0) {
+                    self.postMessage({ type: 'done' });
+                } else {
+                    pump();
+                }
+            };
+        `;
+
+        function createMetaWorker() {
+            if (typeof Worker === 'undefined') return null;
+            try {
+                const blob = new Blob([META_WORKER_SOURCE], { type: 'application/javascript' });
+                const url = URL.createObjectURL(blob);
+                const w = new Worker(url);
+                URL.revokeObjectURL(url);
+                return w;
+            } catch (e) {
+                console.warn('Web Worker unavailable, falling back to main-thread loader:', e);
+                return null;
+            }
+        }
+
+        // Function to load and display files.
+        // Prefer a manifest.json (GitHub Pages, which has no directory autoindex),
+        // and fall back to parsing an Apache-style directory listing (legacy
+        // self-hosted server at /var/www/html/z3).
+        function loadFiles() {
+            fetch('manifest.json', { cache: 'no-store' })
+                .then(response => {
+                    if (!response.ok) throw new Error('no manifest.json');
+                    return response.json();
+                })
+                .then(manifest => {
+                    const names = (manifest.files || []).slice().reverse();
+                    allFiles = [];
+                    names.forEach(name => {
+                        if (name.endsWith('.md') && name.includes('stats')) {
+                            allFiles.push({
+                                name: name,
+                                runNum: extractRunNum(name),
+                                metadata: metadataCache[name] || null
+                            });
+                        }
+                    });
+                    renderFileList(getCurrentGroupBy());
+                    loadAllMetadata();
+                })
+                .catch(() => loadFilesFromAutoindex());
+        }
+
+        // Legacy loader: parse an Apache-style directory listing from ./
+        function loadFilesFromAutoindex() {
+            fetch('.')
+                .then(response => response.text())
+                .then(data => {
+                    // Create a temporary DOM element to parse the HTML content
+                    let tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = data;
+
+                    // Get the list of files from the parsed HTML
+                    let fileList = Array.from(tempDiv.querySelectorAll('a')).reverse();
+
+                    allFiles = [];
+                    fileList.forEach(file => {
+                        const name = file.textContent;
+                        if (name.endsWith('.md') && name.includes('stats')) {
+                            allFiles.push({
+                                name: name,
+                                runNum: extractRunNum(name),
+                                metadata: metadataCache[name] || null
+                            });
+                        }
+                    });
+
+                    renderFileList(getCurrentGroupBy());
+                    loadAllMetadata();
+                })
+                .catch(error => console.error('Error loading files:', error));
+        }
+
+        function getCurrentGroupBy() {
+            const sel = document.getElementById('group-by');
+            return sel ? sel.value : 'none';
+        }
+
+        function onGroupByChange() {
+            // Different criterion → different group keys; throw away the
+            // expansion-state set so old keys can't accidentally match.
+            expandedGroups = new Set();
+            renderFileList(getCurrentGroupBy());
+        }
+
+        // Update the "Loaded N / M metadata" indicator.
+        function updateMetaProgress() {
+            const el = document.getElementById('meta-progress');
+            if (!el) return;
+            const total = allFiles.length;
+            if (total === 0) {
+                el.textContent = '';
+                return;
+            }
+            if (metaLoadedCount >= total) {
+                el.textContent = `Metadata: ${total} / ${total} loaded`;
+            } else {
+                el.textContent = `Loading metadata: ${metaLoadedCount} / ${total}`;
+            }
+        }
+
+        // Debounced re-render. While metadata streams in we batch DOM
+        // rebuilds so the UI stays interactive and the user's expansion
+        // state (preserved through `expandedGroups`) is not wiped on
+        // every fetch.
+        function scheduleRender() {
+            if (renderScheduled) return;
+            renderScheduled = true;
+            setTimeout(() => {
+                renderScheduled = false;
+                const gb = getCurrentGroupBy();
+                if (gb !== 'none' && gb !== 'date') {
+                    renderFileList(gb);
+                }
+                saveMetadataCache();
+            }, 1500);
+        }
+
+        // Kick off (or resume) background metadata loading via a Web
+        // Worker. The worker streams parsed-metadata messages back; the
+        // main thread only updates the cache and schedules a debounced
+        // re-render.
+        function loadAllMetadata() {
+            metaLoadedCount = allFiles.filter(f => f.metadata).length;
+            updateMetaProgress();
+
+            const todo = allFiles.filter(f => !f.metadata).map(f => f.name);
+            if (todo.length === 0) {
+                saveMetadataCache();
+                return;
+            }
+
+            // Tear down any previous worker (e.g. on hot reload).
+            if (metaWorker) {
+                try { metaWorker.terminate(); } catch (_) {}
+                metaWorker = null;
+            }
+
+            metaWorker = createMetaWorker();
+            if (!metaWorker) {
+                loadAllMetadataFallback(todo);
+                return;
+            }
+
+            const fileByName = new Map();
+            for (const f of allFiles) fileByName.set(f.name, f);
+
+            metaWorker.onmessage = (e) => {
+                const msg = e.data || {};
+                if (msg.type === 'meta') {
+                    const file = fileByName.get(msg.name);
+                    if (file) file.metadata = msg.metadata || {};
+                    metadataCache[msg.name] = msg.metadata || {};
+                    metaLoadedCount++;
+                    updateMetaProgress();
+                    scheduleRender();
+                } else if (msg.type === 'done') {
+                    try { metaWorker.terminate(); } catch (_) {}
+                    metaWorker = null;
+                    saveMetadataCache();
+                    updateMetaProgress();
+                    // One final render so all groups settle.
+                    const gb = getCurrentGroupBy();
+                    if (gb !== 'none' && gb !== 'date') {
+                        renderFileList(gb);
+                    }
+                }
+            };
+            metaWorker.onerror = (err) => {
+                console.warn('Meta worker error, falling back:', err.message || err);
+                try { metaWorker.terminate(); } catch (_) {}
+                metaWorker = null;
+                loadAllMetadataFallback(todo);
+            };
+
+            metaWorker.postMessage({ command: 'fetch', files: todo });
+        }
+
+        // Main-thread fallback used only when Web Workers are unavailable.
+        // Mirrors the worker logic (Range fetch + parseMetadata + debounce).
+        function loadAllMetadataFallback(names) {
+            const queue = names.slice();
+            const fileByName = new Map();
+            for (const f of allFiles) fileByName.set(f.name, f);
+            let active = 0;
+            const pump = () => {
+                while (active < META_CONCURRENCY && queue.length > 0) {
+                    const name = queue.shift();
+                    active++;
+                    fetch(name, { headers: { 'Range': 'bytes=0-' + (META_RANGE_BYTES - 1) } })
+                        .then(r => r.text())
+                        .then(body => {
+                            const meta = parseMetadata(body);
+                            const file = fileByName.get(name);
+                            if (file) file.metadata = meta;
+                            metadataCache[name] = meta;
+                            metaLoadedCount++;
+                            updateMetaProgress();
+                            scheduleRender();
+                        })
+                        .catch(() => {
+                            const file = fileByName.get(name);
+                            if (file) file.metadata = {};
+                            metadataCache[name] = {};
+                            metaLoadedCount++;
+                            updateMetaProgress();
+                            scheduleRender();
+                        })
+                        .finally(() => {
+                            active--;
+                            if (queue.length === 0 && active === 0) {
+                                saveMetadataCache();
+                                const gb = getCurrentGroupBy();
+                                if (gb !== 'none' && gb !== 'date') {
+                                    renderFileList(gb);
+                                }
+                            }
+                            pump();
+                        });
+                }
+            };
+            pump();
+        }
+
+        // Compute the group key for a file given the current criterion.
+        // Returns an object { key, label } so the UI can show a friendlier name.
+        function groupKeyFor(file, criterion) {
+            const meta = file.metadata || {};
+            const unknown = { key: '__unknown__', label: '(unknown)' };
+            switch (criterion) {
+                case 'date': {
+                    // Bucket the run number in chunks of 50.
+                    if (file.runNum === null || file.runNum === undefined) return unknown;
+                    const lo = Math.floor(file.runNum / 50) * 50;
+                    const hi = lo + 49;
+                    const pad = n => String(n).padStart(4, '0');
+                    const key = `runs-${pad(lo)}-${pad(hi)}`;
+                    return { key, label: `Runs ${pad(lo)}\u2013${pad(hi)}`, sort: -lo };
+                }
+                case 'repo': {
+                    if (!meta.repo) return unknown;
+                    // Normalize trailing whitespace; strip a trailing .git if any.
+                    const v = meta.repo.replace(/\.git$/, '').trim();
+                    return { key: v, label: v };
+                }
+                case 'inputs': {
+                    if (!meta.inputs) return unknown;
+                    let v = meta.inputs.trim();
+                    // Strip URL query string for readability.
+                    const q = v.indexOf('?');
+                    if (q >= 0) v = v.substring(0, q);
+                    // Strip leading "inputs/" prefix.
+                    v = v.replace(/^inputs\//, '');
+                    return { key: v, label: v };
+                }
+                case 'branch': {
+                    if (!meta.branch) return unknown;
+                    const v = meta.branch.trim();
+                    return { key: v, label: v };
+                }
+                case 'runner': {
+                    if (!meta.runner) return unknown;
+                    const v = meta.runner.trim();
+                    return { key: v, label: v };
+                }
+                case 'commit': {
+                    if (!meta.commit) return unknown;
+                    const v = meta.commit.trim().substring(0, 8);
+                    return { key: v, label: v };
+                }
+                default:
+                    return { key: '__all__', label: 'All' };
+            }
+        }
+
+        // Group files according to the criterion. Returns an array of
+        // { key, label, files } in display order.
+        function groupFiles(criterion) {
+            const groups = new Map(); // key -> {key,label,sort,files}
+            allFiles.forEach(file => {
+                const gk = groupKeyFor(file, criterion);
+                if (!groups.has(gk.key)) {
+                    groups.set(gk.key, { key: gk.key, label: gk.label, sort: gk.sort, files: [] });
+                }
+                groups.get(gk.key).files.push(file);
+            });
+            const arr = Array.from(groups.values());
+            arr.sort((a, b) => {
+                // Unknown bucket always last.
+                if (a.key === '__unknown__') return 1;
+                if (b.key === '__unknown__') return -1;
+                if (criterion === 'date') {
+                    // Newer (higher run numbers) first. `sort` is -lo, so smaller (more negative for larger lo) first.
+                    return (a.sort ?? 0) - (b.sort ?? 0);
+                }
+                return a.label.localeCompare(b.label);
+            });
+            return arr;
+        }
+
+        // Build a single <li> for a file entry.
+        function buildFileLi(file) {
+            const li = document.createElement('li');
+            const cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.name = 'file';
+            cb.value = file.name;
+            cb.onclick = checkSelection;
+            li.appendChild(cb);
+            li.appendChild(document.createTextNode(file.name));
+            return li;
+        }
+
+        // Render the file-list DOM from the model.
+        function renderFileList(criterion) {
+            const ul = document.getElementById('file-list');
+            if (!ul) return;
+
+            // Remember which file checkboxes are currently checked so we can
+            // preserve selection across re-renders.
+            const checked = new Set(
+                Array.from(document.querySelectorAll('#file-list input[name="file"]:checked'))
+                    .map(cb => cb.value)
+            );
+
+            // Remember the user's scroll position in the list and any
+            // search state so a metadata-driven re-render doesn't yank
+            // them away from what they were looking at.
+            const container = document.getElementById('file-list-container');
+            const scrollTop = container ? container.scrollTop : 0;
+            const prevSearchTerm = (document.getElementById('search-input') || {}).value || '';
+
+            ul.innerHTML = '';
+
+            // Reset search state — the DOM nodes the previous search referenced are gone.
+            matches = [];
+            currentMatchIndex = -1;
+
+            if (criterion === 'none') {
+                allFiles.forEach(file => {
+                    const li = buildFileLi(file);
+                    if (checked.has(file.name)) {
+                        li.querySelector('input').checked = true;
+                    }
+                    ul.appendChild(li);
+                });
+                lastGroupCriterion = criterion;
+                if (container) container.scrollTop = scrollTop;
+                if (prevSearchTerm) findFiles();
+                return;
+            }
+
+            const groups = groupFiles(criterion);
+            groups.forEach(group => {
+                const li = document.createElement('li');
+                li.className = 'group';
+                li.dataset.key = group.key;
+
+                const header = document.createElement('span');
+                header.className = 'group-header';
+                // Decide initial expansion: respect what the user opened
+                // earlier, and auto-expand a group containing a selected file.
+                let expand = expandedGroups.has(group.key);
+                if (!expand) {
+                    for (const f of group.files) {
+                        if (checked.has(f.name)) { expand = true; break; }
+                    }
+                }
+                const caretChar = expand ? '\u25BC' : '\u25B6';
+                header.innerHTML = `<span class="caret">${caretChar}</span> ${escapeHtml(group.label)} (${group.files.length})`;
+                header.onclick = () => toggleGroup(li);
+                li.appendChild(header);
+
+                const childUl = document.createElement('ul');
+                childUl.className = 'group-children';
+                childUl.hidden = !expand;
+                group.files.forEach(file => {
+                    const childLi = buildFileLi(file);
+                    if (checked.has(file.name)) {
+                        childLi.querySelector('input').checked = true;
+                    }
+                    childUl.appendChild(childLi);
+                });
+                li.appendChild(childUl);
+                ul.appendChild(li);
+            });
+
+            lastGroupCriterion = criterion;
+            if (container) container.scrollTop = scrollTop;
+            // Re-apply any active search so highlights survive re-render.
+            if (prevSearchTerm) findFiles();
+        }
+
+        function escapeHtml(s) {
+            return String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function toggleGroup(groupLi) {
+            const child = groupLi.querySelector('.group-children');
+            const caret = groupLi.querySelector('.caret');
+            if (!child) return;
+            child.hidden = !child.hidden;
+            const key = groupLi.dataset.key;
+            if (child.hidden) {
+                if (key) expandedGroups.delete(key);
+                if (caret) caret.textContent = '\u25B6';
+            } else {
+                if (key) expandedGroups.add(key);
+                if (caret) caret.textContent = '\u25BC';
+            }
+        }
+
+        function expandAllGroups() {
+            document.querySelectorAll('#file-list li.group').forEach(li => {
+                const child = li.querySelector('.group-children');
+                const caret = li.querySelector('.caret');
+                if (child) child.hidden = false;
+                if (caret) caret.textContent = '\u25BC';
+                if (li.dataset.key) expandedGroups.add(li.dataset.key);
+            });
+        }
+
+        function collapseAllGroups() {
+            document.querySelectorAll('#file-list li.group').forEach(li => {
+                const child = li.querySelector('.group-children');
+                const caret = li.querySelector('.caret');
+                if (child) child.hidden = true;
+                if (caret) caret.textContent = '\u25B6';
+            });
+            expandedGroups = new Set();
+        }
+
+        // Ensure a file <li> is visible (auto-expand its ancestor group, if any).
+        function revealItem(li) {
+            let node = li.parentElement;
+            while (node && node.id !== 'file-list') {
+                if (node.classList && node.classList.contains('group-children')) {
+                    node.hidden = false;
+                    const groupLi = node.parentElement;
+                    if (groupLi) {
+                        const caret = groupLi.querySelector('.caret');
+                        if (caret) caret.textContent = '\u25BC';
+                    }
+                }
+                node = node.parentElement;
+            }
+        }
+
+
+        // Function to check the selection of radio buttons
+        function checkSelection() {
+            let selectedFiles = document.querySelectorAll('input[name="file"]:checked');
+
+            if (selectedFiles.length === 1) {
+                let file = selectedFiles[0].value;
+                displayFile(file);
+            } else if (selectedFiles.length === 2) {
+                let file1 = selectedFiles[0].value;
+                let file2 = selectedFiles[1].value;
+                compareFiles(file1, file2);
+            } else {
+                document.getElementById('message').textContent = '';
+            }
+        }
+
+        function displayFile(file) {
+            fetch(file)
+                .then(res => res.text())
+                .then(content => {
+                    if (chartInstance) {
+                        chartInstance.destroy();
+                        chartInstance = null;
+                    }
+                    let stats = extractStats(content);
+                    let summary = summarizeFile(file, stats);
+
+                    // Display the summary in HTML format
+                    document.getElementById('message').innerHTML = summary;
+                })
+                .catch(error => console.error('Error displaying file:', error));
+        }
+
+        // Function to summarize the contents of a file
+        function summarizeFile(file, s) {
+            let meta = s.meta;
+            let stats = s.stats;
+            let result = '<h2>File Summary</h2>';
+
+            result += '<pre>';
+            result += file;
+            result += "\n";
+            result += meta;
+            result += '</pre>';
+
+            result += showAggregates(stats);
+
+            window.currentSummaryTableData = Object.keys(stats).map(file => ({
+                file: file,
+                stat: stats[file] || {}
+            }));
+            window.currentSummaryPage = 0;
+            result += '<div id="summaryTableContainer">';
+            result += renderSummaryTable();
+            result += '</div>';
+            return result;
+        }
+
+
+        function compareFiles(file1, file2) {
+            Promise.all([fetch(file1).then(res => res.text()), fetch(file2).then(res => res.text())])
+                .then(contents => {
+                    let content1 = contents[0];
+                    let content2 = contents[1];
+
+                    let stats1 = extractStats(content1);
+                    let stats2 = extractStats(content2);
+
+                    let comparisonResult = displayStats(file1, stats1, file2, stats2);
+
+                    // Display the comparison result in HTML format
+                    document.getElementById('message').innerHTML = comparisonResult;
+                    plotStats(file1, file2, stats1.stats, stats2.stats);
+                })
+                .catch(error => console.error('Error comparing files:', error));
+        }
+
+        // Function to parse time from a string
+        function parseTime(s) {
+            const match = s.match(/(\d+(\.\d+)?)s/);
+            return match ? parseFloat(match[1]) : null;
+        }
+
+        function humanize(s) {
+            return s;
+        }
+
+        // Function to parse memory from a string
+        function parseMem(s) {
+            const match = s.match(/(\d+)(\w+)/);
+            if (!match) return null;
+
+            let mem = parseInt(match[1], 10);
+            const memU = match[2];
+
+            switch (memU) {
+                case 'KiB':
+                    mem *= 1000;
+                    break;
+                case 'MiB':
+                    mem *= 1000000;
+                    break;
+                case 'GiB':
+                    mem *= 1000000000;
+                    break;
+            }
+            return mem;
+        }
+
+        // Map Z3 exit codes to human-readable labels (from error_codes.h)
+        const Z3_EXIT_CODES = {
+            0:   'ok',
+            101: 'memout',
+            102: 'timeout',
+            103: 'parser',
+            104: 'unsoundness',
+            105: 'incompleteness',
+            106: 'ini-file',
+            107: 'not-implemented',
+            108: 'open-file',
+            109: 'cmd-line',
+            110: 'internal-fatal',
+            111: 'type-check',
+            112: 'unknown-result',
+            113: 'alloc-exceeded',
+            114: 'unreachable',
+        };
+
+        // Map Linux signal-based exit codes (128 + signal)
+        const SIGNAL_CODES = {
+            134: 'abort',       // SIGABRT (128+6)
+            136: 'fpe',         // SIGFPE (128+8)
+            137: 'killed',      // SIGKILL (128+9)
+            139: 'segfault',    // SIGSEGV (128+11)
+            141: 'broken-pipe', // SIGPIPE (128+13)
+            143: 'terminated',  // SIGTERM (128+15)
+        };
+
+        // Resolve a meaningful status label from the raw status and exit code
+        function resolveStatus(rawStatus, rc) {
+            // If the solver produced a recognized result, keep it
+            if (rawStatus === 'sat' || rawStatus === 'unsat' ||
+                rawStatus === 'timeout' || rawStatus === 'unknown') {
+                return rawStatus;
+            }
+            // Otherwise, derive a label from the exit code
+            if (rc in Z3_EXIT_CODES) {
+                return Z3_EXIT_CODES[rc];
+            }
+            if (rc in SIGNAL_CODES) {
+                return SIGNAL_CODES[rc];
+            }
+            if (rc === -1) {
+                return 'not-run';
+            }
+            if (rc === 123) {
+                return 'parse-skip';
+            }
+            if (rc === 124) {
+                return 'wall-timeout';
+            }
+            if (rc > 128 && rc < 192) {
+                return `signal-${rc - 128}`;
+            }
+            if (rc !== 0) {
+                return `error-${rc}`;
+            }
+            return 'error';
+        }
+
+        // Function to extract stats from a line
+        function extractStatsFromLine(stats, line) {
+            const fields = line.split('|').map(field => field.trim()).filter(field => field.length > 0);
+            if (fields.length === 0 || !fields[0].endsWith('smt2')) {
+                return;
+            }
+
+            const file = fields[0];
+            const time = fields[1];
+            const mb = fields[2];
+            const rawStatus = fields[3];
+            const code = fields[4];
+            const rc = parseInt(code, 10);
+
+            const st = {
+                file: file,
+                status: resolveStatus(rawStatus, rc),
+                time: parseTime(time),
+                rc: rc,
+                mem: parseMem(mb)
+            };
+
+            stats[file] = st;
+        }
+
+        // Function to extract stats from a file
+        function extractStats(text) {
+            const stats = {};
+            let meta = "";
+            let inPre = false;
+            // Truncate the "Z3 commit message: ..." section to at most 2 lines
+            // (subject + first body line) so long commit messages don't break
+            // the side-by-side layout when comparing two runs.
+            const COMMIT_PREFIX = 'Z3 commit message:';
+            const MAX_COMMIT_LINES = 2;
+            let commitLineCount = 0;
+            let droppedCommitLines = 0;
+
+            const lines = text.split('\n');
+
+            for (const line of lines) {
+                if (line.startsWith('<pre>')) {
+                    inPre = true;
+                    continue;
+                }
+                if (line.startsWith('</pre>')) {
+                    inPre = false;
+                    continue;
+                }
+                if (inPre) {
+                    if (commitLineCount > 0) {
+                        if (commitLineCount < MAX_COMMIT_LINES) {
+                            meta += line;
+                            meta += '\n';
+                            commitLineCount++;
+                        } else {
+                            droppedCommitLines++;
+                        }
+                        continue;
+                    }
+                    if (line.startsWith(COMMIT_PREFIX)) {
+                        meta += line;
+                        meta += '\n';
+                        commitLineCount = 1;
+                        continue;
+                    }
+                    meta += line;
+                    meta += '\n';
+                    continue;
+                }
+                extractStatsFromLine(stats, line);
+            }
+
+            if (droppedCommitLines > 0) {
+                meta += `... (${droppedCommitLines} more line${droppedCommitLines === 1 ? '' : 's'} of commit message truncated)\n`;
+            }
+
+            return { meta, stats };
+        }
+
+
+        // Function to show aggregate statistics
+        function showAggregates(stats) {
+            let numSat = 0;
+            let numUnsat = 0;
+            let numTimeout = 0;
+            let numUnknown = 0;
+            let numErr = 0;
+            const errorBreakdown = {};
+
+            for (const s of Object.values(stats)) {
+                if (s.rc !== 0) {
+                    numErr += 1;
+                }
+                switch (s.status) {
+                    case 'sat':
+                        numSat += 1;
+                        break;
+                    case 'unsat':
+                        numUnsat += 1;
+                        break;
+                    case 'timeout':
+                        numTimeout += 1;
+                        break;
+                    case 'unknown':
+                        numUnknown += 1;
+                        break;
+                    default:
+                        errorBreakdown[s.status] = (errorBreakdown[s.status] || 0) + 1;
+                        break;
+                }
+            }
+
+            const numSolved = numSat + numUnsat;
+
+            let result = '<h2>Aggregates</h2>';
+            result += `<ul>`;
+            result += `<li>solved: ${numSolved} (SAT: ${numSat}, UNSAT: ${numUnsat})</li>`;
+            result += `<li>timeout: ${numTimeout}</li>`;
+            result += `<li>UNKNOWN: ${numUnknown}</li>`;
+            const totalErrors = Object.values(errorBreakdown).reduce((a, b) => a + b, 0);
+            if (totalErrors > 0) {
+                const breakdown = Object.entries(errorBreakdown)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([label, count]) => `${label}:${count}`)
+                    .join(', ');
+                result += `<li>errors: ${totalErrors} (${breakdown})</li>`;
+            }
+            result += `</ul>`;
+
+            return result;
+        }
+
+        // Function to show unique aggregates
+        function showUniqueAggregates(stats1, stats2) {
+            let numSat = 0;
+            let numUnsat = 0;
+            let numTimeout = 0;
+            let numUnknown = 0;
+            let numUnset = 0;
+
+            for (const n in stats1) {
+                const s = stats1[n];
+                if (!(n in stats2)) {
+                    continue;
+                }
+                const s2 = stats2[n];
+                if (s.status === s2.status) {
+                    continue;
+                }
+                switch (s.status) {
+                    case 'sat':
+                        numSat += 1;
+                        break;
+                    case 'unsat':
+                        numUnsat += 1;
+                        break;
+                    case 'timeout':
+                        numTimeout += 1;
+                        break;
+                    case 'unknown':
+                        numUnknown += 1;
+                        break;
+                    default:
+                        numUnset += 1;
+                        break;
+                }
+            }
+
+            let result = '<h2>Unique Aggregates</h2>';
+            result += `<ul>`;
+            result += `<li>Unique SAT: ${numSat}</li>`;
+            result += `<li>Unique UNSAT: ${numUnsat}</li>`;
+            result += `<li>Unique TIMEOUT: ${numTimeout}</li>`;
+            result += `<li>Unique UNKNOWN: ${numUnknown}</li>`;
+            result += `<li>Unique UNSET: ${numUnset}</li>`;
+            result += `</ul>`;
+
+            return result;
+        }
+
+        function showSpeedup(stats1, stats2, file1, file2) {
+            let sum_of_speedups = 0;
+            let num_speedups = 0;
+            let sum_time1 = 0;
+            let sum_time2 = 0;
+
+            for (const n in stats1) {
+                const s1 = stats1[n];
+                if (!(n in stats2)) {
+                    continue;
+                }
+                const s2 = stats2[n];
+                if (s1.status !== s2.status || s1.status == 'timeout' || s1.status == 'unknown') {
+                    continue;
+                }
+                if (s1.time <= 1 && s2.time <= 1) {
+                    continue;
+                }
+
+
+                // s1.time 20 secs, s2 time 10 secs : speedup = 2 
+                // the second job is 2 times faster than the first one.
+                sum_time1 += s1.time;
+                sum_time2 += s2.time;
+                num_speedups += 1;
+            }
+            if (num_speedups === 0) {
+                return '';
+            }
+
+            if (sum_time1 > sum_time2) {
+                sum_of_speedups = sum_time1 / sum_time2;
+            }
+            else {
+                sum_of_speedups = sum_time2 /sum_time1;
+                let file = file1;
+                file1 = file2;
+                file2 = file;
+            }
+
+            const avgFactor = sum_of_speedups.toFixed(2);
+
+            let result = '<h2>Speedup</h2>';
+            result += `<ul>`;
+            // Show in natural language format with file names
+            result += `<li>${file2} is ${avgFactor} faster than ${file1}</li>`;
+            result += `</ul>`;
+            return result;
+        }
+
+        let chartInstance = null;
+        const TABLE_PAGE_SIZE = 200;
+
+        const DEFAULT_TIMEOUT = 10; // seconds, used when no timeout can be inferred from data
+        const PAR2_PENALTY_FACTOR = 2; // penalty multiplier for unsolved instances in Par2 scoring
+
+        // Infer the timeout limit from the max time seen across all entries
+        function inferTimeout(stats) {
+            let maxTime = 0;
+            for (const s of Object.values(stats)) {
+                if (s.time !== null && s.time > maxTime) {
+                    maxTime = s.time;
+                }
+            }
+            return maxTime > 0 ? maxTime : DEFAULT_TIMEOUT;
+        }
+
+        // Compute Par2 score: solved instances count actual time,
+        // unsolved instances count PAR2_PENALTY_FACTOR × timeout as penalty.
+        function computePar2Score(stats, timeoutValue) {
+            let par2 = 0;
+            for (const s of Object.values(stats)) {
+                if (s.time === null) continue;
+                if (s.status === 'sat' || s.status === 'unsat') {
+                    par2 += s.time;
+                } else {
+                    par2 += PAR2_PENALTY_FACTOR * timeoutValue;
+                }
+            }
+            return par2;
+        }
+
+        // Display Par2 scores for both result sets
+        function showPar2(stats1, stats2, file1, file2) {
+            const timeoutValue = Math.max(inferTimeout(stats1), inferTimeout(stats2));
+            const par2_1 = computePar2Score(stats1, timeoutValue);
+            const par2_2 = computePar2Score(stats2, timeoutValue);
+
+            let result = '<h2>Par2 Score</h2>';
+            result += `<p><em>Timeout estimate used: ${timeoutValue.toFixed(1)}s</em></p>`;
+            result += '<ul>';
+            result += `<li>${file1}: ${par2_1.toFixed(2)}</li>`;
+            result += `<li>${file2}: ${par2_2.toFixed(2)}</li>`;
+            if (par2_1 < par2_2) {
+                result += `<li>${file1} has a better (lower) Par2 score</li>`;
+            } else if (par2_2 < par2_1) {
+                result += `<li>${file2} has a better (lower) Par2 score</li>`;
+            } else {
+                result += '<li>Both have equal Par2 scores</li>';
+            }
+            result += '</ul>';
+            return result;
+        }
+
+        // Display Par2 scores for both result sets
+        function showPar2(stats1, stats2, file1, file2) {
+            const timeoutValue = Math.max(inferTimeout(stats1), inferTimeout(stats2));
+            const par2_1 = computePar2Score(stats1, timeoutValue);
+            const par2_2 = computePar2Score(stats2, timeoutValue);
+
+            let result = '<h2>Par2 Score</h2>';
+            result += `<p><em>Timeout estimate used: ${timeoutValue.toFixed(1)}s</em></p>`;
+            result += '<ul>';
+            result += `<li>${file1}: ${par2_1.toFixed(2)}</li>`;
+            result += `<li>${file2}: ${par2_2.toFixed(2)}</li>`;
+            if (par2_1 < par2_2) {
+                result += `<li>${file1} has a better (lower) Par2 score</li>`;
+            } else if (par2_2 < par2_1) {
+                result += `<li>${file2} has a better (lower) Par2 score</li>`;
+            } else {
+                result += '<li>Both have equal Par2 scores</li>';
+            }
+            result += '</ul>';
+            return result;
+        }
+
+        // Function to plot statistics using Chart.js
+        function plotStats(file1, file2, s1, s2) {
+            const canvasId = 'statsChart';
+
+            const satLabels = [], satPoints = [];
+            const unsatLabels = [], unsatPoints = [];
+            const otherLabels = [], otherPoints = [];
+
+            const FALLBACK_FLOOR = 0.01;
+            let dataMax = FALLBACK_FLOOR;
+            let dataMin = Infinity;
+            const rawPairs = [];
+            for (const file in s1) {
+                if (s2.hasOwnProperty(file)) {
+                    const t1 = s1[file].time;
+                    const t2 = s2[file].time;
+                    if (t1 != null && t1 > dataMax) dataMax = t1;
+                    if (t2 != null && t2 > dataMax) dataMax = t2;
+                    if (t1 != null && t1 > 0 && t1 < dataMin) dataMin = t1;
+                    if (t2 != null && t2 > 0 && t2 < dataMin) dataMin = t2;
+                    rawPairs.push({ file, t1, t2 });
+                }
+            }
+            const dynamicFloor = isFinite(dataMin)
+                ? Math.pow(10, Math.floor(Math.log10(dataMin)))
+                : FALLBACK_FLOOR;
+            for (const { file, t1, t2 } of rawPairs) {
+                const point = {
+                    x: (t1 != null && t1 > dynamicFloor) ? t1 : dynamicFloor,
+                    y: (t2 != null && t2 > dynamicFloor) ? t2 : dynamicFloor,
+                    origX: t1,
+                    origY: t2
+                };
+                const status1 = s1[file].status;
+                const status2 = s2[file].status;
+                if (status1 == 'bug' || status2 == 'bug') {
+                    otherPoints.push(point);
+                    otherLabels.push(file);
+                } else if (status1 === 'sat' || status2 == 'sat') {
+                    satPoints.push(point);
+                    satLabels.push(file);
+                } else if (status1 === 'unsat' || status2 == 'unsat') {
+                    unsatPoints.push(point);
+                    unsatLabels.push(file);
+                } else {
+                    otherPoints.push(point);
+                    otherLabels.push(file);
+                }
+            }
+            const axisMax = Math.pow(10, Math.ceil(Math.log10(Math.max(dataMax, dynamicFloor * 10))));
+
+            // Destroy existing chart instance if it exists
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            // Set specific dimensions for the canvas
+            const canvas = document.getElementById(canvasId);
+            canvas.style.maxWidth = '600px';
+            canvas.style.maxHeight = '600px';
+
+            const ctx = canvas.getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [
+                        {
+                            label: 'SAT',
+                            data: satPoints,
+                            labels: satLabels,
+                            backgroundColor: 'rgba(0, 130, 0, 0.5)',
+                            borderColor: 'rgba(0, 130, 0, 0.5)',
+                            pointStyle: 'circle',
+                            pointRadius: 0.75,
+                            pointHoverRadius: 5,
+                            borderWidth: 0
+                        },
+                        {
+                            label: 'UNSAT',
+                            data: unsatPoints,
+                            labels: unsatLabels,
+                            backgroundColor: 'rgba(180, 0, 0, 0.5)',
+                            borderColor: 'rgba(180, 0, 0, 0.5)',
+                            pointStyle: 'circle',
+                            pointRadius: 0.75,
+                            pointHoverRadius: 6,
+                            borderWidth: 0
+                        },
+                        {
+                            label: 'Other',
+                            data: otherPoints,
+                            labels: otherLabels,
+                            backgroundColor: 'rgba(110, 110, 110, 0.5)',
+                            borderColor: 'rgba(110, 110, 110, 0.5)',
+                            pointStyle: 'circle',
+                            pointRadius: 0.75,
+                            pointHoverRadius: 5,
+                            borderWidth: 0
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    aspectRatio: 1,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const ds = context.dataset;
+                                    const label = ds.labels ? ds.labels[context.dataIndex] : '';
+                                    const raw = context.raw || {};
+                                    const fmt = v => v == null ? 'n/a'
+                                        : (typeof v === 'number' ? v.toFixed(3) : v);
+                                    const x = raw.origX !== undefined ? raw.origX : context.parsed.x;
+                                    const y = raw.origY !== undefined ? raw.origY : context.parsed.y;
+                                    return `${label} (${fmt(x)}, ${fmt(y)})`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'logarithmic',
+                            position: 'bottom',
+                            min: dynamicFloor,
+                            max: axisMax,
+                            title: {
+                                display: true,
+                                text: file1
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    const log = Math.log10(value);
+                                    if (Math.abs(log - Math.round(log)) < 1e-9) {
+                                        return '10^' + Math.round(log);
+                                    }
+                                    return '';
+                                }
+                            }
+                        },
+                        y: {
+                            type: 'logarithmic',
+                            min: dynamicFloor,
+                            max: axisMax,
+                            title: {
+                                display: true,
+                                text: file2
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    const log = Math.log10(value);
+                                    if (Math.abs(log - Math.round(log)) < 1e-9) {
+                                        return '10^' + Math.round(log);
+                                    }
+                                    return '';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+
+        function displayStats(file1, s1, file2, s2) {
+            let meta1 = s1.meta
+            let stats1 = s1.stats
+            let meta2 = s2.meta
+            let stats2 = s2.stats
+
+            let result = '';
+
+            // Create a side-by-side container
+            result += '<div style="display: flex; gap: 20px; margin-bottom: 20px;">';
+
+            // Left column - older job
+            result += '<div style="flex: 1;">';
+            result += '<h3>' + file1 + '</h3>';
+            result += '<pre>';
+            result += meta1;
+            result += '</pre>';
+            result += showAggregates(stats1);
+            result += showUniqueAggregates(stats1, stats2);
+            result += '</div>';
+
+            // Right column - newer job
+            result += '<div style="flex: 1;">';
+            result += '<h3>' + file2 + '</h3>';
+            result += '<pre>';
+            result += meta2;
+            result += '</pre>';
+            result += showAggregates(stats2);
+            result += showUniqueAggregates(stats2, stats1);
+            result += '</div>';
+
+            result += '</div>'; // Close the flex container
+
+            // Show speedup info below both columns
+            result += showSpeedup(stats1, stats2, file1, file2);
+
+            // Show Par2 scores
+            result += showPar2(stats1, stats2, file1, file2);
+
+            // Add the comparison table
+            const allFiles = new Set([...Object.keys(stats1), ...Object.keys(stats2)]);
+
+            // Create data array for sorting
+            const tableData = [];
+            allFiles.forEach(file => {
+                const stat1 = stats1[file] || {};
+                const stat2 = stats2[file] || {};
+                const timeDiff = (stat1.time !== undefined && stat2.time !== undefined) 
+                    ? stat1.time - stat2.time 
+                    : null;
+                
+                tableData.push({
+                    file: file,
+                    stat1: stat1,
+                    stat2: stat2,
+                    timeDiff: timeDiff
+                });
+            });
+
+            let sort_diff = '<button onclick="sortTableByTimeDiff()" style="padding: 5px 10px;">Sort</button>';
+            let sort_file = '<button onclick="sortTableByFile()" style="padding: 5px 10px; margin-left: 5px;">Sort</button>';
+            let sort_time1 = '<button onclick="sortTableByTime1()" style="padding: 5px 10px; margin-left: 5px;">Sort</button>';
+            let sort_time2 = '<button onclick="sortTableByTime2()" style="padding: 5px 10px; margin-left: 5px;">Sort</button>';
+            let sort_mem1 = '<button onclick="sortTableByMem1()" style="padding: 5px 10px; margin-left: 5px;">Sort</button>';
+            let sort_mem2 = '<button onclick="sortTableByMem2()" style="padding: 5px 10px; margin-left: 5px;">Sort</button>';
+
+
+
+            // Store data globally for sorting
+            window.currentTableData = tableData;
+            window.currentComparisonPage = 0;
+
+            result += '<div id="comparisonTableContainer">';
+            result += renderComparisonTable(sort_file, sort_time1, sort_mem1, sort_time2, sort_mem2, sort_diff);
+            result += '</div>';
+            return result;
+        }
+
+        // Function to generate table rows from data array
+        function generateTableRows(tableData) {
+            let rows = '';
+            tableData.forEach(item => {
+                const stat1 = item.stat1;
+                const stat2 = item.stat2;
+                const timeDiff = item.timeDiff;
+
+                rows += '<tr>';
+                rows += `<td>${item.file}</td>`;
+                rows += `<td>${stat1.status || ''}</td>`;
+                rows += `<td>${stat1.time !== undefined ? stat1.time + 's' : ''}</td>`;
+                rows += `<td>${stat1.mem !== undefined ? (stat1.mem) : ''}</td>`;
+                rows += `<td>${stat2.status || ''}</td>`;
+                rows += `<td>${stat2.time !== undefined ? stat2.time + 's' : ''}</td>`;
+                rows += `<td>${stat2.mem !== undefined ? (stat2.mem) : ''}</td>`;
+                rows += `<td>${timeDiff !== null ? timeDiff.toFixed(3) : ''}</td>`;
+                rows += '</tr>';
+            });
+            return rows;
+        }
+
+        function renderTableControls(kind, totalRows, page, pageCount) {
+            const start = totalRows === 0 ? 0 : (page * TABLE_PAGE_SIZE) + 1;
+            const end = Math.min(totalRows, (page + 1) * TABLE_PAGE_SIZE);
+            const prevDisabled = page <= 0 ? 'disabled' : '';
+            const nextDisabled = page >= pageCount - 1 ? 'disabled' : '';
+            return `<div class="table-controls">` +
+                `<span>Rows ${start}-${end} of ${totalRows}</span>` +
+                `<button onclick="changeTablePage('${kind}', -1)" ${prevDisabled}>Previous page</button>` +
+                `<button onclick="changeTablePage('${kind}', 1)" ${nextDisabled}>Next page</button>` +
+                `<span>Page ${page + 1} / ${pageCount}</span>` +
+                `</div>`;
+        }
+
+        function renderSummaryTable() {
+            const data = window.currentSummaryTableData || [];
+            const pageCount = Math.max(1, Math.ceil(data.length / TABLE_PAGE_SIZE));
+            const page = Math.min(window.currentSummaryPage || 0, pageCount - 1);
+            window.currentSummaryPage = page;
+            const start = page * TABLE_PAGE_SIZE;
+            const rows = data.slice(start, start + TABLE_PAGE_SIZE);
+
+            let result = renderTableControls('summary', data.length, page, pageCount);
+            result += '<table border="1" style="width: 100%;">';
+            result += '<tr><th>File</th><th>Status</th><th>Time</th><th>Memory</th><th>Return code</th></tr>';
+            rows.forEach(item => {
+                const stat = item.stat || {};
+                result += '<tr>';
+                result += `<td>${item.file}</td>`;
+                result += `<td>${stat.status || ''}</td>`;
+                result += `<td>${stat.time !== undefined ? stat.time + 's' : ''}</td>`;
+                result += `<td>${stat.mem !== undefined ? stat.mem : ''}</td>`;
+                result += `<td>${stat.rc !== undefined ? stat.rc : ''}</td>`;
+                result += '</tr>';
+            });
+            result += '</table>';
+            result += renderTableControls('summary', data.length, page, pageCount);
+            return result;
+        }
+
+        function renderComparisonTable(sort_file, sort_time1, sort_mem1, sort_time2, sort_mem2, sort_diff) {
+            const data = window.currentTableData || [];
+            const pageCount = Math.max(1, Math.ceil(data.length / TABLE_PAGE_SIZE));
+            const page = Math.min(window.currentComparisonPage || 0, pageCount - 1);
+            window.currentComparisonPage = page;
+            const start = page * TABLE_PAGE_SIZE;
+            const pageData = data.slice(start, start + TABLE_PAGE_SIZE);
+
+            let result = renderTableControls('comparison', data.length, page, pageCount);
+            result += '<table border="1" style="width: 100%;" id="comparisonTable">';
+            result += '<tr><th>File</th><th>Status 1</th><th>Time 1</th><th>Memory 1</th><th>Status 2</th><th>Time 2</th><th>Memory 2</th><th>Time Diff (s)</th></tr>';
+            result += '<tr><th>' + sort_file + '</th><th>  </th><th>' + sort_time1 + '</th><th>' + sort_mem1 + '</th><th> </th><th>' + sort_time2 + '</th><th>' + sort_mem2 + '</th><th>' + sort_diff + '</th></tr>';
+            result += generateTableRows(pageData);
+            result += '</table>';
+            result += renderTableControls('comparison', data.length, page, pageCount);
+            return result;
+        }
+
+        function changeTablePage(kind, delta) {
+            if (kind === 'summary') {
+                const data = window.currentSummaryTableData || [];
+                const pageCount = Math.max(1, Math.ceil(data.length / TABLE_PAGE_SIZE));
+                window.currentSummaryPage = Math.max(0, Math.min((window.currentSummaryPage || 0) + delta, pageCount - 1));
+                updateSummaryTable();
+                return;
+            }
+            if (kind === 'comparison') {
+                const data = window.currentTableData || [];
+                const pageCount = Math.max(1, Math.ceil(data.length / TABLE_PAGE_SIZE));
+                window.currentComparisonPage = Math.max(0, Math.min((window.currentComparisonPage || 0) + delta, pageCount - 1));
+                updateComparisonTable();
+            }
+        }
+
+        function updateSummaryTable() {
+            const container = document.getElementById('summaryTableContainer');
+            if (!container) return;
+            container.innerHTML = renderSummaryTable();
+        }
+
+        function updateComparisonTable() {
+            const container = document.getElementById('comparisonTableContainer');
+            if (!container) return;
+            let sort_diff = '<button onclick="sortTableByTimeDiff()" style="padding: 5px 10px;">Sort</button>';
+            let sort_file = '<button onclick="sortTableByFile()" style="padding: 5px 10px; margin-left: 5px;">Sort</button>';
+            let sort_time1 = '<button onclick="sortTableByTime1()" style="padding: 5px 10px; margin-left: 5px;">Sort</button>';
+            let sort_time2 = '<button onclick="sortTableByTime2()" style="padding: 5px 10px; margin-left: 5px;">Sort</button>';
+            let sort_mem1 = '<button onclick="sortTableByMem1()" style="padding: 5px 10px; margin-left: 5px;">Sort</button>';
+            let sort_mem2 = '<button onclick="sortTableByMem2()" style="padding: 5px 10px; margin-left: 5px;">Sort</button>';
+            container.innerHTML = renderComparisonTable(sort_file, sort_time1, sort_mem1, sort_time2, sort_mem2, sort_diff);
+        }
+
+        // Function to sort table by largest time difference
+        function sortTableByTimeDiff() {
+            if (!window.currentTableData) return;
+            
+            // Sort by time difference, alternating between descending and ascending
+            const sortedData = [...window.currentTableData].sort((a, b) => {
+                if (a.timeDiff === null && b.timeDiff === null) return 0;
+                if (a.timeDiff === null) return 1;
+                if (b.timeDiff === null) return -1;
+                
+                if (timeDiffSortDescending) {
+                    return b.timeDiff - a.timeDiff; // Descending order (largest first)
+                } else {
+                    return a.timeDiff - b.timeDiff; // Ascending order (smallest first)
+                }
+            });
+            
+            // Toggle sort direction for next call
+            timeDiffSortDescending = !timeDiffSortDescending;
+            window.currentTableData = sortedData;
+            window.currentComparisonPage = 0;
+            updateComparisonTable();
+        }
+
+        // Function to sort table by file name
+        function sortTableByFile() {
+            if (!window.currentTableData) return;
+            
+            // Sort by file name, alternating between descending and ascending
+            const sortedData = [...window.currentTableData].sort((a, b) => {
+                if (fileSortDescending) {
+                    return b.file.localeCompare(a.file); // Descending order (Z-A)
+                } else {
+                    return a.file.localeCompare(b.file); // Ascending order (A-Z)
+                }
+            });
+            
+            // Toggle sort direction for next call
+            fileSortDescending = !fileSortDescending;
+            window.currentTableData = sortedData;
+            window.currentComparisonPage = 0;
+            updateComparisonTable();
+        }
+
+        // Function to sort table by Time 1
+        function sortTableByTime1() {
+            if (!window.currentTableData) return;
+            
+            // Sort by Time 1, alternating between descending and ascending
+            const sortedData = [...window.currentTableData].sort((a, b) => {
+                const time1A = a.stat1.time;
+                const time1B = b.stat1.time;
+                
+                // Handle undefined/null values (put them at the end)
+                if (time1A === undefined && time1B === undefined) return 0;
+                if (time1A === undefined) return 1;
+                if (time1B === undefined) return -1;
+                
+                if (time1SortDescending) {
+                    return time1B - time1A; // Descending order (largest first)
+                } else {
+                    return time1A - time1B; // Ascending order (smallest first)
+                }
+            });
+            
+            // Toggle sort direction for next call
+            time1SortDescending = !time1SortDescending;
+            window.currentTableData = sortedData;
+            window.currentComparisonPage = 0;
+            updateComparisonTable();
+        }
+
+        // Function to sort table by Time 2
+        function sortTableByTime2() {
+            if (!window.currentTableData) return;
+            
+            // Sort by Time 2, alternating between descending and ascending
+            const sortedData = [...window.currentTableData].sort((a, b) => {
+                const time2A = a.stat2.time;
+                const time2B = b.stat2.time;
+                
+                // Handle undefined/null values (put them at the end)
+                if (time2A === undefined && time2B === undefined) return 0;
+                if (time2A === undefined) return 1;
+                if (time2B === undefined) return -1;
+                
+                if (time2SortDescending) {
+                    return time2B - time2A; // Descending order (largest first)
+                } else {
+                    return time2A - time2B; // Ascending order (smallest first)
+                }
+            });
+            
+            // Toggle sort direction for next call
+            time2SortDescending = !time2SortDescending;
+            window.currentTableData = sortedData;
+            window.currentComparisonPage = 0;
+            updateComparisonTable();
+        }
+
+        // Function to sort table by Memory 1
+        function sortTableByMem1() {
+            if (!window.currentTableData) return;
+            
+            // Sort by Memory 1, alternating between descending and ascending
+            const sortedData = [...window.currentTableData].sort((a, b) => {
+                const mem1A = a.stat1.mem;
+                const mem1B = b.stat1.mem;
+                
+                // Handle undefined/null values (put them at the end)
+                if (mem1A === undefined && mem1B === undefined) return 0;
+                if (mem1A === undefined) return 1;
+                if (mem1B === undefined) return -1;
+                
+                if (mem1SortDescending) {
+                    return mem1B - mem1A; // Descending order (largest first)
+                } else {
+                    return mem1A - mem1B; // Ascending order (smallest first)
+                }
+            });
+            
+            // Toggle sort direction for next call
+            mem1SortDescending = !mem1SortDescending;
+            window.currentTableData = sortedData;
+            window.currentComparisonPage = 0;
+            updateComparisonTable();
+        }
+
+        // Function to sort table by Memory 2
+        function sortTableByMem2() {
+            if (!window.currentTableData) return;
+            
+            // Sort by Memory 2, alternating between descending and ascending
+            const sortedData = [...window.currentTableData].sort((a, b) => {
+                const mem2A = a.stat2.mem;
+                const mem2B = b.stat2.mem;
+                
+                // Handle undefined/null values (put them at the end)
+                if (mem2A === undefined && mem2B === undefined) return 0;
+                if (mem2A === undefined) return 1;
+                if (mem2B === undefined) return -1;
+                
+                if (mem2SortDescending) {
+                    return mem2B - mem2A; // Descending order (largest first)
+                } else {
+                    return mem2A - mem2B; // Ascending order (smallest first)
+                }
+            });
+            
+            // Toggle sort direction for next call
+            mem2SortDescending = !mem2SortDescending;
+            window.currentTableData = sortedData;
+            window.currentComparisonPage = 0;
+            updateComparisonTable();
+        }
+
+        // Sort state tracking variables
+        let timeDiffSortDescending = true;
+        let fileSortDescending = true;
+        let time1SortDescending = true;
+        let time2SortDescending = true;
+        let mem1SortDescending = true;
+        let mem2SortDescending = true;
+
+        // Search functionality variables
+        let currentMatchIndex = -1;
+        let matches = [];
+
+        // Function to find matching files
+        function findFiles() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            if (!searchTerm) return;
+
+            // Remove all existing highlights
+            clearHighlights();
+
+            // Find new matches: only leaf file items (those with a checkbox).
+            matches = [];
+            const fileItems = document.querySelectorAll('#file-list li');
+
+            fileItems.forEach((item, index) => {
+                if (!item.querySelector(':scope > input[name="file"]')) return;
+                const fileName = item.textContent.toLowerCase();
+                if (fileName.includes(searchTerm)) {
+                    matches.push(item);
+                }
+            });
+
+            // If matches found, highlight the first one
+            if (matches.length > 0) {
+                currentMatchIndex = 0;
+                highlightMatch();
+            }
+        }
+
+        // Function to clear all highlights
+        function clearHighlights() {
+            document.querySelectorAll('.highlight, .current-highlight').forEach(el => {
+                el.classList.remove('highlight');
+                el.classList.remove('current-highlight');
+            });
+        }
+
+        // Function to highlight the current match
+        function highlightMatch() {
+            if (matches.length === 0 || currentMatchIndex < 0) return;
+
+            // Remove current highlight from all items
+            document.querySelectorAll('.current-highlight').forEach(el => {
+                el.classList.remove('current-highlight');
+            });
+
+            // Add highlight to current match
+            const currentMatch = matches[currentMatchIndex];
+            currentMatch.classList.add('current-highlight');
+
+            // Make sure the match is visible (auto-expand any collapsed ancestor group).
+            if (typeof revealItem === 'function') {
+                revealItem(currentMatch);
+            }
+
+            // Scroll the match into view
+            currentMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Function to find the next match
+        function findNext() {
+            if (matches.length === 0) {
+                findFiles();
+                return;
+            }
+
+            currentMatchIndex = (currentMatchIndex + 1) % matches.length;
+            highlightMatch();
+        }
+
+        // Function to find the previous match
+        function findPrevious() {
+            if (matches.length === 0) {
+                findFiles();
+                return;
+            }
+
+            currentMatchIndex = (currentMatchIndex - 1 + matches.length) % matches.length;
+            highlightMatch();
+        }
+
+        // Function to confirm deletion of selected files (now just opens the files in github)
+        function confirmDeletion() {
+            const selectedFiles = document.querySelectorAll('input[name="file"]:checked');
+            
+            if (selectedFiles.length === 0) {
+                alert('Please select at least one file to open in GitHub.');
+                return;
+            }
+            
+            const fileNames = Array.from(selectedFiles).map(checkbox => checkbox.value).join(', ');
+            
+            //if (confirm(`Are you sure you want to delete the following files?\n${fileNames}`)) {
+                deleteSelectedFiles(Array.from(selectedFiles).map(checkbox => checkbox.value));
+            //}
+        }
+        
+        // Function to delete the selected files. It just opens a link in github to delete
+        // the file in the repo.
+        function deleteSelectedFiles(fileNames) {
+            if (!fileNames.length) return;
+            
+            // Create a fetch request for each file deletion
+            //window.open("https://github.com/");
+            for (const file of fileNames) {
+              window.open("https://github.com/mtzguido/z3-ramon-results/blob/main/" + file, "_blank");
+            }
+        }
+
+        // Add event listener to reset search when input changes
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search-input');
+
+            searchInput.addEventListener('input', function () {
+                // Clear existing matches and highlights when typing
+                matches = [];
+                currentMatchIndex = -1;
+                clearHighlights();
+            });
+
+            // Keep the existing Enter key handler
+            searchInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    if (matches.length > 0) {
+                        findNext();
+                    } else {
+                        findFiles();
+                    }
+                }
+            });
+        });
+
+        // Load files when the page is loaded
+        window.onload = loadFiles;
+    </script>
+</body>
+
+</html>
