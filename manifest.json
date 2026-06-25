@@ -61,6 +61,7 @@
     "run-0058-regex-equivalence-derive-stats.md",
     "run-0059-regex-equivalence-derive-with-ranges-stats.md",
     "run-0060-lia_w_vs_master_qflia_20_rs_1-stats.md",
-    "run-0061-lia_w_vs_master_qflia_20_rs_2-stats.md"
+    "run-0061-lia_w_vs_master_qflia_20_rs_2-stats.md",
+    "run-0062-lia_w_vs_master_qflia_20_rs_3-stats.md"
   ]
 }
