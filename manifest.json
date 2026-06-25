@@ -56,6 +56,7 @@
     "run-0053-Z3-threads-4-qfbv-30s-parallel_tactic-stats.md",
     "run-0054-qf-s-derive-stats.md",
     "run-0055-qf-s-derive-with-ranges-stats.md",
-    "run-0056-qf-s-master-stats.md"
+    "run-0056-qf-s-master-stats.md",
+    "run-0057-regex-equivalence-master-stats.md"
   ]
 }
