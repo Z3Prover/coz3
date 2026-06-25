@@ -65,6 +65,7 @@
     "run-0062-lia_w_vs_master_qflia_20_rs_3-stats.md",
     "run-0063-master_vs_master_qflia_20_rs_1-stats.md",
     "run-0064-master_vs_master_qflia_20_rs_2-stats.md",
-    "run-0065-master_vs_master_qflia_20_rs_3-stats.md"
+    "run-0065-master_vs_master_qflia_20_rs_3-stats.md",
+    "run-0066-regex-equivalence-master-stats.md"
   ]
 }
