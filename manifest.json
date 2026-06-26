@@ -76,6 +76,7 @@
     "run-0073-qf-s-derive-with-ranges-stats.md",
     "run-0074-qf-s-master-stats.md",
     "run-0075-qf-s-nseq-stats.md",
-    "run-0076-clemens-regex-master-stats.md"
+    "run-0076-clemens-regex-master-stats.md",
+    "run-0077-clemens-regex-nseq-stats.md"
   ]
 }
