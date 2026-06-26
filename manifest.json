@@ -71,6 +71,7 @@
     "run-0068-regex-equivalence-derive-with-ranges-stats.md",
     "run-0069-qf-s-derive-stats.md",
     "run-0070-qf-s-derive-with-ranges-stats.md",
-    "run-0071-qf-s-master-stats.md"
+    "run-0071-qf-s-master-stats.md",
+    "run-0072-qf-s-derive-stats.md"
   ]
 }
