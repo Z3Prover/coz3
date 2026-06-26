@@ -74,6 +74,7 @@
     "run-0071-qf-s-master-stats.md",
     "run-0072-qf-s-derive-stats.md",
     "run-0073-qf-s-derive-with-ranges-stats.md",
-    "run-0074-qf-s-master-stats.md"
+    "run-0074-qf-s-master-stats.md",
+    "run-0075-qf-s-nseq-stats.md"
   ]
 }
