@@ -278,7 +278,7 @@
     <div class="page">
     <div class="hero">
         <h1>Compare Stats</h1>
-        <p>Select exactly two reports to compare their solver statistics.</p>
+        <p>Select exactly two reports to compare their solver statistics. With two selected, use &ldquo;Copy comparison permalink&rdquo; to share a link that reopens the same comparison.</p>
         <a class="back-link" href="home.html">&larr; Back to CoZ3 home</a>
     </div>
 
@@ -327,6 +327,13 @@
             <!-- Move the delete button below the 'Previous' button -->
             <div id="delete-button-container" style="margin-top: 10px;">
                 <button id="delete-button" onclick="confirmDeletion()">Open in GitHub</button>
+            </div>
+
+            <!-- Share a permalink to the current two-run comparison -->
+            <div id="share-button-container" style="margin-top: 10px;">
+                <button id="share-button" onclick="copyPermalink()" disabled
+                    title="Select exactly two reports to enable a shareable comparison link">Copy comparison permalink</button>
+                <span id="share-feedback" style="font-size: 12px; margin-left: 6px; color: var(--accent);"></span>
             </div>
         </div>
     </div>
@@ -534,6 +541,7 @@
                         }
                     });
                     renderFileList(getCurrentGroupBy());
+                    restoreFromUrl();
                     loadAllMetadata();
                 })
                 .catch(() => loadFilesFromAutoindex());
@@ -564,6 +572,7 @@
                     });
 
                     renderFileList(getCurrentGroupBy());
+                    restoreFromUrl();
                     loadAllMetadata();
                 })
                 .catch(error => console.error('Error loading files:', error));
@@ -953,16 +962,112 @@
         // Function to check the selection of radio buttons
         function checkSelection() {
             let selectedFiles = document.querySelectorAll('input[name="file"]:checked');
+            const shareBtn = document.getElementById('share-button');
 
             if (selectedFiles.length === 1) {
                 let file = selectedFiles[0].value;
                 displayFile(file);
+                clearPermalink();
+                if (shareBtn) shareBtn.disabled = true;
             } else if (selectedFiles.length === 2) {
                 let file1 = selectedFiles[0].value;
                 let file2 = selectedFiles[1].value;
                 compareFiles(file1, file2);
+                updatePermalink(file1, file2);
+                if (shareBtn) shareBtn.disabled = false;
             } else {
                 document.getElementById('message').textContent = '';
+                clearPermalink();
+                if (shareBtn) shareBtn.disabled = true;
+            }
+            const fb = document.getElementById('share-feedback');
+            if (fb) fb.textContent = '';
+        }
+
+        // Encode the current two-run comparison into the page URL so it can be
+        // shared and later restored verbatim.
+        function updatePermalink(file1, file2) {
+            const params = new URLSearchParams();
+            params.set('a', file1);
+            params.set('b', file2);
+            const url = window.location.pathname + '?' + params.toString();
+            history.replaceState(null, '', url);
+        }
+
+        // Drop any comparison parameters from the URL (e.g. when fewer than two
+        // reports are selected).
+        function clearPermalink() {
+            if (window.location.search) {
+                history.replaceState(null, '', window.location.pathname);
+            }
+        }
+
+        // Copy the current comparison permalink to the clipboard.
+        function copyPermalink() {
+            const selectedFiles = document.querySelectorAll('input[name="file"]:checked');
+            if (selectedFiles.length !== 2) {
+                showShareFeedback('Select exactly two reports first.');
+                return;
+            }
+            const url = window.location.href;
+            const ok = () => showShareFeedback('Permalink copied to clipboard!');
+            const fail = () => showShareFeedback('Copy failed — link: ' + url);
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(url).then(ok).catch(() => {
+                    if (!legacyCopy(url)) fail();
+                    else ok();
+                });
+            } else {
+                if (legacyCopy(url)) ok(); else fail();
+            }
+        }
+
+        function legacyCopy(text) {
+            try {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                const ok = document.execCommand('copy');
+                document.body.removeChild(ta);
+                return ok;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        function showShareFeedback(msg) {
+            const fb = document.getElementById('share-feedback');
+            if (!fb) return;
+            fb.textContent = msg;
+            clearTimeout(showShareFeedback._t);
+            showShareFeedback._t = setTimeout(() => { fb.textContent = ''; }, 4000);
+        }
+
+        // Restore a comparison from URL parameters (?a=...&b=...) once the file
+        // list has been rendered. Checks the matching boxes and runs the
+        // comparison so a shared link reopens to the same view.
+        function restoreFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const wanted = [params.get('a'), params.get('b')].filter(Boolean);
+            if (wanted.length === 0) return;
+
+            const boxes = document.querySelectorAll('#file-list input[name="file"]');
+            let matched = 0;
+            boxes.forEach(cb => {
+                if (wanted.includes(cb.value)) {
+                    cb.checked = true;
+                    matched++;
+                    const li = cb.closest('li');
+                    if (li && typeof revealItem === 'function') revealItem(li);
+                }
+            });
+
+            if (matched > 0) {
+                checkSelection();
             }
         }
 
