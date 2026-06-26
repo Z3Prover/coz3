@@ -278,7 +278,7 @@
     <div class="page">
     <div class="hero">
         <h1>Compare Stats</h1>
-        <p>Select exactly two reports to compare their solver statistics. With two selected, use &ldquo;Copy comparison permalink&rdquo; to share a link that reopens the same comparison.</p>
+        <p>Select one report to view its stats, or two to compare them. A &ldquo;Share&rdquo; button appears with a link that reopens the same view.</p>
         <a class="back-link" href="home.html">&larr; Back to CoZ3 home</a>
     </div>
 
@@ -329,10 +329,10 @@
                 <button id="delete-button" onclick="confirmDeletion()">Open in GitHub</button>
             </div>
 
-            <!-- Share a permalink to the current two-run comparison -->
-            <div id="share-button-container" style="margin-top: 10px;">
-                <button id="share-button" onclick="copyPermalink()" disabled
-                    title="Select exactly two reports to enable a shareable comparison link">Copy comparison permalink</button>
+            <!-- Share a permalink to the current report or comparison view -->
+            <div id="share-button-container" style="margin-top: 10px; display: none;">
+                <button id="share-button" onclick="copyPermalink()"
+                    title="Copy a link that reopens this view">Share report</button>
                 <span id="share-feedback" style="font-size: 12px; margin-left: 6px; color: var(--accent);"></span>
             </div>
         </div>
@@ -963,54 +963,58 @@
         function checkSelection() {
             let selectedFiles = document.querySelectorAll('input[name="file"]:checked');
             const shareBtn = document.getElementById('share-button');
+            const shareContainer = document.getElementById('share-button-container');
 
             if (selectedFiles.length === 1) {
                 let file = selectedFiles[0].value;
                 displayFile(file);
-                clearPermalink();
-                if (shareBtn) shareBtn.disabled = true;
+                updatePermalink([file]);
+                if (shareBtn) shareBtn.textContent = 'Share report';
+                if (shareContainer) shareContainer.style.display = '';
             } else if (selectedFiles.length === 2) {
                 let file1 = selectedFiles[0].value;
                 let file2 = selectedFiles[1].value;
                 compareFiles(file1, file2);
-                updatePermalink(file1, file2);
-                if (shareBtn) shareBtn.disabled = false;
+                updatePermalink([file1, file2]);
+                if (shareBtn) shareBtn.textContent = 'Share comparison report';
+                if (shareContainer) shareContainer.style.display = '';
             } else {
                 document.getElementById('message').textContent = '';
                 clearPermalink();
-                if (shareBtn) shareBtn.disabled = true;
+                if (shareContainer) shareContainer.style.display = 'none';
             }
             const fb = document.getElementById('share-feedback');
             if (fb) fb.textContent = '';
         }
 
-        // Encode the current two-run comparison into the page URL so it can be
-        // shared and later restored verbatim.
-        function updatePermalink(file1, file2) {
+        // Encode the currently selected report(s) into the page URL so the view
+        // can be shared and later restored verbatim. Accepts one filename (a
+        // single-report view) or two filenames (a comparison).
+        function updatePermalink(files) {
             const params = new URLSearchParams();
-            params.set('a', file1);
-            params.set('b', file2);
+            if (files[0]) params.set('a', files[0]);
+            if (files[1]) params.set('b', files[1]);
             const url = window.location.pathname + '?' + params.toString();
             history.replaceState(null, '', url);
         }
 
-        // Drop any comparison parameters from the URL (e.g. when fewer than two
-        // reports are selected).
+        // Drop any share parameters from the URL (e.g. when no report is
+        // selected).
         function clearPermalink() {
             if (window.location.search) {
                 history.replaceState(null, '', window.location.pathname);
             }
         }
 
-        // Copy the current comparison permalink to the clipboard.
+        // Copy the current share permalink to the clipboard.
         function copyPermalink() {
             const selectedFiles = document.querySelectorAll('input[name="file"]:checked');
-            if (selectedFiles.length !== 2) {
-                showShareFeedback('Select exactly two reports first.');
+            if (selectedFiles.length !== 1 && selectedFiles.length !== 2) {
+                showShareFeedback('Select one or two reports first.');
                 return;
             }
             const url = window.location.href;
-            const ok = () => showShareFeedback('Permalink copied to clipboard!');
+            const ok = () => showShareFeedback('Link copied to clipboard!');
             const fail = () => showShareFeedback('Copy failed — link: ' + url);
 
             if (navigator.clipboard && navigator.clipboard.writeText) {
