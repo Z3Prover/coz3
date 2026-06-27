@@ -85,7 +85,7 @@
       <span class="legend"><span class="swatch" style="background:#eef3fb"></span> manual</span>
       <span class="legend"><span class="swatch" style="background:#fff2cc"></span> scheduled</span>
       <span class="legend"><span class="swatch" style="background:#e6f4ea"></span> push</span>
-      <span class="legend"><span class="swatch" style="background:#f3e8fd"></span> agentic (.lock)</span>
+      <span class="legend"><span class="swatch" style="background:#f3e8fd"></span> agentic workflow (.lock.yml)</span>
       <span class="legend" style="color:#999">scroll to zoom &middot; drag to pan</span>
     </div>
     <div id="viewer-host">
@@ -101,69 +101,57 @@
 
     Edge style:  solid = "workflow_run: completed" (event-driven, automatic)
                  dashed = explicit dispatch (gh workflow run / createWorkflowDispatch)
-    Node color:  entry trigger - manual / scheduled / push / agentic .lock.yml
+    Node color:  entry trigger - manual / scheduled / push / agentic workflow (.lock.yml)
   -->
   <script type="application/dot" id="dot-source">
-    digraph workflows {
-      rankdir = LR;
-      node [shape=box, style="rounded,filled", fillcolor="#eef3fb", color="#5b7fb0", fontname="Helvetica", fontsize=11];
-      edge [color="#555555", fontname="Helvetica", fontsize=9];
+digraph workflows {
+  rankdir = LR;
+  node [shape=box, style="rounded,filled", fillcolor="#eef3fb", color="#5b7fb0", fontname="Helvetica", fontsize=11];
+  edge [color="#555555", fontname="Helvetica", fontsize=9];
 
-      // ---- CoZ3 pipeline ----
-      "coz3-benchmark-runner"             [fillcolor="#eef3fb"];
-      "coz3-benchmark-sourcer"            [fillcolor="#fff2cc"];
-      "ramon"                             [fillcolor="#eef3fb"];
-      "coz3-miner-on-benchmark-complete"  [fillcolor="#eef3fb"];
-      "coz3-run-miner"                    [fillcolor="#eef3fb"];
-      "coz3-snapshot"                     [fillcolor="#eef3fb"];
-      "coz3-deepfix-dispatcher"           [fillcolor="#eef3fb"];
-      "coz3-deepscan-dispatcher"          [fillcolor="#eef3fb"];
-      "coz3-deepunknown-dispatcher"       [fillcolor="#eef3fb"];
-      "coz3-deepfix.lock"                 [fillcolor="#f3e8fd"];
-      "deepscan-benchmark.lock"           [fillcolor="#f3e8fd"];
-      "coz3-deepunknown.lock"             [fillcolor="#f3e8fd"];
+  "coz3-benchmark-runner" [label="coz3-benchmark-runner", fillcolor="#eef3fb"];
+  "coz3-benchmark-sourcer" [label="coz3-benchmark-sourcer", fillcolor="#eef3fb"];
+  "coz3-deepfix" [label="coz3-deepfix\n(agentic workflow)", fillcolor="#f3e8fd"];
+  "coz3-deepfix-dispatcher" [label="coz3-deepfix-dispatcher", fillcolor="#eef3fb"];
+  "coz3-deepscan-dispatcher" [label="coz3-deepscan-dispatcher", fillcolor="#eef3fb"];
+  "coz3-deepunknown" [label="coz3-deepunknown\n(agentic workflow)", fillcolor="#f3e8fd"];
+  "coz3-deepunknown-dispatcher" [label="coz3-deepunknown-dispatcher", fillcolor="#eef3fb"];
+  "coz3-miner-on-benchmark-complete" [label="coz3-miner-on-benchmark-complete", fillcolor="#eef3fb"];
+  "coz3-run-miner" [label="coz3-run-miner", fillcolor="#eef3fb"];
+  "coz3-snapshot" [label="coz3-snapshot", fillcolor="#eef3fb"];
+  "daily-repo-status" [label="daily-repo-status\n(agentic workflow)", fillcolor="#f3e8fd"];
+  "deepscan-benchmark" [label="deepscan-benchmark\n(agentic workflow)", fillcolor="#f3e8fd"];
+  "fixer-selftest" [label="fixer-selftest\n(agentic workflow)", fillcolor="#f3e8fd"];
+  "mariposa-instability-summary" [label="mariposa-instability-summary", fillcolor="#eef3fb"];
+  "param-sweep" [label="param-sweep", fillcolor="#eef3fb"];
+  "pgo-z3" [label="pgo-z3", fillcolor="#eef3fb"];
+  "profile" [label="profile", fillcolor="#eef3fb"];
+  "ramon" [label="ramon", fillcolor="#eef3fb"];
+  "ramon-ariparti" [label="ramon-ariparti", fillcolor="#eef3fb"];
+  "ramon-ariparti-z3" [label="ramon-ariparti-z3", fillcolor="#eef3fb"];
+  "ramon-cvc5" [label="ramon-cvc5", fillcolor="#eef3fb"];
+  "ramon-log-triage" [label="ramon-log-triage", fillcolor="#eef3fb"];
+  "ramon-opensmt" [label="ramon-opensmt", fillcolor="#eef3fb"];
+  "ramon-smts" [label="ramon-smts", fillcolor="#eef3fb"];
+  "snapshot-regression" [label="snapshot-regression", fillcolor="#eef3fb"];
+  "snapshot-regression-fixer" [label="snapshot-regression-fixer\n(agentic workflow)", fillcolor="#f3e8fd"];
+  "snapshot-regression-fixer-dispatcher" [label="snapshot-regression-fixer-dispatcher", fillcolor="#eef3fb"];
+  "test-z3" [label="test-z3", fillcolor="#eef3fb"];
+  "update-compare-html" [label="update-compare-html", fillcolor="#eef3fb"];
+  "update-coz3-pages" [label="update-coz3-pages", fillcolor="#eef3fb"];
+  "update-workflows-graph" [label="update-workflows-graph\n(agentic workflow)", fillcolor="#f3e8fd"];
 
-      "coz3-benchmark-runner" -> "ramon"                            [style=dashed, label="dispatch/suite"];
-      "coz3-benchmark-runner" -> "coz3-run-miner"                   [style=dashed, label="dispatch"];
-      "coz3-benchmark-runner" -> "coz3-deepfix-dispatcher"          [style=dashed, label="dispatch"];
-      "ramon" -> "coz3-miner-on-benchmark-complete"                 [style=solid,  label="workflow_run"];
-      "coz3-miner-on-benchmark-complete" -> "coz3-run-miner"        [style=dashed, label="dispatch"];
-      "coz3-run-miner" -> "coz3-deepfix-dispatcher"                 [style=solid,  label="workflow_run"];
-      "coz3-run-miner" -> "coz3-deepscan-dispatcher"                [style=solid,  label="workflow_run"];
-      "coz3-run-miner" -> "coz3-deepunknown-dispatcher"             [style=solid,  label="workflow_run"];
-      "coz3-deepfix-dispatcher"     -> "coz3-deepfix.lock"          [style=dashed, label="gh run xN"];
-      "coz3-deepscan-dispatcher"    -> "deepscan-benchmark.lock"    [style=dashed, label="gh run xN"];
-      "coz3-deepunknown-dispatcher" -> "coz3-deepunknown.lock"      [style=dashed, label="gh run xN"];
-
-      // ---- Snapshot regression + fixer ----
-      "snapshot-regression"                  [fillcolor="#fff2cc"];
-      "snapshot-regression-fixer-dispatcher" [fillcolor="#fff2cc"];
-      "snapshot-regression-fixer.lock"       [fillcolor="#f3e8fd"];
-      "fixer-selftest.lock"                  [fillcolor="#f3e8fd"];
-
-      "snapshot-regression" -> "snapshot-regression-fixer-dispatcher" [style=solid,  label="workflow_run"];
-      "snapshot-regression-fixer-dispatcher" -> "snapshot-regression-fixer.lock" [style=dashed, label="gh run/discussion"];
-
-      // ---- Manual benchmark / profiling (workflow_dispatch only) ----
-      "ramon-smts"                    [fillcolor="#eef3fb"];
-      "ramon-opensmt"                 [fillcolor="#eef3fb"];
-      "ramon-cvc5"                    [fillcolor="#eef3fb"];
-      "ramon-ariparti"                [fillcolor="#eef3fb"];
-      "ramon-ariparti-z3"             [fillcolor="#eef3fb"];
-      "profile"                       [fillcolor="#eef3fb"];
-      "param-sweep"                   [fillcolor="#eef3fb"];
-      "mariposa-instability-summary"  [fillcolor="#eef3fb"];
-      "test-z3"                       [fillcolor="#eef3fb"];
-      "pgo-z3"                        [fillcolor="#eef3fb"];
-
-      // ---- Scheduled / push utility & agentic maintenance ----
-      "ramon-log-triage"                  [fillcolor="#fff2cc"];
-      "daily-repo-status.lock"            [fillcolor="#f3e8fd"];
-      "agentics-maintenance"              [fillcolor="#fff2cc"];
-      "agentics-maintenance-Z3Prover-z3"  [fillcolor="#eef3fb"];
-      "update-coz3-pages"                 [fillcolor="#e6f4ea"];
-      "update-compare-html"               [fillcolor="#e6f4ea"];
-    }
+  "coz3-benchmark-runner" -> "coz3-deepfix-dispatcher" [style=dashed, label="dispatch"];
+  "coz3-benchmark-runner" -> "coz3-run-miner" [style=dashed, label="dispatch"];
+  "coz3-benchmark-runner" -> "ramon" [style=dashed, label="dispatch"];
+  "coz3-miner-on-benchmark-complete" -> "coz3-run-miner" [style=dashed, label="dispatch"];
+  "coz3-miner-on-benchmark-complete" -> "ramon" [style=dashed, label="dispatch"];
+  "coz3-run-miner" -> "coz3-deepfix-dispatcher" [style=solid, label="workflow_run"];
+  "coz3-run-miner" -> "coz3-deepscan-dispatcher" [style=solid, label="workflow_run"];
+  "coz3-run-miner" -> "coz3-deepunknown-dispatcher" [style=solid, label="workflow_run"];
+  "ramon" -> "coz3-miner-on-benchmark-complete" [style=solid, label="workflow_run"];
+  "snapshot-regression" -> "snapshot-regression-fixer-dispatcher" [style=solid, label="workflow_run"];
+}
   </script>
 
   <script type="module">
