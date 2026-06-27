@@ -137,6 +137,7 @@
     "run-0134-capture_pointer_vs_master_qfnia_small_20_rs_3-stats.md",
     "run-0135-capture_pointer_certora_100_rs_1-stats.md",
     "run-0136-capture_pointer_certora_100_rs_2-stats.md",
-    "run-0137-capture_pointer_certora_100_rs_3-stats.md"
+    "run-0137-capture_pointer_certora_100_rs_3-stats.md",
+    "run-0138-master_certora_100_rs_1-stats.md"
   ]
 }
