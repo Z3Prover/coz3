@@ -5,6 +5,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CoZ3 &middot; Workflows Graph</title>
+
+  <!--
+    msagl-js loads from esm.sh so @msagl/core stays a single shared instance
+    across the parser and the SVG renderer (bundling would create two cores and
+    break attribute/layout state). esm.sh, however, mis-wraps panzoom's CommonJS
+    dependencies (its eventify() loses .fire), so we externalize panzoom from the
+    renderer build (?external=panzoom emits a bare `import ... from "panzoom"`)
+    and resolve that bare specifier through this import map to jsDelivr's
+    Rollup-bundled ESM build, which keeps the CJS interop intact.
+  -->
+  <script type="importmap">
+    {
+      "imports": {
+        "panzoom": "https://cdn.jsdelivr.net/npm/panzoom@9.4.4/+esm"
+      }
+    }
+  </script>
   <style>
     * { box-sizing: border-box; }
 
@@ -152,13 +169,17 @@
   <script type="module">
     const statusEl = document.getElementById('status');
     const dot = document.getElementById('dot-source').textContent;
-    const RENDERER_VER = '1.1.24';
-    const PARSER_VER = '1.1.24';
+    // All @msagl packages must share one @msagl/core instance: keep the same
+    // esm.sh target so the renderer's transitive core import and the parser's
+    // core import resolve to the identical build. panzoom is externalized here
+    // and redirected to a working ESM build via the import map in <head>.
+    const RENDERER_URL = 'https://esm.sh/@msagl/renderer-svg@1.1.26?external=panzoom&target=es2022';
+    const PARSER_URL = 'https://esm.sh/@msagl/parser@1.1.24?target=es2022';
 
     try {
       const [{ RendererSvg }, { parseDot }] = await Promise.all([
-        import(`https://esm.sh/@msagl/renderer-svg@${RENDERER_VER}`),
-        import(`https://esm.sh/@msagl/parser@${PARSER_VER}`),
+        import(RENDERER_URL),
+        import(PARSER_URL),
       ]);
 
       const graph = parseDot(dot);
