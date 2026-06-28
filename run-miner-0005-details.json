@@ -1,0 +1,14 @@
+{
+  "generated_at": "2026-06-28T18:21:31.190287+00:00",
+  "runs": [],
+  "bugs": [],
+  "unknowns": [],
+  "slow": [],
+  "report": {
+    "discussion_number": 2786,
+    "discussion_title": "CoZ3 run miner report 2026-06-28 18:21:31 UTC",
+    "discussion_url": "https://github.com/Z3Prover/bench/discussions/2786",
+    "workflow_run_id": 28331653743,
+    "workflow_run_url": "https://github.com/Z3Prover/bench/actions/runs/28331653743"
+  }
+}
