@@ -38,7 +38,7 @@
     #bar strong { font-size: 0.92rem; color: #1c3856; }
 
     .legend { display: inline-flex; align-items: center; gap: 6px; color: #5e6673; }
-    .swatch { width: 14px; height: 14px; border-radius: 3px; border: 1px solid #999; }
+    .swatch { width: 14px; height: 14px; border-radius: 3px; border: 2px solid; }
     .ln { display: inline-block; width: 22px; border-top: 2px solid #444; }
     .ln.dashed { border-top-style: dashed; }
 
@@ -66,6 +66,16 @@
       overflow: hidden;
     }
 
+    /* Make the MSAGL-generated SVG fill the entire viewer div */
+    #viewer > svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    #wrap { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; }
+    #viewer-host { position: relative; flex: 1; min-height: 0; }
+
     #status {
       position: absolute;
       top: 50%; left: 50%;
@@ -86,10 +96,11 @@
       <strong>Z3Prover/bench &middot; workflow dependency graph</strong>
       <span class="legend"><span class="ln"></span> workflow_run (auto)</span>
       <span class="legend"><span class="ln dashed"></span> explicit dispatch</span>
-      <span class="legend"><span class="swatch" style="background:#eef3fb"></span> manual</span>
-      <span class="legend"><span class="swatch" style="background:#fff2cc"></span> scheduled</span>
-      <span class="legend"><span class="swatch" style="background:#e6f4ea"></span> push</span>
-      <span class="legend"><span class="swatch" style="background:#f3e8fd"></span> agentic workflow (.lock.yml)</span>
+      <span class="legend"><span class="swatch" style="background:#dbeafe;border-color:#60a5fa"></span> manual</span>
+      <span class="legend"><span class="swatch" style="background:#fef9c3;border-color:#fbbf24"></span> scheduled</span>
+      <span class="legend"><span class="swatch" style="background:#dcfce7;border-color:#34d399"></span> push</span>
+      <span class="legend"><span class="swatch" style="background:#fce7f3;border-color:#f472b6"></span> workflow_run triggered</span>
+      <span class="legend"><span class="swatch" style="background:#ede9fe;border-color:#a78bfa"></span> agentic workflow (.lock.yml)</span>
       <span class="legend" style="color:#999">scroll to zoom &middot; drag to pan</span>
     </div>
     <div id="viewer-host">
@@ -107,60 +118,56 @@
 
     Edge style:  solid = "workflow_run: completed" (event-driven, automatic)
                  dashed = explicit dispatch (gh workflow run / createWorkflowDispatch)
-    Node color:  entry trigger - manual / scheduled / push / agentic workflow (.lock.yml)
+    Node color:  entry trigger - manual / scheduled / push / workflow_run / agentic workflow (.lock.yml)
   -->
   <script type="application/dot" id="dot-source">
 digraph workflows {
   rankdir = LR;
-  node [shape=box, style="rounded,filled", fillcolor="#eef3fb", color="#5b7fb0", fontname="Helvetica", fontsize=11];
-  edge [color="#555555", fontname="Helvetica", fontsize=9];
+  node [shape=box, style="rounded,filled", fillcolor="#dbeafe", color="#60a5fa", fontname="Helvetica", fontsize=11, penwidth=1.5];
+  edge [color="#6b7280", fontname="Helvetica", fontsize=9];
 
-  "coz3-benchmark-runner" [label="coz3-benchmark-runner", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "coz3-benchmark-sourcer" [label="coz3-benchmark-sourcer", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "coz3-deepfix" [label="coz3-deepfix", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
-  "coz3-deepfix-dispatcher" [label="coz3-deepfix-dispatcher", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "coz3-deepscan-dispatcher" [label="coz3-deepscan-dispatcher", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "coz3-deepunknown" [label="coz3-deepunknown", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
-  "coz3-deepunknown-dispatcher" [label="coz3-deepunknown-dispatcher", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "coz3-miner-on-benchmark-complete" [label="coz3-miner-on-benchmark-complete", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "coz3-run-miner" [label="coz3-run-miner", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "coz3-snapshot" [label="coz3-snapshot", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "daily-repo-status" [label="daily-repo-status", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
-  "deepscan-benchmark" [label="deepscan-benchmark", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
-  "fixer-selftest" [label="fixer-selftest", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
-  "mariposa-instability-summary" [label="mariposa-instability-summary", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "param-sweep" [label="param-sweep", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "pgo-z3" [label="pgo-z3", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "profile" [label="profile", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "ramon" [label="ramon", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "ramon-ariparti" [label="ramon-ariparti", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "ramon-ariparti-z3" [label="ramon-ariparti-z3", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "ramon-cvc5" [label="ramon-cvc5", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "ramon-log-triage" [label="ramon-log-triage", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "ramon-opensmt" [label="ramon-opensmt", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "ramon-smts" [label="ramon-smts", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "snapshot-regression" [label="snapshot-regression", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "snapshot-regression-fixer" [label="snapshot-regression-fixer", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
-  "snapshot-regression-fixer-dispatcher" [label="snapshot-regression-fixer-dispatcher", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "test-z3" [label="test-z3", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "update-compare-html" [label="update-compare-html", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "update-coz3-pages" [label="update-coz3-pages", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
-  "update-workflows-graph" [label="update-workflows-graph", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
+  "coz3-benchmark-runner" [label="coz3-benchmark-runner", fillcolor="#dbeafe", color="#60a5fa"];
+  "coz3-benchmark-sourcer" [label="coz3-benchmark-sourcer", fillcolor="#fef9c3", color="#fbbf24"];
+  "coz3-deepfix" [label="coz3-deepfix", fillcolor="#ede9fe", color="#a78bfa"];
+  "coz3-deepfix-dispatcher" [label="coz3-deepfix-dispatcher", fillcolor="#fce7f3", color="#f472b6"];
+  "coz3-deepscan-dispatcher" [label="coz3-deepscan-dispatcher", fillcolor="#fce7f3", color="#f472b6"];
+  "coz3-deepunknown" [label="coz3-deepunknown", fillcolor="#ede9fe", color="#a78bfa"];
+  "coz3-deepunknown-dispatcher" [label="coz3-deepunknown-dispatcher", fillcolor="#fce7f3", color="#f472b6"];
+  "coz3-miner-on-benchmark-complete" [label="coz3-miner-on-benchmark-complete", fillcolor="#fce7f3", color="#f472b6"];
+  "coz3-run-miner" [label="coz3-run-miner", fillcolor="#dbeafe", color="#60a5fa"];
+  "coz3-snapshot" [label="coz3-snapshot", fillcolor="#dbeafe", color="#60a5fa"];
+  "daily-repo-status" [label="daily-repo-status", fillcolor="#ede9fe", color="#a78bfa"];
+  "deepscan-benchmark" [label="deepscan-benchmark", fillcolor="#ede9fe", color="#a78bfa"];
+  "fixer-selftest" [label="fixer-selftest", fillcolor="#ede9fe", color="#a78bfa"];
+  "mariposa-instability-summary" [label="mariposa-instability-summary", fillcolor="#dbeafe", color="#60a5fa"];
+  "param-sweep" [label="param-sweep", fillcolor="#dbeafe", color="#60a5fa"];
+  "pgo-z3" [label="pgo-z3", fillcolor="#dbeafe", color="#60a5fa"];
+  "profile" [label="profile", fillcolor="#dbeafe", color="#60a5fa"];
+  "ramon" [label="ramon", fillcolor="#dbeafe", color="#60a5fa"];
+  "ramon-ariparti" [label="ramon-ariparti", fillcolor="#dbeafe", color="#60a5fa"];
+  "ramon-ariparti-z3" [label="ramon-ariparti-z3", fillcolor="#dbeafe", color="#60a5fa"];
+  "ramon-cvc5" [label="ramon-cvc5", fillcolor="#dbeafe", color="#60a5fa"];
+  "ramon-log-triage" [label="ramon-log-triage", fillcolor="#fef9c3", color="#fbbf24"];
+  "ramon-opensmt" [label="ramon-opensmt", fillcolor="#dbeafe", color="#60a5fa"];
+  "ramon-smts" [label="ramon-smts", fillcolor="#dbeafe", color="#60a5fa"];
+  "snapshot-regression" [label="snapshot-regression", fillcolor="#fef9c3", color="#fbbf24"];
+  "snapshot-regression-fixer" [label="snapshot-regression-fixer", fillcolor="#ede9fe", color="#a78bfa"];
+  "snapshot-regression-fixer-dispatcher" [label="snapshot-regression-fixer-dispatcher", fillcolor="#fef9c3", color="#fbbf24"];
+  "test-z3" [label="test-z3", fillcolor="#dbeafe", color="#60a5fa"];
+  "update-compare-html" [label="update-compare-html", fillcolor="#dcfce7", color="#34d399"];
+  "update-coz3-pages" [label="update-coz3-pages", fillcolor="#dcfce7", color="#34d399"];
+  "update-workflows-graph" [label="update-workflows-graph", fillcolor="#ede9fe", color="#a78bfa"];
 
-  "coz3-benchmark-runner" -> "coz3-deepfix-dispatcher" [style=dashed, label="dispatch"];
-  "coz3-benchmark-runner" -> "coz3-run-miner" [style=dashed, label="dispatch"];
-  "coz3-benchmark-runner" -> "ramon" [style=dashed, label="dispatch"];
-  "coz3-deepfix-dispatcher" -> "coz3-deepfix" [style=dashed, label="dispatch"];
-  "coz3-deepscan-dispatcher" -> "deepscan-benchmark" [style=dashed, label="dispatch"];
-  "coz3-deepunknown-dispatcher" -> "coz3-deepunknown" [style=dashed, label="dispatch"];
-  "coz3-miner-on-benchmark-complete" -> "coz3-run-miner" [style=dashed, label="dispatch"];
-  "coz3-miner-on-benchmark-complete" -> "ramon" [style=dashed, label="dispatch"];
-  "coz3-run-miner" -> "coz3-deepfix-dispatcher" [style=solid, label="workflow_run"];
-  "coz3-run-miner" -> "coz3-deepscan-dispatcher" [style=solid, label="workflow_run"];
-  "coz3-run-miner" -> "coz3-deepunknown-dispatcher" [style=solid, label="workflow_run"];
-  "ramon" -> "coz3-miner-on-benchmark-complete" [style=solid, label="workflow_run"];
-  "snapshot-regression" -> "snapshot-regression-fixer-dispatcher" [style=solid, label="workflow_run"];
-  "snapshot-regression-fixer-dispatcher" -> "snapshot-regression-fixer" [style=dashed, label="dispatch"];
+  "coz3-benchmark-runner" -> "coz3-deepfix-dispatcher" [style=dashed, color="#9ca3af", label="dispatch"];
+  "coz3-benchmark-runner" -> "coz3-run-miner" [style=dashed, color="#9ca3af", label="dispatch"];
+  "coz3-benchmark-runner" -> "ramon" [style=dashed, color="#9ca3af", label="dispatch"];
+  "coz3-miner-on-benchmark-complete" -> "coz3-run-miner" [style=dashed, color="#9ca3af", label="dispatch"];
+  "coz3-miner-on-benchmark-complete" -> "ramon" [style=dashed, color="#9ca3af", label="dispatch"];
+  "coz3-run-miner" -> "coz3-deepfix-dispatcher" [style=solid, color="#4b5563", label="workflow_run"];
+  "coz3-run-miner" -> "coz3-deepscan-dispatcher" [style=solid, color="#4b5563", label="workflow_run"];
+  "coz3-run-miner" -> "coz3-deepunknown-dispatcher" [style=solid, color="#4b5563", label="workflow_run"];
+  "ramon" -> "coz3-miner-on-benchmark-complete" [style=solid, color="#4b5563", label="workflow_run"];
+  "snapshot-regression" -> "snapshot-regression-fixer-dispatcher" [style=solid, color="#4b5563", label="workflow_run"];
 }
   </script>
 
@@ -179,6 +186,41 @@ digraph workflows {
         renderer.layoutEditingEnabled = false;
         renderer.setGraph(graph);
         statusEl.style.display = 'none';
+
+        // Re-fit the graph once the SVG has been laid out at its full size.
+        // showRectangle alone only updates the transform state; we also call
+        // moveTo so panzoom's rAF render loop picks up the change immediately.
+        // Note: renderer.panZoom and renderer._svgCreator are the public-facing
+        // panzoom instance and SVG creator used by RendererSvg. There is no
+        // equivalent high-level "fitToContent" method in the msagl-js public API,
+        // so we access them directly here. Both are guarded below; if the internal
+        // API ever changes these properties will be undefined/null and fitToView
+        // will silently no-op rather than throw.
+        function fitToView() {
+          try {
+            if (renderer.panZoom && renderer._svgCreator) {
+              renderer.panZoom.showRectangle(renderer._svgCreator.getShowRect());
+              const t = renderer.panZoom.getTransform();
+              renderer.panZoom.moveTo(t.x, t.y);
+            }
+          } catch (e) { console.warn('fitToView failed:', e); }
+        }
+
+        // First fit: let the browser finish computing SVG dimensions.
+        requestAnimationFrame(fitToView);
+
+        // Re-fit whenever the viewer is resized (e.g. window resize).
+        // Debounced to avoid excessive recalculations during continuous resize.
+        if (typeof ResizeObserver !== 'undefined') {
+          let resizeTimer = 0;
+          new ResizeObserver(function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+              requestAnimationFrame(fitToView);
+            }, 100);
+          }).observe(viewerEl);
+        }
+
       } catch (err) {
         console.error(err);
         statusEl.className = 'error';
