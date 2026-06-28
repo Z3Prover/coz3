@@ -158,9 +158,11 @@ digraph workflows {
   "update-coz3-pages" [label="update-coz3-pages", fillcolor="#dcfce7", color="#34d399"];
   "update-workflows-graph" [label="update-workflows-graph", fillcolor="#ede9fe", color="#a78bfa"];
 
-  "coz3-benchmark-runner" -> "coz3-deepfix-dispatcher" [style=dashed, color="#9ca3af", label="dispatch"];
   "coz3-benchmark-runner" -> "coz3-run-miner" [style=dashed, color="#9ca3af", label="dispatch"];
   "coz3-benchmark-runner" -> "ramon" [style=dashed, color="#9ca3af", label="dispatch"];
+  "coz3-deepfix-dispatcher" -> "coz3-deepfix" [style=dashed, color="#9ca3af", label="dispatch"];
+  "coz3-deepscan-dispatcher" -> "deepscan-benchmark" [style=dashed, color="#9ca3af", label="dispatch"];
+  "coz3-deepunknown-dispatcher" -> "coz3-deepunknown" [style=dashed, color="#9ca3af", label="dispatch"];
   "coz3-miner-on-benchmark-complete" -> "coz3-run-miner" [style=dashed, color="#9ca3af", label="dispatch"];
   "coz3-miner-on-benchmark-complete" -> "ramon" [style=dashed, color="#9ca3af", label="dispatch"];
   "coz3-run-miner" -> "coz3-deepfix-dispatcher" [style=solid, color="#4b5563", label="workflow_run"];
@@ -168,6 +170,7 @@ digraph workflows {
   "coz3-run-miner" -> "coz3-deepunknown-dispatcher" [style=solid, color="#4b5563", label="workflow_run"];
   "ramon" -> "coz3-miner-on-benchmark-complete" [style=solid, color="#4b5563", label="workflow_run"];
   "snapshot-regression" -> "snapshot-regression-fixer-dispatcher" [style=solid, color="#4b5563", label="workflow_run"];
+  "snapshot-regression-fixer-dispatcher" -> "snapshot-regression-fixer" [style=dashed, color="#9ca3af", label="dispatch"];
 }
   </script>
 
