@@ -18,6 +18,11 @@
       color: #1e2128;
       background: #fffdf8;
     }
+    :root {
+      --bar-height: 76px;
+      --viewer-width: 96vw;
+      --viewer-max-width: 1800px;
+    }
 
     #bar {
       display: flex;
@@ -37,16 +42,29 @@
     .ln { display: inline-block; width: 22px; border-top: 2px solid #444; }
     .ln.dashed { border-top-style: dashed; }
 
+    #wrap { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; }
+    #viewer-host { position: relative; flex: 1; min-height: 0; display: flex; align-items: stretch; justify-content: center; padding: 12px; overflow: auto; }
+    #viewer-panel {
+      position: relative;
+      width: min(var(--viewer-width), var(--viewer-max-width));
+      height: calc(100vh - var(--bar-height));
+      min-width: 520px;
+      min-height: 320px;
+      resize: both;
+      overflow: hidden;
+      border: 1px solid #d8d2c7;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    }
+
     #viewer {
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      inset: 0;
       margin-top: 0;
       touch-action: none;
       overflow: hidden;
     }
-
-    #wrap { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; flex-direction: column; }
-    #viewer-host { position: relative; flex: 1; min-height: 0; }
 
     #status {
       position: absolute;
@@ -75,8 +93,10 @@
       <span class="legend" style="color:#999">scroll to zoom &middot; drag to pan</span>
     </div>
     <div id="viewer-host">
-      <div id="viewer"></div>
-      <div id="status">Loading msagl-js&hellip;</div>
+      <div id="viewer-panel">
+        <div id="viewer"></div>
+        <div id="status">Loading msagl-js&hellip;</div>
+      </div>
     </div>
   </div>
 
@@ -95,41 +115,44 @@ digraph workflows {
   node [shape=box, style="rounded,filled", fillcolor="#eef3fb", color="#5b7fb0", fontname="Helvetica", fontsize=11];
   edge [color="#555555", fontname="Helvetica", fontsize=9];
 
-  "coz3-benchmark-runner" [label="coz3-benchmark-runner", fillcolor="#eef3fb"];
-  "coz3-benchmark-sourcer" [label="coz3-benchmark-sourcer", fillcolor="#eef3fb"];
-  "coz3-deepfix" [label="coz3-deepfix", fillcolor="#f3e8fd"];
-  "coz3-deepfix-dispatcher" [label="coz3-deepfix-dispatcher", fillcolor="#eef3fb"];
-  "coz3-deepscan-dispatcher" [label="coz3-deepscan-dispatcher", fillcolor="#eef3fb"];
-  "coz3-deepunknown" [label="coz3-deepunknown", fillcolor="#f3e8fd"];
-  "coz3-deepunknown-dispatcher" [label="coz3-deepunknown-dispatcher", fillcolor="#eef3fb"];
-  "coz3-miner-on-benchmark-complete" [label="coz3-miner-on-benchmark-complete", fillcolor="#eef3fb"];
-  "coz3-run-miner" [label="coz3-run-miner", fillcolor="#eef3fb"];
-  "coz3-snapshot" [label="coz3-snapshot", fillcolor="#eef3fb"];
-  "daily-repo-status" [label="daily-repo-status", fillcolor="#f3e8fd"];
-  "deepscan-benchmark" [label="deepscan-benchmark", fillcolor="#f3e8fd"];
-  "fixer-selftest" [label="fixer-selftest", fillcolor="#f3e8fd"];
-  "mariposa-instability-summary" [label="mariposa-instability-summary", fillcolor="#eef3fb"];
-  "param-sweep" [label="param-sweep", fillcolor="#eef3fb"];
-  "pgo-z3" [label="pgo-z3", fillcolor="#eef3fb"];
-  "profile" [label="profile", fillcolor="#eef3fb"];
-  "ramon" [label="ramon", fillcolor="#eef3fb"];
-  "ramon-ariparti" [label="ramon-ariparti", fillcolor="#eef3fb"];
-  "ramon-ariparti-z3" [label="ramon-ariparti-z3", fillcolor="#eef3fb"];
-  "ramon-cvc5" [label="ramon-cvc5", fillcolor="#eef3fb"];
-  "ramon-log-triage" [label="ramon-log-triage", fillcolor="#eef3fb"];
-  "ramon-opensmt" [label="ramon-opensmt", fillcolor="#eef3fb"];
-  "ramon-smts" [label="ramon-smts", fillcolor="#eef3fb"];
-  "snapshot-regression" [label="snapshot-regression", fillcolor="#eef3fb"];
-  "snapshot-regression-fixer" [label="snapshot-regression-fixer", fillcolor="#f3e8fd"];
-  "snapshot-regression-fixer-dispatcher" [label="snapshot-regression-fixer-dispatcher", fillcolor="#eef3fb"];
-  "test-z3" [label="test-z3", fillcolor="#eef3fb"];
-  "update-compare-html" [label="update-compare-html", fillcolor="#eef3fb"];
-  "update-coz3-pages" [label="update-coz3-pages", fillcolor="#eef3fb"];
-  "update-workflows-graph" [label="update-workflows-graph", fillcolor="#f3e8fd"];
+  "coz3-benchmark-runner" [label="coz3-benchmark-runner", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "coz3-benchmark-sourcer" [label="coz3-benchmark-sourcer", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "coz3-deepfix" [label="coz3-deepfix", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
+  "coz3-deepfix-dispatcher" [label="coz3-deepfix-dispatcher", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "coz3-deepscan-dispatcher" [label="coz3-deepscan-dispatcher", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "coz3-deepunknown" [label="coz3-deepunknown", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
+  "coz3-deepunknown-dispatcher" [label="coz3-deepunknown-dispatcher", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "coz3-miner-on-benchmark-complete" [label="coz3-miner-on-benchmark-complete", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "coz3-run-miner" [label="coz3-run-miner", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "coz3-snapshot" [label="coz3-snapshot", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "daily-repo-status" [label="daily-repo-status", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
+  "deepscan-benchmark" [label="deepscan-benchmark", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
+  "fixer-selftest" [label="fixer-selftest", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
+  "mariposa-instability-summary" [label="mariposa-instability-summary", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "param-sweep" [label="param-sweep", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "pgo-z3" [label="pgo-z3", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "profile" [label="profile", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "ramon" [label="ramon", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "ramon-ariparti" [label="ramon-ariparti", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "ramon-ariparti-z3" [label="ramon-ariparti-z3", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "ramon-cvc5" [label="ramon-cvc5", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "ramon-log-triage" [label="ramon-log-triage", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "ramon-opensmt" [label="ramon-opensmt", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "ramon-smts" [label="ramon-smts", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "snapshot-regression" [label="snapshot-regression", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "snapshot-regression-fixer" [label="snapshot-regression-fixer", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
+  "snapshot-regression-fixer-dispatcher" [label="snapshot-regression-fixer-dispatcher", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "test-z3" [label="test-z3", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "update-compare-html" [label="update-compare-html", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "update-coz3-pages" [label="update-coz3-pages", style="rounded,filled", color="#5b7fb0", fillcolor="#eef3fb"];
+  "update-workflows-graph" [label="update-workflows-graph", style="rounded,filled", color="#5b7fb0", fillcolor="#f3e8fd"];
 
   "coz3-benchmark-runner" -> "coz3-deepfix-dispatcher" [style=dashed, label="dispatch"];
   "coz3-benchmark-runner" -> "coz3-run-miner" [style=dashed, label="dispatch"];
   "coz3-benchmark-runner" -> "ramon" [style=dashed, label="dispatch"];
+  "coz3-deepfix-dispatcher" -> "coz3-deepfix" [style=dashed, label="dispatch"];
+  "coz3-deepscan-dispatcher" -> "deepscan-benchmark" [style=dashed, label="dispatch"];
+  "coz3-deepunknown-dispatcher" -> "coz3-deepunknown" [style=dashed, label="dispatch"];
   "coz3-miner-on-benchmark-complete" -> "coz3-run-miner" [style=dashed, label="dispatch"];
   "coz3-miner-on-benchmark-complete" -> "ramon" [style=dashed, label="dispatch"];
   "coz3-run-miner" -> "coz3-deepfix-dispatcher" [style=solid, label="workflow_run"];
@@ -137,6 +160,7 @@ digraph workflows {
   "coz3-run-miner" -> "coz3-deepunknown-dispatcher" [style=solid, label="workflow_run"];
   "ramon" -> "coz3-miner-on-benchmark-complete" [style=solid, label="workflow_run"];
   "snapshot-regression" -> "snapshot-regression-fixer-dispatcher" [style=solid, label="workflow_run"];
+  "snapshot-regression-fixer-dispatcher" -> "snapshot-regression-fixer" [style=dashed, label="dispatch"];
 }
   </script>
 
