@@ -1215,9 +1215,12 @@
 
         // Resolve a meaningful status label from the raw status and exit code
         function resolveStatus(rawStatus, rc) {
-            // If the solver produced a recognized result, keep it
+            // If the solver produced a recognized result, keep it.
+            // 'bug' is a verdict (e.g. unsoundness / model-validation failure)
+            // that must be preserved verbatim even when the exit code is 0.
             if (rawStatus === 'sat' || rawStatus === 'unsat' ||
-                rawStatus === 'timeout' || rawStatus === 'unknown') {
+                rawStatus === 'timeout' || rawStatus === 'unknown' ||
+                rawStatus === 'bug') {
                 return rawStatus;
             }
             // TPTP/SZS status (Unsatisfiable, CounterSatisfiable, Timeout, ...).
