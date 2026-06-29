@@ -128,12 +128,12 @@ digraph workflows {
 
   "coz3-benchmark-runner" [label="coz3-benchmark-runner", fillcolor="#dbeafe", color="#60a5fa"];
   "coz3-benchmark-sourcer" [label="coz3-benchmark-sourcer", fillcolor="#fef9c3", color="#fbbf24"];
-  "coz3-quickfix" [label="coz3-quickfix", fillcolor="#ede9fe", color="#a78bfa"];
-  "coz3-quickfix-dispatcher" [label="coz3-quickfix-dispatcher", fillcolor="#fce7f3", color="#f472b6"];
   "coz3-deepscan-dispatcher" [label="coz3-deepscan-dispatcher", fillcolor="#fce7f3", color="#f472b6"];
   "coz3-deepunknown" [label="coz3-deepunknown", fillcolor="#ede9fe", color="#a78bfa"];
   "coz3-deepunknown-dispatcher" [label="coz3-deepunknown-dispatcher", fillcolor="#fce7f3", color="#f472b6"];
   "coz3-miner-on-benchmark-complete" [label="coz3-miner-on-benchmark-complete", fillcolor="#fce7f3", color="#f472b6"];
+  "coz3-quickfix" [label="coz3-quickfix", fillcolor="#ede9fe", color="#a78bfa"];
+  "coz3-quickfix-dispatcher" [label="coz3-quickfix-dispatcher", fillcolor="#fce7f3", color="#f472b6"];
   "coz3-run-miner" [label="coz3-run-miner", fillcolor="#dbeafe", color="#60a5fa"];
   "coz3-snapshot" [label="coz3-snapshot", fillcolor="#dbeafe", color="#60a5fa"];
   "daily-repo-status" [label="daily-repo-status", fillcolor="#ede9fe", color="#a78bfa"];
@@ -160,14 +160,14 @@ digraph workflows {
 
   "coz3-benchmark-runner" -> "coz3-run-miner" [style=dashed, color="#9ca3af", label="dispatch"];
   "coz3-benchmark-runner" -> "ramon" [style=dashed, color="#9ca3af", label="dispatch"];
-  "coz3-quickfix-dispatcher" -> "coz3-quickfix" [style=dashed, color="#9ca3af", label="dispatch"];
   "coz3-deepscan-dispatcher" -> "deepscan-benchmark" [style=dashed, color="#9ca3af", label="dispatch"];
   "coz3-deepunknown-dispatcher" -> "coz3-deepunknown" [style=dashed, color="#9ca3af", label="dispatch"];
   "coz3-miner-on-benchmark-complete" -> "coz3-run-miner" [style=dashed, color="#9ca3af", label="dispatch"];
   "coz3-miner-on-benchmark-complete" -> "ramon" [style=dashed, color="#9ca3af", label="dispatch"];
-  "coz3-run-miner" -> "coz3-quickfix-dispatcher" [style=solid, color="#4b5563", label="workflow_run"];
+  "coz3-quickfix-dispatcher" -> "coz3-quickfix" [style=dashed, color="#9ca3af", label="dispatch"];
   "coz3-run-miner" -> "coz3-deepscan-dispatcher" [style=solid, color="#4b5563", label="workflow_run"];
   "coz3-run-miner" -> "coz3-deepunknown-dispatcher" [style=solid, color="#4b5563", label="workflow_run"];
+  "coz3-run-miner" -> "coz3-quickfix-dispatcher" [style=solid, color="#4b5563", label="workflow_run"];
   "ramon" -> "coz3-miner-on-benchmark-complete" [style=solid, color="#4b5563", label="workflow_run"];
   "snapshot-regression" -> "snapshot-regression-fixer-dispatcher" [style=solid, color="#4b5563", label="workflow_run"];
   "snapshot-regression-fixer-dispatcher" -> "snapshot-regression-fixer" [style=dashed, color="#9ca3af", label="dispatch"];

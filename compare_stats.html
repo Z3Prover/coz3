@@ -1197,11 +1197,32 @@
             143: 'terminated',  // SIGTERM (128+15)
         };
 
+        // TPTP benchmarks (files ending in `.p`) report their result through the
+        // SZS ontology rather than the SMT-LIB sat/unsat tokens. We keep these
+        // statuses as a SEPARATE taxonomy (never folded into sat/unsat/unknown).
+        // https://www.tptp.org/cgi-bin/SeeTPTP?Category=Documents&File=SZSOntology
+        const SZS_SUCCESS = new Set([
+            'Theorem', 'Unsatisfiable', 'Satisfiable', 'CounterSatisfiable',
+            'ContradictoryAxioms', 'Tautology', 'TautologousConclusion',
+            'Equivalent', 'WeakerConclusion', 'EquivalentTheorem', 'NoConsequence',
+        ]);
+        const SZS_NOSUCCESS = new Set([
+            'Unknown', 'Timeout', 'GaveUp', 'ResourceOut', 'Incomplete', 'Error',
+            'InputError', 'OutputError', 'NotTested', 'NotTestedYet', 'Open',
+            'Unsolved', 'Stopped', 'Inappropriate', 'Assumed', 'Forced', 'User',
+        ]);
+        const SZS_STATUSES = new Set([...SZS_SUCCESS, ...SZS_NOSUCCESS]);
+
         // Resolve a meaningful status label from the raw status and exit code
         function resolveStatus(rawStatus, rc) {
             // If the solver produced a recognized result, keep it
             if (rawStatus === 'sat' || rawStatus === 'unsat' ||
                 rawStatus === 'timeout' || rawStatus === 'unknown') {
+                return rawStatus;
+            }
+            // TPTP/SZS status (Unsatisfiable, CounterSatisfiable, Timeout, ...).
+            // Reported verbatim and tracked under the SZS taxonomy.
+            if (SZS_STATUSES.has(rawStatus)) {
                 return rawStatus;
             }
             // Otherwise, derive a label from the exit code
@@ -1232,7 +1253,7 @@
         // Function to extract stats from a line
         function extractStatsFromLine(stats, line) {
             const fields = line.split('|').map(field => field.trim()).filter(field => field.length > 0);
-            if (fields.length === 0 || !fields[0].endsWith('smt2')) {
+            if (fields.length === 0 || !/\.(smt2|p)$/.test(fields[0])) {
                 return;
             }
 
@@ -1318,10 +1339,16 @@
             let numUnknown = 0;
             let numErr = 0;
             const errorBreakdown = {};
+            const szsBreakdown = {};
 
             for (const s of Object.values(stats)) {
                 if (s.rc !== 0) {
                     numErr += 1;
+                }
+                // SZS (TPTP) results are tallied under their own taxonomy.
+                if (SZS_STATUSES.has(s.status)) {
+                    szsBreakdown[s.status] = (szsBreakdown[s.status] || 0) + 1;
+                    continue;
                 }
                 switch (s.status) {
                     case 'sat':
@@ -1357,6 +1384,20 @@
                     .join(', ');
                 result += `<li>errors: ${totalErrors} (${breakdown})</li>`;
             }
+            const szsTotal = Object.values(szsBreakdown).reduce((a, b) => a + b, 0);
+            if (szsTotal > 0) {
+                let szsSolved = 0;
+                let szsNoSuccess = 0;
+                for (const [label, count] of Object.entries(szsBreakdown)) {
+                    if (SZS_SUCCESS.has(label)) szsSolved += count;
+                    else szsNoSuccess += count;
+                }
+                const szsDetail = Object.entries(szsBreakdown)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([label, count]) => `${label}:${count}`)
+                    .join(', ');
+                result += `<li>SZS (TPTP): ${szsTotal} (Success: ${szsSolved}, NoSuccess: ${szsNoSuccess}) — ${szsDetail}</li>`;
+            }
             result += `</ul>`;
 
             return result;
@@ -1369,6 +1410,7 @@
             let numTimeout = 0;
             let numUnknown = 0;
             let numUnset = 0;
+            const szsBreakdown = {};
 
             for (const n in stats1) {
                 const s = stats1[n];
@@ -1377,6 +1419,11 @@
                 }
                 const s2 = stats2[n];
                 if (s.status === s2.status) {
+                    continue;
+                }
+                // SZS (TPTP) results are tallied under their own taxonomy.
+                if (SZS_STATUSES.has(s.status)) {
+                    szsBreakdown[s.status] = (szsBreakdown[s.status] || 0) + 1;
                     continue;
                 }
                 switch (s.status) {
@@ -1405,6 +1452,14 @@
             result += `<li>Unique TIMEOUT: ${numTimeout}</li>`;
             result += `<li>Unique UNKNOWN: ${numUnknown}</li>`;
             result += `<li>Unique UNSET: ${numUnset}</li>`;
+            const szsTotal = Object.values(szsBreakdown).reduce((a, b) => a + b, 0);
+            if (szsTotal > 0) {
+                const szsDetail = Object.entries(szsBreakdown)
+                    .sort((a, b) => b[1] - a[1])
+                    .map(([label, count]) => `${label}:${count}`)
+                    .join(', ');
+                result += `<li>Unique SZS (TPTP): ${szsTotal} — ${szsDetail}</li>`;
+            }
             result += `</ul>`;
 
             return result;
@@ -1422,7 +1477,7 @@
                     continue;
                 }
                 const s2 = stats2[n];
-                if (s1.status !== s2.status || s1.status == 'timeout' || s1.status == 'unknown') {
+                if (s1.status !== s2.status || s1.status == 'timeout' || s1.status == 'unknown' || SZS_NOSUCCESS.has(s1.status)) {
                     continue;
                 }
                 if (s1.time <= 1 && s2.time <= 1) {
@@ -1483,7 +1538,7 @@
             let par2 = 0;
             for (const s of Object.values(stats)) {
                 if (s.time === null) continue;
-                if (s.status === 'sat' || s.status === 'unsat') {
+                if (s.status === 'sat' || s.status === 'unsat' || SZS_SUCCESS.has(s.status)) {
                     par2 += s.time;
                 } else {
                     par2 += PAR2_PENALTY_FACTOR * timeoutValue;
