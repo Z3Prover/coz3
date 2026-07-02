@@ -505,6 +505,7 @@
     "run-0502-coz3-generation-eval-2-baseline-https-zenodo.org-records-UFLRA-stats.md",
     "run-0503-coz3-generation-eval-2-baseline-https-zenodo.org-records-UFNIRA-stats.md",
     "run-0504-coz3-https-zenodo.org-records-QF_ABV-stats.md",
-    "run-0505-coz3-https-zenodo.org-records-QF_ABVFP-stats.md"
+    "run-0505-coz3-https-zenodo.org-records-QF_ABVFP-stats.md",
+    "run-0506-coz3-https-zenodo.org-records-QF_ABVFPLRA-stats.md"
   ]
 }
