@@ -157,7 +157,11 @@ digraph big {
   edge [color="#6b7280", fontname="Helvetica", fontsize=9];
 
   "coz3-benchmark-runner" [label="coz3-benchmark-runner", fillcolor="#dbeafe", color="#60a5fa"];
+  "coz3-deepperf-fix" [label="coz3-deepperf-fix", fillcolor="#ede9fe", color="#a78bfa"];
+  "coz3-deepperf-fix-dispatcher" [label="coz3-deepperf-fix-dispatcher", fillcolor="#dbeafe", color="#60a5fa"];
+  "coz3-deepperf-fix-fallback" [label="coz3-deepperf-fix-fallback", fillcolor="#fce7f3", color="#f472b6"];
   "coz3-deepscan-dispatcher" [label="coz3-deepscan-dispatcher", fillcolor="#fce7f3", color="#f472b6"];
+  "coz3-deepscan-fix-pipeline" [label="coz3-deepscan-fix-pipeline", fillcolor="#dbeafe", color="#60a5fa"];
   "coz3-deepunknown" [label="coz3-deepunknown", fillcolor="#ede9fe", color="#a78bfa"];
   "coz3-deepunknown-dispatcher" [label="coz3-deepunknown-dispatcher", fillcolor="#fce7f3", color="#f472b6"];
   "coz3-miner-on-benchmark-complete" [label="coz3-miner-on-benchmark-complete", fillcolor="#fce7f3", color="#f472b6"];
@@ -169,7 +173,11 @@ digraph big {
 
   "coz3-benchmark-runner" -> "coz3-run-miner" [style=dashed, color="#9ca3af"];
   "coz3-benchmark-runner" -> "ramon" [style=dashed, color="#9ca3af"];
+  "coz3-deepperf-fix" -> "coz3-deepperf-fix-fallback" [style=solid, color="#4b5563"];
+  "coz3-deepperf-fix-dispatcher" -> "coz3-deepperf-fix" [style=dashed, color="#9ca3af"];
   "coz3-deepscan-dispatcher" -> "deepscan-benchmark" [style=dashed, color="#9ca3af"];
+  "coz3-deepscan-fix-pipeline" -> "coz3-deepperf-fix" [style=dashed, color="#9ca3af"];
+  "coz3-deepscan-fix-pipeline" -> "deepscan-benchmark" [style=dashed, color="#9ca3af"];
   "coz3-deepunknown-dispatcher" -> "coz3-deepunknown" [style=dashed, color="#9ca3af"];
   "coz3-miner-on-benchmark-complete" -> "coz3-run-miner" [style=dashed, color="#9ca3af"];
   "coz3-miner-on-benchmark-complete" -> "ramon" [style=dashed, color="#9ca3af"];
