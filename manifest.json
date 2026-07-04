@@ -606,6 +606,7 @@
     "run-0603-clemens-regex-master-stats.md",
     "run-0604-clemens-regex-nseq-stats.md",
     "run-0605-margus-regex-master-stats.md",
-    "run-0606-margus-regex-nseq-stats.md"
+    "run-0606-margus-regex-nseq-stats.md",
+    "run-0607-clemens-regex-split-stats.md"
   ]
 }
