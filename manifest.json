@@ -596,6 +596,7 @@
     "run-0593-relev-filter-on-stats.md",
     "run-0594-relev-filter-off-stats.md",
     "run-0595-relev-fstar-on-stats.md",
-    "run-0596-relev-fstar-off-stats.md"
+    "run-0596-relev-fstar-off-stats.md",
+    "run-0597-relev-uflia-on-stats.md"
   ]
 }
