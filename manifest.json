@@ -603,6 +603,7 @@
     "run-0600-qf-s-split-stats.md",
     "run-0601-qf-s-split-stats.md",
     "run-0602-qf-s-split-stats.md",
-    "run-0603-clemens-regex-master-stats.md"
+    "run-0603-clemens-regex-master-stats.md",
+    "run-0604-clemens-regex-nseq-stats.md"
   ]
 }
