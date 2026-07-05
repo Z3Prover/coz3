@@ -622,6 +622,7 @@
     "run-0619-clemens-regex-split-stats.md",
     "run-0620-margus-regex-master-stats.md",
     "run-0621-margus-regex-nseq-stats.md",
-    "run-0622-margus-regex-split-stats.md"
+    "run-0622-margus-regex-split-stats.md",
+    "run-0623-lia-batch-on-seed5-stats.md"
   ]
 }
