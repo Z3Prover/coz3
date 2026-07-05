@@ -616,6 +616,7 @@
     "run-0613-clemens-regex-nseq-stats.md",
     "run-0614-clemens-regex-split-stats.md",
     "run-0615-lia-batch-on-stats.md",
-    "run-0616-lia-batch-off-stats.md"
+    "run-0616-lia-batch-off-stats.md",
+    "run-0617-clemens-regex-master-stats.md"
   ]
 }
