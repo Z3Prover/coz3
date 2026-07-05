@@ -625,6 +625,7 @@
     "run-0622-margus-regex-split-stats.md",
     "run-0623-lia-batch-on-seed5-stats.md",
     "run-0624-lia-batch-off-seed5-stats.md",
-    "run-0625-slia-batch-on-seed5-stats.md"
+    "run-0625-slia-batch-on-seed5-stats.md",
+    "run-0626-slia-batch-off-seed5-stats.md"
   ]
 }
