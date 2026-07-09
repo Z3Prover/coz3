@@ -324,6 +324,10 @@
             </div>
             <span id="meta-progress"></span>
 
+            <div style="margin-top: 10px;">
+                <button id="clear-selection-button" onclick="clearSelection()">Clear selection</button>
+            </div>
+
             <!-- Move the delete button below the 'Previous' button -->
             <div id="delete-button-container" style="margin-top: 10px;">
                 <button id="delete-button" onclick="confirmDeletion()">Open in GitHub</button>
@@ -985,6 +989,13 @@
             }
             const fb = document.getElementById('share-feedback');
             if (fb) fb.textContent = '';
+        }
+
+        // Uncheck every file checkbox and reset the view to its unselected state.
+        function clearSelection() {
+            document.querySelectorAll('input[name="file"]:checked')
+                .forEach(cb => { cb.checked = false; });
+            checkSelection();
         }
 
         // Encode the currently selected report(s) into the page URL so the view
