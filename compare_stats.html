@@ -984,6 +984,10 @@
                 if (shareContainer) shareContainer.style.display = '';
             } else {
                 document.getElementById('message').textContent = '';
+                if (chartInstance) {
+                    chartInstance.destroy();
+                    chartInstance = null;
+                }
                 clearPermalink();
                 if (shareContainer) shareContainer.style.display = 'none';
             }
