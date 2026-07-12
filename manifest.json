@@ -710,6 +710,7 @@
     "run-0707-qf-uf-generation-table-reverted-seed2-stats.md",
     "run-0708-master-today-qflia-stats.md",
     "run-0709-stable-4.16.0-qflia-stats.md",
-    "run-0710-Z3-threads-16-QF_LIA-timeout10min-bb2-stats.md"
+    "run-0710-Z3-threads-16-QF_LIA-timeout10min-bb2-stats.md",
+    "run-0711-Z3-threads-16-QF_NIA-timeout10min-bb2-stats.md"
   ]
 }
