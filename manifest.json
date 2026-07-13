@@ -714,6 +714,7 @@
     "run-0711-Z3-threads-16-QF_NIA-timeout10min-bb2-stats.md",
     "run-0712-Z3-threads-1-parallel-QF_LIA-timeout10min-bb2-stats.md",
     "run-0713-qflia-z3-4.15.0-stats.md",
-    "run-0714-qflia-z3-4.14.1-stats.md"
+    "run-0714-qflia-z3-4.14.1-stats.md",
+    "run-0715-qflia-z3-4.13.0-stats.md"
   ]
 }
