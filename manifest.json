@@ -720,6 +720,7 @@
     "run-0717-Z3-threads-1-parallel-QF_LIA-timeout10min-bb2-stats.md",
     "run-0718-Z3-threads-1-parallel-QF_NIA-timeout10min-bb2-stats.md",
     "run-0719-relem-swap-on-stats.md",
-    "run-0720-relem-swap-off-stats.md"
+    "run-0720-relem-swap-off-stats.md",
+    "run-0721-certora-relem-swap-on-stats.md"
   ]
 }
