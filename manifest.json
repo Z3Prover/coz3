@@ -722,6 +722,7 @@
     "run-0719-relem-swap-on-stats.md",
     "run-0720-relem-swap-off-stats.md",
     "run-0721-certora-relem-swap-on-stats.md",
-    "run-0722-certora-relem-swap-off-stats.md"
+    "run-0722-certora-relem-swap-off-stats.md",
+    "run-0723-qfnia-quot-rem-lemmas-stats.md"
   ]
 }
