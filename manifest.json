@@ -725,6 +725,7 @@
     "run-0722-certora-relem-swap-off-stats.md",
     "run-0723-qfnia-quot-rem-lemmas-stats.md",
     "run-0724-qfnia-master-stats.md",
-    "run-0725-qf-s-master-stats.md"
+    "run-0725-qf-s-master-stats.md",
+    "run-0726-qf-s-nseq-stats.md"
   ]
 }
