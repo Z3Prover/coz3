@@ -738,6 +738,7 @@
     "run-0735-qfnia-fstar-opt-stats.md",
     "run-0736-qfnia-master-stats.md",
     "run-0737-Z3-threads-1-parallel-QF_LIA-timeout10min-bb2-stats.md",
-    "run-0738-Z3-threads-1-parallel-QF_NIA-timeout10min-bb2-stats.md"
+    "run-0738-Z3-threads-1-parallel-QF_NIA-timeout10min-bb2-stats.md",
+    "run-0739-qfnia-fstar-opt-stats.md"
   ]
 }
