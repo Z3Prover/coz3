@@ -744,6 +744,7 @@
     "run-0741-qfnia-fstar-opt-stats.md",
     "run-0742-qfnia-fstar-opt-stats.md",
     "run-0743-Z3-threads-16-QF_NIA-timeout10min-bb2-stats.md",
-    "run-0744-Z3-threads-8-QF_LIA-timeout10min-bb0-run2-stats.md"
+    "run-0744-Z3-threads-8-QF_LIA-timeout10min-bb0-run2-stats.md",
+    "run-0745-Z3-threads-8-QF_LIA-timeout10min-bb1-run2-stats.md"
   ]
 }
