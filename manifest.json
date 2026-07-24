@@ -752,6 +752,7 @@
     "run-0749-Z3-threads-8-QF_LIA-timeout10min-bb2-run3-stats.md",
     "run-0750-Z3-threads-8-QF_LIA-timeout10min-bb0-run4-stats.md",
     "run-0751-Z3-threads-8-QF_LIA-timeout10min-bb1-run4-stats.md",
-    "run-0752-Z3-threads-8-QF_LIA-timeout10min-bb2-run4-stats.md"
+    "run-0752-Z3-threads-8-QF_LIA-timeout10min-bb2-run4-stats.md",
+    "run-0753-qfnia-master-stats.md"
   ]
 }
