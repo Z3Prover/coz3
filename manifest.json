@@ -805,6 +805,7 @@
     "run-0802-Z3-threads-8-QF_LIA-timeout10min-bb1-run5-stats.md",
     "run-0803-Z3-threads-8-QF_LIA-timeout10min-bb2-run5-stats.md",
     "run-0804-Z3-threads-8-QF_LIA-timeout10min-no_core_min-bb2-run2-stats.md",
-    "run-0805-Z3-threads-8-QF_LIA-timeout10min-no_core_min-bb2-run3-stats.md"
+    "run-0805-Z3-threads-8-QF_LIA-timeout10min-no_core_min-bb2-run3-stats.md",
+    "run-0806-Z3-threads-8-QF_LIA-timeout10min-no_core_min-bb2-run4-stats.md"
   ]
 }
