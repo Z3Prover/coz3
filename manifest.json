@@ -812,6 +812,7 @@
     "run-0809-Z3-threads-8-QF_LIA-timeout10min-ablate_backtracking-bb2-run3-stats.md",
     "run-0810-Z3-threads-8-QF_LIA-timeout10min-ablate_backtracking-bb2-run4-stats.md",
     "run-0811-qfnia-master-stats.md",
-    "run-0812-qfnia-fstar-opt-stats.md"
+    "run-0812-qfnia-fstar-opt-stats.md",
+    "run-0813-qfnia-fstar-opt-stats.md"
   ]
 }
