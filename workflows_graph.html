@@ -195,10 +195,13 @@ digraph small {
   node [shape=box, style="rounded,filled", fillcolor="#dbeafe", color="#60a5fa", fontname="Helvetica", fontsize=11, penwidth=1.5];
   edge [color="#6b7280", fontname="Helvetica", fontsize=9];
 
+  "fstar-build-fixer" [label="fstar-build-fixer", fillcolor="#ede9fe", color="#a78bfa"];
+  "fstar-build-fixer-dispatcher" [label="fstar-build-fixer-dispatcher", fillcolor="#fef9c3", color="#fbbf24"];
   "snapshot-regression" [label="snapshot-regression", fillcolor="#fef9c3", color="#fbbf24"];
   "snapshot-regression-fixer" [label="snapshot-regression-fixer", fillcolor="#ede9fe", color="#a78bfa"];
   "snapshot-regression-fixer-dispatcher" [label="snapshot-regression-fixer-dispatcher", fillcolor="#fef9c3", color="#fbbf24"];
 
+  "fstar-build-fixer-dispatcher" -> "fstar-build-fixer" [style=dashed, color="#9ca3af"];
   "snapshot-regression" -> "snapshot-regression-fixer-dispatcher" [style=solid, color="#4b5563"];
   "snapshot-regression-fixer-dispatcher" -> "snapshot-regression-fixer" [style=dashed, color="#9ca3af"];
 }
@@ -211,6 +214,7 @@ digraph isolated {
   edge [color="#6b7280", fontname="Helvetica", fontsize=9];
 
   "coz3-benchmark-sourcer" [label="coz3-benchmark-sourcer", fillcolor="#fef9c3", color="#fbbf24"];
+  "coz3-deepstab" [label="coz3-deepstab", fillcolor="#ede9fe", color="#a78bfa"];
   "coz3-snapshot" [label="coz3-snapshot", fillcolor="#dbeafe", color="#60a5fa"];
   "daily-repo-status" [label="daily-repo-status", fillcolor="#ede9fe", color="#a78bfa"];
   "fixer-selftest" [label="fixer-selftest", fillcolor="#ede9fe", color="#a78bfa"];
