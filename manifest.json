@@ -825,6 +825,7 @@
     "run-0822-qfnia-fstar-opt2-stats.md",
     "run-0823-qfnia-fstar-opt2-squares-stats.md",
     "run-0824-nla_obp_on_fstar-ulib-smt2_60_rs_1-stats.md",
-    "run-0825-nla_obp_off_fstar-ulib-smt2_60_rs_1-stats.md"
+    "run-0825-nla_obp_off_fstar-ulib-smt2_60_rs_1-stats.md",
+    "run-0826-nla_obp_on_QF_NIA_small_60_rs_1-stats.md"
   ]
 }
