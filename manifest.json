@@ -841,6 +841,7 @@
     "run-0838-nla_obp_on_QF_NIA_small_60_rs_5-stats.md",
     "run-0839-nla_obp_off_QF_NIA_small_60_rs_4-stats.md",
     "run-0840-nla_obp_off_QF_NIA_small_60_rs_5-stats.md",
-    "run-0841-nla_rndmon_both_QF_NIA_small_60_rs_1-stats.md"
+    "run-0841-nla_rndmon_both_QF_NIA_small_60_rs_1-stats.md",
+    "run-0842-nla_rndmon_both_QF_NIA_small_60_rs_2-stats.md"
   ]
 }
