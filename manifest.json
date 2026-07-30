@@ -849,6 +849,7 @@
     "run-0846-nla_rndmon_on_QF_NIA_small_60_rs_2-stats.md",
     "run-0847-imp_fix_on_QF_BV_small_60_rs_1-stats.md",
     "run-0848-imp_fix_off_QF_BV_small_60_rs_1-stats.md",
-    "run-0849-imp_fix_on_QF_NIA_small_60_rs_1-stats.md"
+    "run-0849-imp_fix_on_QF_NIA_small_60_rs_1-stats.md",
+    "run-0850-imp_fix_on_QF_NIA_small_60_rs_2-stats.md"
   ]
 }
