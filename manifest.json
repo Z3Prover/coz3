@@ -886,6 +886,7 @@
     "run-0883-imp_fix_1p_on_fstar-ulib-smt2-small_60_rs_1-stats.md",
     "run-0884-imp_fix_1p_on_fstar-ulib-smt2-small_60_rs_2-stats.md",
     "run-0885-imp_fix_1p_on_fstar-ulib-smt2-small_60_rs_3-stats.md",
-    "run-0886-imp_fix_1p_off_fstar-ulib-smt2-small_60_rs_1-stats.md"
+    "run-0886-imp_fix_1p_off_fstar-ulib-smt2-small_60_rs_1-stats.md",
+    "run-0887-imp_fix_1p_off_fstar-ulib-smt2-small_60_rs_2-stats.md"
   ]
 }
