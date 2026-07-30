@@ -861,6 +861,7 @@
     "run-0858-imp_fix_off_QF_NRA_small_60_rs_1-stats.md",
     "run-0859-imp_fix_off_QF_NRA_small_60_rs_2-stats.md",
     "run-0860-imp_fix_off_QF_NRA_small_60_rs_3-stats.md",
-    "run-0861-imp_fix_on_fstar-ulib-smt2-small_60_rs_1-stats.md"
+    "run-0861-imp_fix_on_fstar-ulib-smt2-small_60_rs_1-stats.md",
+    "run-0862-imp_fix_on_fstar-ulib-smt2-small_60_rs_2-stats.md"
   ]
 }
