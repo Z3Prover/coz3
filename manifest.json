@@ -867,6 +867,7 @@
     "run-0864-imp_fix_off_fstar-ulib-smt2-small_60_rs_1-stats.md",
     "run-0865-imp_fix_off_fstar-ulib-smt2-small_60_rs_2-stats.md",
     "run-0866-imp_fix_off_fstar-ulib-smt2-small_60_rs_3-stats.md",
-    "run-0867-imp_fix_on_QF_LIA_small_60_rs_1-stats.md"
+    "run-0867-imp_fix_on_QF_LIA_small_60_rs_1-stats.md",
+    "run-0868-imp_fix_off_QF_LIA_small_60_rs_1-stats.md"
   ]
 }
