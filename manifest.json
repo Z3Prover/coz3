@@ -891,6 +891,7 @@
     "run-0888-imp_fix_1p_off_fstar-ulib-smt2-small_60_rs_3-stats.md",
     "run-0889-imp_fix_1p_on_QF_LIA_small_60_rs_1-stats.md",
     "run-0890-imp_fix_1p_off_QF_LIA_small_60_rs_1-stats.md",
-    "run-0891-qfnia-imp-fix-stats.md"
+    "run-0891-qfnia-imp-fix-stats.md",
+    "run-0892-aeq_off_QF_NIA_small-stats.md"
   ]
 }
