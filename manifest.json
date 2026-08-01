@@ -898,6 +898,7 @@
     "run-0895-aeq_on_QF_NRA_small-stats.md",
     "run-0896-eager_off_QF_NIA-stats.md",
     "run-0897-eager_off_QF_NRA-stats.md",
-    "run-0898-eager_on_QF_NIA-stats.md"
+    "run-0898-eager_on_QF_NIA-stats.md",
+    "run-0899-eager_on_QF_NRA-stats.md"
   ]
 }
