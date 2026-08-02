@@ -327,12 +327,13 @@
             </div>
             <span id="meta-progress"></span>
 
-            <div style="margin-top: 10px;">
+            <!-- Shown only while at least one report is selected -->
+            <div id="clear-selection-container" style="margin-top: 10px; display: none;">
                 <button id="clear-selection-button" onclick="clearSelection()">Clear selection</button>
             </div>
 
-            <!-- Move the delete button below the 'Previous' button -->
-            <div id="delete-button-container" style="margin-top: 10px;">
+            <!-- Shown only for a single selected report, which is the one opened -->
+            <div id="delete-button-container" style="margin-top: 10px; display: none;">
                 <button id="delete-button" onclick="confirmDeletion()">Open in GitHub</button>
             </div>
 
@@ -966,11 +967,23 @@
         }
 
 
+        // "Clear selection" is only useful once something is selected, and
+        // "Open in GitHub" opens exactly one report, so it only makes sense for
+        // a single selection. Hide each of them the rest of the time.
+        function updateSelectionButtons(selectedCount) {
+            const clearContainer = document.getElementById('clear-selection-container');
+            const openContainer = document.getElementById('delete-button-container');
+            if (clearContainer) clearContainer.style.display = selectedCount > 0 ? '' : 'none';
+            if (openContainer) openContainer.style.display = selectedCount === 1 ? '' : 'none';
+        }
+
         // Function to check the selection of radio buttons
         function checkSelection() {
             let selectedFiles = document.querySelectorAll('input[name="file"]:checked');
             const shareBtn = document.getElementById('share-button');
             const shareContainer = document.getElementById('share-button-container');
+
+            updateSelectionButtons(selectedFiles.length);
 
             if (selectedFiles.length === 1) {
                 let file = selectedFiles[0].value;
@@ -2242,30 +2255,28 @@
             highlightMatch();
         }
 
-        // Function to confirm deletion of selected files (now just opens the files in github)
+        // Opens the selected report on GitHub. The button is only shown for a
+        // single selection, so exactly one report is opened.
         function confirmDeletion() {
             const selectedFiles = document.querySelectorAll('input[name="file"]:checked');
-            
-            if (selectedFiles.length === 0) {
-                alert('Please select at least one file to open in GitHub.');
+
+            if (selectedFiles.length !== 1) {
+                alert('Please select exactly one file to open in GitHub.');
                 return;
             }
-            
-            const fileNames = Array.from(selectedFiles).map(checkbox => checkbox.value).join(', ');
-            
-            //if (confirm(`Are you sure you want to delete the following files?\n${fileNames}`)) {
-                deleteSelectedFiles(Array.from(selectedFiles).map(checkbox => checkbox.value));
-            //}
+
+            openFilesInGitHub(Array.from(selectedFiles).map(checkbox => checkbox.value));
         }
-        
-        // Function to delete the selected files. It just opens a link in github to delete
-        // the file in the repo.
-        function deleteSelectedFiles(fileNames) {
+
+        // Repo hosting the published stats reports (see update-coz3-pages.yml).
+        const PAGES_REPO_URL = 'https://github.com/Z3Prover/coz3/blob/main/';
+
+        // Open each report's source file on GitHub in a new tab.
+        function openFilesInGitHub(fileNames) {
             if (!fileNames.length) return;
-            
-            // Create a fetch request for each file deletion
-            //window.open("https://github.com/");
+
             for (const file of fileNames) {
+                window.open(PAGES_REPO_URL + encodeURIComponent(file), '_blank', 'noopener');
             }
         }
 
