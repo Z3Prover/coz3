@@ -215,7 +215,10 @@
             margin-top: 6px;
         }
 
+        /* Hidden until a two-report comparison actually renders a chart, so the
+           page never shows an empty framed rectangle. */
         #statsChart {
+            display: none;
             margin-top: 12px;
             background: var(--panel);
             border: 1px solid var(--line);
@@ -984,10 +987,7 @@
                 if (shareContainer) shareContainer.style.display = '';
             } else {
                 document.getElementById('message').textContent = '';
-                if (chartInstance) {
-                    chartInstance.destroy();
-                    chartInstance = null;
-                }
+                hideStatsChart();
                 clearPermalink();
                 if (shareContainer) shareContainer.style.display = 'none';
             }
@@ -1098,6 +1098,7 @@
                         chartInstance.destroy();
                         chartInstance = null;
                     }
+                    setStatsChartVisible(false);
                     let stats = extractStats(content);
                     let summary = summarizeFile(file, stats);
 
@@ -1148,7 +1149,10 @@
                     document.getElementById('message').innerHTML = comparisonResult;
                     plotStats(file1, file2, stats1.stats, stats2.stats);
                 })
-                .catch(error => console.error('Error comparing files:', error));
+                .catch(error => {
+                    hideStatsChart();
+                    console.error('Error comparing files:', error);
+                });
         }
 
         // Function to parse time from a string
@@ -1536,6 +1540,23 @@
         let chartInstance = null;
         const TABLE_PAGE_SIZE = 600;
 
+        // The chart canvas is styled as a card, so leaving it in the layout with
+        // nothing drawn on it renders an empty white rectangle. Keep it hidden
+        // unless a comparison chart is actually being displayed.
+        function setStatsChartVisible(visible) {
+            const canvas = document.getElementById('statsChart');
+            if (canvas) canvas.style.display = visible ? 'block' : 'none';
+        }
+
+        // Tear down any existing chart and hide its canvas.
+        function hideStatsChart() {
+            if (chartInstance) {
+                chartInstance.destroy();
+                chartInstance = null;
+            }
+            setStatsChartVisible(false);
+        }
+
         const DEFAULT_TIMEOUT = 10; // seconds, used when no timeout can be inferred from data
         const PAR2_PENALTY_FACTOR = 2; // penalty multiplier for unsolved instances in Par2 scoring
 
@@ -1660,15 +1681,24 @@
             }
             const axisMax = Math.pow(10, Math.ceil(Math.log10(Math.max(dataMax, dynamicFloor * 10))));
 
+            // Nothing in common between the two reports: there is no graph to
+            // show, so tear the canvas down instead of leaving an empty card.
+            if (rawPairs.length === 0) {
+                hideStatsChart();
+                return;
+            }
+
             // Destroy existing chart instance if it exists
             if (chartInstance) {
                 chartInstance.destroy();
+                chartInstance = null;
             }
 
             // Set specific dimensions for the canvas
             const canvas = document.getElementById(canvasId);
             canvas.style.maxWidth = '600px';
             canvas.style.maxHeight = '600px';
+            setStatsChartVisible(true);
 
             const ctx = canvas.getContext('2d');
             chartInstance = new Chart(ctx, {
