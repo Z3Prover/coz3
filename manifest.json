@@ -914,6 +914,7 @@
     "run-0911-regexes-monadic-stats.md",
     "run-0912-qf-s-monadic-opt-stats.md",
     "run-0913-20260803-QF_NIA_small-linearize_violated_monomials-on-T60-stats.md",
-    "run-0914-20260803-QF_NRA_small-linearize_violated_monomials-on-T60-stats.md"
+    "run-0914-20260803-QF_NRA_small-linearize_violated_monomials-on-T60-stats.md",
+    "run-0915-20260803-QF_NRA_small-linearize_violated_monomials-off-T60-stats.md"
   ]
 }
