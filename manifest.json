@@ -905,6 +905,7 @@
     "run-0902-qf-s-monadic-stats.md",
     "run-0903-qf-s-no-monadic-stats.md",
     "run-0904-regexes-c3-stats.md",
-    "run-0905-regexes-monadic-stats.md"
+    "run-0905-regexes-monadic-stats.md",
+    "run-0906-regexes-no-monadic-stats.md"
   ]
 }
