@@ -902,6 +902,7 @@
     "run-0899-eager_on_QF_NRA-stats.md",
     "run-0900-aeq_on_QF_NRA-stats.md",
     "run-0901-aeq_on_QF_NIA-stats.md",
-    "run-0902-qf-s-monadic-stats.md"
+    "run-0902-qf-s-monadic-stats.md",
+    "run-0903-qf-s-no-monadic-stats.md"
   ]
 }
