@@ -911,6 +911,7 @@
     "run-0908-qf-slia-monadic-stats.md",
     "run-0909-qf-slia-nseq-stats.md",
     "run-0910-regexes-monadic-opt-stats.md",
-    "run-0911-regexes-monadic-stats.md"
+    "run-0911-regexes-monadic-stats.md",
+    "run-0912-qf-s-monadic-opt-stats.md"
   ]
 }
