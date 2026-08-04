@@ -918,6 +918,7 @@
     "run-0915-20260803-QF_NRA_small-linearize_violated_monomials-off-T60-stats.md",
     "run-0916-20260803-QF_NIA_small-linearize_violated_monomials-off-T60-stats.md",
     "run-0917-qf-s-monadic-refine-stats.md",
-    "run-0918-qf-s-monadic-refine-stats.md"
+    "run-0918-qf-s-monadic-refine-stats.md",
+    "run-0919-qf-s-monadic-refine-stats.md"
   ]
 }
