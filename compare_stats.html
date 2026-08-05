@@ -1246,18 +1246,23 @@
         const SZS_STATUSES = new Set([...SZS_SUCCESS, ...SZS_NOSUCCESS]);
 
         // Resolve a meaningful status label from the raw status and exit code
-        function resolveStatus(rawStatus, rc) {
+        function isBenignInfo(info) {
+            return /^benign:/i.test(info || '');
+        }
+
+        function resolveStatus(rawStatus, rc, info) {
             // If the solver produced a recognized result, keep it.
             // 'bug' is a verdict (e.g. unsoundness / model-validation failure)
             // that must be preserved verbatim even when the exit code is 0.
-            if (rawStatus === 'sat' || rawStatus === 'unsat' ||
+            if ((rc === 0 || isBenignInfo(info)) &&
+                (rawStatus === 'sat' || rawStatus === 'unsat' ||
                 rawStatus === 'timeout' || rawStatus === 'unknown' ||
-                rawStatus === 'bug') {
+                rawStatus === 'bug')) {
                 return rawStatus;
             }
             // TPTP/SZS status (Unsatisfiable, CounterSatisfiable, Timeout, ...).
             // Reported verbatim and tracked under the SZS taxonomy.
-            if (SZS_STATUSES.has(rawStatus)) {
+            if (rc === 0 && SZS_STATUSES.has(rawStatus)) {
                 return rawStatus;
             }
             // Otherwise, derive a label from the exit code
@@ -1286,25 +1291,36 @@
         }
 
         // Function to extract stats from a line
-        function extractStatsFromLine(stats, line) {
-            const fields = line.split('|').map(field => field.trim()).filter(field => field.length > 0);
-            if (fields.length === 0 || !/\.(smt2|p)$/.test(fields[0])) {
+        function parseMarkdownRow(line) {
+            if (!line.startsWith('|')) return [];
+            const fields = line.split('|');
+            return fields.slice(1, fields.length - 1).map(field => field.trim());
+        }
+
+        function extractStatsFromLine(stats, line, columns) {
+            const fields = parseMarkdownRow(line);
+            const indexOf = (name, fallback) =>
+                columns && columns[name] !== undefined ? columns[name] : fallback;
+            const file = fields[indexOf('FILE', 0)];
+            if (!file || !/\.(smt2|p)$/.test(file)) {
                 return;
             }
 
-            const file = fields[0];
-            const time = fields[1];
-            const mb = fields[2];
-            const rawStatus = fields[3];
-            const code = fields[4];
+            const time = fields[indexOf('TIME', 1)];
+            const mb = fields[indexOf('MEM', 2)];
+            const rawStatus = fields[indexOf('STATUS', 3)];
+            const code = fields[indexOf('EXIT', 4)];
+            const infoIndex = indexOf('INFO', -1);
+            const info = infoIndex >= 0 ? fields[infoIndex] || '' : '';
             const rc = parseInt(code, 10);
 
             const st = {
                 file: file,
-                status: resolveStatus(rawStatus, rc),
+                status: resolveStatus(rawStatus, rc, info),
                 time: parseTime(time),
                 rc: rc,
-                mem: parseMem(mb)
+                mem: parseMem(mb),
+                info: info
             };
 
             stats[file] = st;
@@ -1322,6 +1338,7 @@
             const MAX_COMMIT_LINES = 2;
             let commitLineCount = 0;
             let droppedCommitLines = 0;
+            let columns = null;
 
             const lines = text.split('\n');
 
@@ -1355,7 +1372,18 @@
                     meta += '\n';
                     continue;
                 }
-                extractStatsFromLine(stats, line);
+                const fields = parseMarkdownRow(line);
+                if (fields.length > 0 && fields[0].toUpperCase() === 'FILE') {
+                    columns = {};
+                    fields.forEach((field, index) => {
+                        const name = field.toUpperCase();
+                        if (columns[name] === undefined) {
+                            columns[name] = index;
+                        }
+                    });
+                    continue;
+                }
+                extractStatsFromLine(stats, line, columns);
             }
 
             if (droppedCommitLines > 0) {
@@ -1373,12 +1401,16 @@
             let numTimeout = 0;
             let numUnknown = 0;
             let numErr = 0;
+            let numBenign = 0;
             const errorBreakdown = {};
             const szsBreakdown = {};
 
             for (const s of Object.values(stats)) {
                 if (s.rc !== 0) {
                     numErr += 1;
+                }
+                if (isBenignInfo(s.info)) {
+                    numBenign += 1;
                 }
                 // SZS (TPTP) results are tallied under their own taxonomy.
                 if (SZS_STATUSES.has(s.status)) {
@@ -1418,6 +1450,9 @@
                     .map(([label, count]) => `${label}:${count}`)
                     .join(', ');
                 result += `<li>errors: ${totalErrors} (${breakdown})</li>`;
+            }
+            if (numBenign > 0) {
+                result += `<li>benign diagnostics: ${numBenign} (model query without model)</li>`;
             }
             const szsTotal = Object.values(szsBreakdown).reduce((a, b) => a + b, 0);
             if (szsTotal > 0) {
@@ -1908,9 +1943,13 @@
                 rows += `<td>${stat1.status || ''}</td>`;
                 rows += `<td>${stat1.time !== undefined ? stat1.time + 's' : ''}</td>`;
                 rows += `<td>${stat1.mem !== undefined ? (stat1.mem) : ''}</td>`;
+                rows += `<td>${stat1.rc !== undefined ? stat1.rc : ''}</td>`;
+                rows += `<td>${escapeHtml(stat1.info || '')}</td>`;
                 rows += `<td>${stat2.status || ''}</td>`;
                 rows += `<td>${stat2.time !== undefined ? stat2.time + 's' : ''}</td>`;
                 rows += `<td>${stat2.mem !== undefined ? (stat2.mem) : ''}</td>`;
+                rows += `<td>${stat2.rc !== undefined ? stat2.rc : ''}</td>`;
+                rows += `<td>${escapeHtml(stat2.info || '')}</td>`;
                 rows += `<td>${timeDiff !== null ? timeDiff.toFixed(3) : ''}</td>`;
                 rows += '</tr>';
             });
@@ -1940,7 +1979,7 @@
 
             let result = renderTableControls('summary', data.length, page, pageCount);
             result += '<table border="1" style="width: 100%;">';
-            result += '<tr><th>File</th><th>Status</th><th>Time</th><th>Memory</th><th>Return code</th></tr>';
+            result += '<tr><th>File</th><th>Status</th><th>Time</th><th>Memory</th><th>Return code</th><th>Info</th></tr>';
             rows.forEach(item => {
                 const stat = item.stat || {};
                 result += '<tr>';
@@ -1949,6 +1988,7 @@
                 result += `<td>${stat.time !== undefined ? stat.time + 's' : ''}</td>`;
                 result += `<td>${stat.mem !== undefined ? stat.mem : ''}</td>`;
                 result += `<td>${stat.rc !== undefined ? stat.rc : ''}</td>`;
+                result += `<td>${escapeHtml(stat.info || '')}</td>`;
                 result += '</tr>';
             });
             result += '</table>';
@@ -1966,8 +2006,8 @@
 
             let result = renderTableControls('comparison', data.length, page, pageCount);
             result += '<table border="1" style="width: 100%;" id="comparisonTable">';
-            result += '<tr><th>File</th><th>Status 1</th><th>Time 1</th><th>Memory 1</th><th>Status 2</th><th>Time 2</th><th>Memory 2</th><th>Time Diff (s)</th></tr>';
-            result += '<tr><th>' + sort_file + '</th><th>  </th><th>' + sort_time1 + '</th><th>' + sort_mem1 + '</th><th> </th><th>' + sort_time2 + '</th><th>' + sort_mem2 + '</th><th>' + sort_diff + '</th></tr>';
+            result += '<tr><th>File</th><th>Status 1</th><th>Time 1</th><th>Memory 1</th><th>Return code 1</th><th>Info 1</th><th>Status 2</th><th>Time 2</th><th>Memory 2</th><th>Return code 2</th><th>Info 2</th><th>Time Diff (s)</th></tr>';
+            result += '<tr><th>' + sort_file + '</th><th>  </th><th>' + sort_time1 + '</th><th>' + sort_mem1 + '</th><th></th><th></th><th> </th><th>' + sort_time2 + '</th><th>' + sort_mem2 + '</th><th></th><th></th><th>' + sort_diff + '</th></tr>';
             result += generateTableRows(pageData);
             result += '</table>';
             result += renderTableControls('comparison', data.length, page, pageCount);
