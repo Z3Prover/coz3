@@ -926,6 +926,7 @@
     "run-0923-regexes-monadic-stats.md",
     "run-0924-regexes-monadic-stats.md",
     "run-0925-margus-regexes-monadic-stats.md",
-    "run-0926-margus-regexes-live-states-stats.md"
+    "run-0926-margus-regexes-live-states-stats.md",
+    "run-0927-qf-s-monadic-refine-stats.md"
   ]
 }
