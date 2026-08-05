@@ -931,6 +931,7 @@
     "run-0928-qf-s-monadic-refine-stats.md",
     "run-0929-qf-s-monadic-refine-stats.md",
     "run-0930-qf-s-monadic-refine-stats.md",
-    "run-0931-regexes-master-stats.md"
+    "run-0931-regexes-master-stats.md",
+    "run-0932-qf-s-dfs-opt-stats.md"
   ]
 }
