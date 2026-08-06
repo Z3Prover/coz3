@@ -936,6 +936,7 @@
     "run-0933-regexes-seq-dnf-opt-stats.md",
     "run-0934-qf-s-margus-seq-live-states-stats.md",
     "run-0935-qf-s-margus-master-stats.md",
-    "run-0936-margus-regexes-monadic-stats.md"
+    "run-0936-margus-regexes-monadic-stats.md",
+    "run-0937-margus-regexes-live-states-stats.md"
   ]
 }
