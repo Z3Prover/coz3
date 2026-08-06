@@ -933,6 +933,7 @@
     "run-0930-qf-s-monadic-refine-stats.md",
     "run-0931-regexes-master-stats.md",
     "run-0932-qf-s-dfs-opt-stats.md",
-    "run-0933-regexes-seq-dnf-opt-stats.md"
+    "run-0933-regexes-seq-dnf-opt-stats.md",
+    "run-0934-qf-s-margus-seq-live-states-stats.md"
   ]
 }
