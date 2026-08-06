@@ -938,6 +938,7 @@
     "run-0935-qf-s-margus-master-stats.md",
     "run-0936-margus-regexes-monadic-stats.md",
     "run-0937-margus-regexes-live-states-stats.md",
-    "run-0938-lprobe-QF_NRA_small-stats.md"
+    "run-0938-lprobe-QF_NRA_small-stats.md",
+    "run-0939-master-QF_NRA_small-stats.md"
   ]
 }
