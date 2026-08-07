@@ -953,6 +953,7 @@
     "run-0950-linprobe_true_fstar-ulib-smt2-stats.md",
     "run-0951-linprobe_false_fstar-ulib-smt2-stats.md",
     "run-0952-lprobe_1_true_fstar-ulib-smt2-stats.md",
-    "run-0953-lprobe_1_false_fstar-ulib-smt2-stats.md"
+    "run-0953-lprobe_1_false_fstar-ulib-smt2-stats.md",
+    "run-0954-lprobe_fixed_false_QF_NIA_small-stats.md"
   ]
 }
