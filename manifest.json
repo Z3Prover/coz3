@@ -950,6 +950,7 @@
     "run-0947-linprobe_false_QF_NIA_small-stats.md",
     "run-0948-linprobe_true_QF_NRA_small-stats.md",
     "run-0949-linprobe_false_QF_NRA_small-stats.md",
-    "run-0950-linprobe_true_fstar-ulib-smt2-stats.md"
+    "run-0950-linprobe_true_fstar-ulib-smt2-stats.md",
+    "run-0951-linprobe_false_fstar-ulib-smt2-stats.md"
   ]
 }
