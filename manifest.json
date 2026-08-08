@@ -957,6 +957,7 @@
     "run-0954-lprobe_fixed_false_QF_NIA_small-stats.md",
     "run-0955-lprobe_fixed_true_QF_NIA_small-stats.md",
     "run-0956-lprobe_fixed_true_QF_NRA_small-stats.md",
-    "run-0957-lprobe_fixed_false_QF_NRA_small-stats.md"
+    "run-0957-lprobe_fixed_false_QF_NRA_small-stats.md",
+    "run-0958-margus-regexes-live-states-eval-stats.md"
   ]
 }
