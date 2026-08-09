@@ -963,6 +963,7 @@
     "run-0960-monadic-budget-1m-stats.md",
     "run-0961-monadic-budget-200k-stats.md",
     "run-0962-qfnia-imp-fix-stats.md",
-    "run-0963-qfnia-round-robin-stats.md"
+    "run-0963-qfnia-round-robin-stats.md",
+    "run-0964-qfnia-master-stats.md"
   ]
 }
