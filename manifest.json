@@ -962,6 +962,7 @@
     "run-0959-qf-s-margus-seq-live-states-eval-stats.md",
     "run-0960-monadic-budget-1m-stats.md",
     "run-0961-monadic-budget-200k-stats.md",
-    "run-0962-qfnia-imp-fix-stats.md"
+    "run-0962-qfnia-imp-fix-stats.md",
+    "run-0963-qfnia-round-robin-stats.md"
   ]
 }
