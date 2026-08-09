@@ -965,6 +965,7 @@
     "run-0962-qfnia-imp-fix-stats.md",
     "run-0963-qfnia-round-robin-stats.md",
     "run-0964-qfnia-master-stats.md",
-    "run-0965-regexes-master-stats.md"
+    "run-0965-regexes-master-stats.md",
+    "run-0966-regexes-seq-dnf-opt-stats.md"
   ]
 }
