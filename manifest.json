@@ -971,6 +971,7 @@
     "run-0968-qf-s-seq-length-lookahead-stats.md",
     "run-0969-regexes-seq-dnf-opt-stats.md",
     "run-0970-regexes-seq-monadic-core-stats.md",
-    "run-0971-regexes-seq-monadic-sl-stats.md"
+    "run-0971-regexes-seq-monadic-sl-stats.md",
+    "run-0972-regexes-seq-dnf-opt-stats.md"
   ]
 }
