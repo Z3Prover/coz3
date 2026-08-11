@@ -982,6 +982,7 @@
     "run-0979-eager-true-fstar-ulib-smt2-stats.md",
     "run-0980-eager-false-fstar-ulib-smt2-stats.md",
     "run-0981-regexes-seq-filter-single-var-groups-stats.md",
-    "run-0982-qfnia-round-robin2-stats.md"
+    "run-0982-qfnia-round-robin2-stats.md",
+    "run-0983-qf-s-seq-filter-single-var-groups-stats.md"
   ]
 }
