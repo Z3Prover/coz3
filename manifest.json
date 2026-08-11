@@ -973,6 +973,7 @@
     "run-0970-regexes-seq-monadic-core-stats.md",
     "run-0971-regexes-seq-monadic-sl-stats.md",
     "run-0972-regexes-seq-dnf-opt-stats.md",
-    "run-0973-eager-true-QF_NIA_small-stats.md"
+    "run-0973-eager-true-QF_NIA_small-stats.md",
+    "run-0974-eager-false-QF_NIA_small-stats.md"
   ]
 }
