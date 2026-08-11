@@ -978,6 +978,7 @@
     "run-0975-eager-true-QF_NRA_small-stats.md",
     "run-0976-eager-false-QF_NRA_small-stats.md",
     "run-0977-eager-true-certora-stats.md",
-    "run-0978-eager-false-certora-stats.md"
+    "run-0978-eager-false-certora-stats.md",
+    "run-0979-eager-true-fstar-ulib-smt2-stats.md"
   ]
 }
