@@ -986,6 +986,7 @@
     "run-0983-qf-s-seq-filter-single-var-groups-stats.md",
     "run-0984-regexes-master-stats.md",
     "run-0985-regexes-master-stats.md",
-    "run-0986-qfnia-avoid-grobner-horner-stats.md"
+    "run-0986-qfnia-avoid-grobner-horner-stats.md",
+    "run-0987-regexes-master-stats.md"
   ]
 }
