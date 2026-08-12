@@ -984,6 +984,7 @@
     "run-0981-regexes-seq-filter-single-var-groups-stats.md",
     "run-0982-qfnia-round-robin2-stats.md",
     "run-0983-qf-s-seq-filter-single-var-groups-stats.md",
-    "run-0984-regexes-master-stats.md"
+    "run-0984-regexes-master-stats.md",
+    "run-0985-regexes-master-stats.md"
   ]
 }
