@@ -992,6 +992,7 @@
     "run-0989-qfnia-round-robin-stats.md",
     "run-0990-qfnia-master-stats.md",
     "run-0991-regexes-seq-monadic-orientation-stats.md",
-    "run-0992-regexes-seq-monadic-orientation-stats.md"
+    "run-0992-regexes-seq-monadic-orientation-stats.md",
+    "run-0993-regexes-seq-monadic-orientation-stats.md"
   ]
 }
