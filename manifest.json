@@ -997,6 +997,7 @@
     "run-0994-rrmerge_QF_NIA_timeout200-stats.md",
     "run-0995-dio10417-QF_LIA_small-base-stats.md",
     "run-0996-dio10417-QF_LIA_small-fix-stats.md",
-    "run-0997-qfnia-squeeze-backoff-v2-stats.md"
+    "run-0997-qfnia-squeeze-backoff-v2-stats.md",
+    "run-0998-regexes-seq-monadic-view-output-stats.md"
   ]
 }
