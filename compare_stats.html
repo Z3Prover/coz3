@@ -215,6 +215,28 @@
             margin-top: 6px;
         }
 
+        /* Metadata blocks must wrap: a single long line (job description,
+           options, ...) would otherwise widen its flex column and push the
+           side-by-side comparison off the screen. */
+        #message pre,
+        #message h3 {
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        /* Long benchmark file paths in the results tables must break, and the
+           table containers scroll horizontally as a fallback, so the tables
+           never widen the page itself. */
+        #message td,
+        #message th {
+            overflow-wrap: anywhere;
+        }
+
+        #summaryTableContainer,
+        #comparisonTableContainer {
+            overflow-x: auto;
+        }
+
         /* Hidden until a two-report comparison actually renders a chart, so the
            page never shows an empty framed rectangle. */
         #statsChart {
@@ -1336,6 +1358,10 @@
             // the side-by-side layout when comparing two runs.
             const COMMIT_PREFIX = 'Z3 commit message:';
             const MAX_COMMIT_LINES = 2;
+            // Likewise cap the "Job description: ..." line so a verbose
+            // description doesn't dominate the metadata block.
+            const DESCRIPTION_PREFIX = 'Job description:';
+            const MAX_DESCRIPTION_CHARS = 160;
             let commitLineCount = 0;
             let droppedCommitLines = 0;
             let columns = null;
@@ -1366,6 +1392,11 @@
                         meta += line;
                         meta += '\n';
                         commitLineCount = 1;
+                        continue;
+                    }
+                    if (line.startsWith(DESCRIPTION_PREFIX) && line.length > MAX_DESCRIPTION_CHARS) {
+                        meta += line.substring(0, MAX_DESCRIPTION_CHARS) + ' ...';
+                        meta += '\n';
                         continue;
                     }
                     meta += line;
@@ -1864,7 +1895,9 @@
             result += '<div style="display: flex; gap: 20px; margin-bottom: 20px;">';
 
             // Left column - older job
-            result += '<div style="flex: 1;">';
+            // min-width: 0 lets the columns shrink below their content width,
+            // so long metadata lines wrap instead of widening the layout.
+            result += '<div style="flex: 1; min-width: 0;">';
             result += '<h3>' + file1 + '</h3>';
             result += '<pre>';
             result += meta1;
@@ -1874,7 +1907,7 @@
             result += '</div>';
 
             // Right column - newer job
-            result += '<div style="flex: 1;">';
+            result += '<div style="flex: 1; min-width: 0;">';
             result += '<h3>' + file2 + '</h3>';
             result += '<pre>';
             result += meta2;
