@@ -1000,6 +1000,7 @@
     "run-0997-qfnia-squeeze-backoff-v2-stats.md",
     "run-0998-regexes-seq-monadic-view-output-stats.md",
     "run-0999-regexes-seq-monadic-view-output-stats.md",
-    "run-1000-regexes-seq-monadic-regex-split-stats.md"
+    "run-1000-regexes-seq-monadic-regex-split-stats.md",
+    "run-1001-regexes-seq-monadic-regex-split-stats.md"
   ]
 }
