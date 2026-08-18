@@ -384,7 +384,7 @@
         // allFiles: [{ name, runNum, metadata?: {...} }]
         let allFiles = [];
         let metadataCache = {};
-        const METADATA_CACHE_KEY = 'compare_stats.metadataCache.v1';
+        const METADATA_CACHE_KEY = 'compare_stats.metadataCache.v2';
         let metaLoadedCount = 0;
         const META_CONCURRENCY = 8;
         // Only fetch the first chunk of each stats file. The <pre>...</pre>
@@ -424,7 +424,7 @@
         }
 
         // Parse the <pre>...</pre> metadata block from a stats file body.
-        // Returns an object with keys: description, tag, runner, repo,
+        // Returns an object with keys: experimentDate, description, tag, runner, repo,
         // commit, branch, options, inputs, commitMessage.
         // (Same logic also runs inside the worker; kept on the main thread
         // for tests / fallback when Web Workers aren't available.)
@@ -439,6 +439,7 @@
                 : body.substring(preStart + 5);
             const lines = block.split('\n');
             const map = {
+                'Experiment date and time': 'experimentDate',
                 'Job description': 'description',
                 'Job tag': 'tag',
                 'Runner': 'runner',
@@ -477,6 +478,7 @@
                     : body.substring(preStart + 5);
                 const lines = block.split('\\n');
                 const map = {
+                    'Experiment date and time': 'experimentDate',
                     'Job description': 'description',
                     'Job tag': 'tag',
                     'Runner': 'runner',
@@ -1421,7 +1423,19 @@
                 meta += `... (${droppedCommitLines} more line${droppedCommitLines === 1 ? '' : 's'} of commit message truncated)\n`;
             }
 
-            return { meta, stats };
+            return { meta: prioritizeExperimentDate(meta), stats };
+        }
+
+        function prioritizeExperimentDate(meta) {
+            const lines = meta.trim().split('\n');
+            const prefix = 'Experiment date and time:';
+            const dateLines = lines.filter(line => line.startsWith(prefix));
+            if (dateLines.length === 0) return meta.trim();
+
+            const remaining = lines.filter(line => !line.startsWith(prefix));
+            const insertAt = remaining.length > 1 && remaining[1].trim() === '-' ? 2 : 1;
+            remaining.splice(insertAt, 0, ...dateLines);
+            return remaining.join('\n');
         }
 
 
