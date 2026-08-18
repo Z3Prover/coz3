@@ -1003,6 +1003,7 @@
     "run-1000-regexes-seq-monadic-regex-split-stats.md",
     "run-1001-regexes-seq-monadic-regex-split-stats.md",
     "run-1002-regexes-seq-monadic-regex-split-stats.md",
-    "run-1003-qf-s-seq-monadic-regex-split-stats.md"
+    "run-1003-qf-s-seq-monadic-regex-split-stats.md",
+    "run-1004-master-stats.md"
   ]
 }
