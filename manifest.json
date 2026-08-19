@@ -1005,6 +1005,7 @@
     "run-1002-regexes-seq-monadic-regex-split-stats.md",
     "run-1003-qf-s-seq-monadic-regex-split-stats.md",
     "run-1004-master-stats.md",
-    "run-1005-nla-backoff-pr-NRA-stats.md"
+    "run-1005-nla-backoff-pr-NRA-stats.md",
+    "run-1006-nla-backoff-baseline-NRA-stats.md"
   ]
 }
