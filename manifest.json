@@ -1013,6 +1013,7 @@
     "run-1010-nla-backoff-baseline-fstar-build-stats.md",
     "run-1011-regexes-seq-eq-approx-stats.md",
     "run-1012-qf-s-seq-eq-approx-stats.md",
-    "run-1013-iss3613-QF_ANIA-stats.md"
+    "run-1013-iss3613-QF_ANIA-stats.md",
+    "run-1014-iss3613-QF_S-stats.md"
   ]
 }
