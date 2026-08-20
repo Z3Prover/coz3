@@ -1011,6 +1011,7 @@
     "run-1008-nla-backoff-baseline-QF_NIA_SAT-stats.md",
     "run-1009-nla-backoff-pr-fstar-build-stats.md",
     "run-1010-nla-backoff-baseline-fstar-build-stats.md",
-    "run-1011-regexes-seq-eq-approx-stats.md"
+    "run-1011-regexes-seq-eq-approx-stats.md",
+    "run-1012-qf-s-seq-eq-approx-stats.md"
   ]
 }
