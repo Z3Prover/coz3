@@ -1027,6 +1027,7 @@
     "run-1024-iss3613-base-AUFLIRA-stats.md",
     "run-1025-iss3613-QF_UFNIA-certora-stats.md",
     "run-1026-iss3613-base-QF_UFNIA-certora-stats.md",
-    "run-1027-qf-slia-master-stats.md"
+    "run-1027-qf-slia-master-stats.md",
+    "run-1028-qf-slia-nseq-stats.md"
   ]
 }
