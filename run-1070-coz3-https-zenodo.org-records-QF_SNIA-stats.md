@@ -1,0 +1,100 @@
+# .
+
+* SAT 70
+* UNSAT 0
+* TIMEOUT 0
+* UNKNOWN 0
+
+* ERRORS 0
+
+# Meta data
+
+<pre>
+Ramon benchmark for Z3
+-
+Experiment date and time: 2026-09-01 21:03:26 UTC
+Job description: Triggered by CoZ3 Benchmark Runner | Benchmark suite: https://zenodo.org/records/16740866/files/QF_SNIA.tar.zst?download=1 | Source list: benchmarks-qf.txt
+Job tag: coz3-https-zenodo.org-records-QF_SNIA
+Runner: rise-runner-2
+Z3 repo: Z3Prover/z3
+Z3 commit: 532bff7af54bbe1359bc456c8060fe5fb545093b
+Z3 branch: master
+Z3 options: "-T:20 model_validate=true"
+Z3 inputs: https://zenodo.org/records/16740866/files/QF_SNIA.tar.zst?download=1
+Z3 commit message: Removed misplaced comment
+</pre>
+
+
+# Statistics
+|FILE                                                         |TIME     |MEM        | STATUS   | EXIT | INFO |
+|------------|----------:|---------:|-------------:| ----------:|------|
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1553.corecstrs.readable.smt2 |    0.024s | 20.364MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/2008.corecstrs.readable.smt2 |    0.024s | 20.18MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1573.corecstrs.readable.smt2 |    0.024s | 20.36MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1567.corecstrs.readable.smt2 |    0.024s | 20.644MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1568.corecstrs.readable.smt2 |    0.024s | 20.876MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1626.corecstrs.readable.smt2 |    0.024s | 20.368MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1635.corecstrs.readable.smt2 |    0.024s | 20.364MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1552.corecstrs.readable.smt2 |    0.024s | 20.368MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20200224-Wu-PyExZ3/e007cfdcf4dd61007107222cbedbb46ad161a945ab5ee0a68d3f585a.smt2 |    0.025s | 21.136MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/851.corecstrs.readable.smt2 |    0.025s | 20.544MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1885.corecstrs.readable.smt2 |    0.025s | 20.708MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/2010.corecstrs.readable.smt2 |    0.025s | 20.412MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1594.corecstrs.readable.smt2 |    0.025s | 20.508MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20200224-Wu-PyExZ3/5735c9082c3f9cd487c6376032029bb499ba1f87113dc9ca03adc6bc.smt2 |    0.026s | 21.128MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/808.corecstrs.readable.smt2 |    0.026s | 20.428MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1597.corecstrs.readable.smt2 |    0.026s | 20.6MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20200224-Wu-PyExZ3/dddb9cc1f86d5738fd85ffa1b430c4e9df9771c0fffa945b9b414772.smt2 |    0.027s | 20.832MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20200224-Wu-PyExZ3/f72b09bc9444f702ad7cdf3a9075754e71d673f3d134d9f485f6608a.smt2 |    0.028s | 21.048MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1575.corecstrs.readable.smt2 |    0.028s | 20.472MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1596.corecstrs.readable.smt2 |    0.028s | 20.444MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20200224-Wu-PyExZ3/bdcb3877984a55b540face066045c4642cba1bc553af78576a41a76e.smt2 |    0.029s | 20.944MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1589.corecstrs.readable.smt2 |    0.029s | 20.4MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1907.corecstrs.readable.smt2 |    0.031s | 20.468MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1557.corecstrs.readable.smt2 |    0.044s | 20.784MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1554.corecstrs.readable.smt2 |    0.044s | 20.404MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/849.corecstrs.readable.smt2 |    0.045s | 20.612MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/826.corecstrs.readable.smt2 |    0.045s | 20.868MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1884.corecstrs.readable.smt2 |    0.045s | 20.384MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1572.corecstrs.readable.smt2 |    0.045s | 20.364MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/825.corecstrs.readable.smt2 |    0.046s | 20.62MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/823.corecstrs.readable.smt2 |    0.046s | 20.892MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1910.corecstrs.readable.smt2 |    0.046s | 20.404MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/824.corecstrs.readable.smt2 |    0.047s | 20.52MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1636.corecstrs.readable.smt2 |    0.047s | 20.364MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1574.corecstrs.readable.smt2 |    0.048s | 20.66MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1598.corecstrs.readable.smt2 |    0.048s | 20.488MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/2007.corecstrs.readable.smt2 |    0.048s | 20.392MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1886.corecstrs.readable.smt2 |    0.048s | 20.36MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/838.corecstrs.readable.smt2 |    0.049s | 20.664MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/811.corecstrs.readable.smt2 |    0.049s | 20.432MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1576.corecstrs.readable.smt2 |    0.050s | 20.38MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/2009.corecstrs.readable.smt2 |    0.050s | 20.404MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/845.corecstrs.readable.smt2 |    0.051s | 20.368MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/821.corecstrs.readable.smt2 |    0.051s | 20.724MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1551.corecstrs.readable.smt2 |    0.051s | 20.448MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1997.corecstrs.readable.smt2 |    0.051s | 20.828MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/809.corecstrs.readable.smt2 |    0.052s | 20.624MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/839.corecstrs.readable.smt2 |    0.052s | 20.384MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/846.corecstrs.readable.smt2 |    0.052s | 20.412MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1634.corecstrs.readable.smt2 |    0.052s | 20.408MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1590.corecstrs.readable.smt2 |    0.052s | 20.38MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1628.corecstrs.readable.smt2 |    0.052s | 20.32MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1633.corecstrs.readable.smt2 |    0.052s | 20.484MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/827.corecstrs.readable.smt2 |    0.053s | 20.616MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/822.corecstrs.readable.smt2 |    0.053s | 20.412MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/820.corecstrs.readable.smt2 |    0.053s | 20.904MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1908.corecstrs.readable.smt2 |    0.053s | 20.324MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1555.corecstrs.readable.smt2 |    0.053s | 20.36MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1556.corecstrs.readable.smt2 |    0.053s | 20.624MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1909.corecstrs.readable.smt2 |    0.053s | 20.424MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1595.corecstrs.readable.smt2 |    0.053s | 20.496MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1588.corecstrs.readable.smt2 |    0.053s | 20.456MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1637.corecstrs.readable.smt2 |    0.053s | 20.428MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/843.corecstrs.readable.smt2 |    0.054s | 20.432MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/840.corecstrs.readable.smt2 |    0.054s | 20.64MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1627.corecstrs.readable.smt2 |    0.054s | 20.52MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1550.corecstrs.readable.smt2 |    0.054s | 20.64MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1911.corecstrs.readable.smt2 |    0.054s | 20.376MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/big/812.corecstrs.readable.smt2 |    0.055s | 20.588MiB| sat | 0 |  |
+|non-incremental/QF_SNIA/20180523-Reynolds/kaluza/sat/small/1566.corecstrs.readable.smt2 |    0.055s | 20.404MiB| sat | 0 |  |
