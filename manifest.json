@@ -1131,6 +1131,7 @@
     "run-1128-qfnia-master-stats.md",
     "run-1129-qfnia-delay-branch-stats.md",
     "run-1130-qfnia-master-gated-ab-stats.md",
-    "run-1131-qfnia-small-delay-stats.md"
+    "run-1131-qfnia-small-delay-stats.md",
+    "run-1132-test-cmake-fix-stats.md"
   ]
 }
