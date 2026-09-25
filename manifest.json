@@ -1133,6 +1133,7 @@
     "run-1130-qfnia-master-gated-ab-stats.md",
     "run-1131-qfnia-small-delay-stats.md",
     "run-1132-test-cmake-fix-stats.md",
-    "run-1133-qfnia-master-lra-cache-stats.md"
+    "run-1133-qfnia-master-lra-cache-stats.md",
+    "run-1134-qfnia-lra-cache-stats.md"
   ]
 }
