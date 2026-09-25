@@ -1134,6 +1134,7 @@
     "run-1131-qfnia-small-delay-stats.md",
     "run-1132-test-cmake-fix-stats.md",
     "run-1133-qfnia-master-lra-cache-stats.md",
-    "run-1134-qfnia-lra-cache-stats.md"
+    "run-1134-qfnia-lra-cache-stats.md",
+    "run-1135-margus-regexes-smart-master-20260925-stats.md"
   ]
 }
