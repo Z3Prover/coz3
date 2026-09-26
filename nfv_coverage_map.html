@@ -227,7 +227,7 @@
       <div class="cmd-block" id="audit-cmd-curl"></div>
 
       <div class="actions">
-        <a href="https://github.com/Z3Prover/bench/actions/workflows/nfv-formal-audit.yml" target="_blank" rel="noopener">Open the workflow on GitHub &rarr;</a>
+        <a href="https://github.com/Z3Prover/bench/actions/workflows/nfv-formal-audit.lock.yml" target="_blank" rel="noopener">Open the workflow on GitHub &rarr;</a>
         <button class="close" id="audit-close" type="button">Close</button>
       </div>
     </div>
@@ -442,7 +442,7 @@ window.NFV_COVERAGE_DATA={"schema_version":1,"updated_at":"2026-09-26T11:38:21.4
     // run (gh CLI, or a REST curl for anyone without gh), pre-filled from the
     // clicked tile, and lets them copy it.
     const AUDIT_REPO = "Z3Prover/bench";
-    const AUDIT_WORKFLOW = "nfv-formal-audit.yml";
+    const AUDIT_WORKFLOW = "nfv-formal-audit.lock.yml";
 
     const backdropEl = document.getElementById("audit-backdrop");
     const filePathEl = document.getElementById("audit-file-path");
