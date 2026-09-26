@@ -466,8 +466,12 @@ window.NFV_COVERAGE_DATA={"schema_version":1,"updated_at":"2026-09-26T11:38:21.4
       return Array.from(seen).sort();
     }
 
+    function toRepoPath(d) {
+      return `src/${d.data.path}`;
+    }
+
     function renderCommands(d) {
-      const file = d.data.path;
+      const file = toRepoPath(d);
       const fn = functionEl.value;
       const instruction = instructionEl.value.trim();
       const spec = specEl.value.trim();
@@ -495,7 +499,7 @@ window.NFV_COVERAGE_DATA={"schema_version":1,"updated_at":"2026-09-26T11:38:21.4
 
     function openAuditModal(d) {
       auditTile = d;
-      filePathEl.textContent = d.data.path;
+      filePathEl.textContent = toRepoPath(d);
       functionEl.innerHTML = "";
       functionEl.appendChild(new Option("(whole file)", ""));
       functionsOf(d).forEach(fn => functionEl.appendChild(new Option(fn, fn)));
