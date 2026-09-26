@@ -1135,6 +1135,7 @@
     "run-1132-test-cmake-fix-stats.md",
     "run-1133-qfnia-master-lra-cache-stats.md",
     "run-1134-qfnia-lra-cache-stats.md",
-    "run-1135-margus-regexes-smart-master-20260925-stats.md"
+    "run-1135-margus-regexes-smart-master-20260925-stats.md",
+    "run-1136-margus-regexes-smart-fixed-20260925-stats.md"
   ]
 }
