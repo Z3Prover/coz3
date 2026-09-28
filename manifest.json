@@ -1151,6 +1151,7 @@
     "run-1148-qf-s-c3mv-stats.md",
     "run-1149-smt-sls-stats.md",
     "run-1150-qf-s-c3mv-stats.md",
-    "run-1151-regexes-c3mv-stats.md"
+    "run-1151-regexes-c3mv-stats.md",
+    "run-1152-regexes-z3-tacas-stats.md"
   ]
 }
