@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
   <title>CoZ3 &middot; NFV Refutation Review</title>
   <style>
     :root { --ink: #1e2128; --muted: #5e6673; --line: #d8d2c7; --panel: #fffdf8; }
@@ -54,6 +55,9 @@
     .filters { display: flex; gap: 15px; flex-wrap: wrap; align-items: end; }
     .filter-panel p { margin: 4px 0; font-size: 0.85rem; }
     .filters input { min-width: 260px; }
+    .submission { border-top: 1px solid var(--line); margin-top: 10px; padding-top: 8px; }
+    #submit-feedback { display: inline-block; font-weight: 600; margin-right: 12px; }
+    [aria-disabled="true"] { opacity: 0.6; }
     [hidden] { display: none !important; }
   </style>
 </head>
@@ -69,7 +73,10 @@
       These preliminary assessments question specific witnesses; they do not prove the C++ correct.</p>
     <p>Feedback is backed by
       <a href="https://github.com/Z3Prover/bench/blob/main/nfv-refutation-reviews.json">version-controlled review JSON in Z3Prover/bench</a>.
-      Automatic imports never overwrite it. Author OK means agreement with the assessment, not verification of a fix.</p>
+      Automatic imports never overwrite it. Author OK means agreement with the assessment, not verification of a fix.
+      Submit several changed rows together through one prefilled GitHub issue; automation saves them in one commit
+      after checking your Bench write permission.
+      Submitted comments will be public on this page.</p>
     <p>Initial assessments are source/report inspection, not independently replayed NFV proofs.
       Linked issue/PR status is recorded at review time, not checked live.</p>
     </details>
@@ -91,6 +98,19 @@
       </select></div>
     </div>
     <p id="visible" role="status"></p>
+    <div class="submission">
+      <a id="submit-feedback" href="#submission-feedback" target="_blank" rel="noopener" aria-disabled="true">Submit feedback (0)</a>
+      <span id="draft-count">No unsaved changes.</span>
+      <p>One GitHub confirmation saves all changed rows in one commit. Feedback will be public.</p>
+      <p id="submission-feedback" role="status"></p>
+      <details id="large-batch" hidden><summary>Large batch: paste one prepared issue body</summary>
+        <p>This batch exceeds GitHub's prefilled URL limit. Copy the prepared body, open the issue, paste into its body,
+          and click Submit new issue. No JSON editing is needed; the whole batch still saves in one commit.</p>
+        <button type="button" id="copy-batch">Copy prepared issue body</button>
+        <a id="batch-issue" href="https://github.com/Z3Prover/bench/issues/new" target="_blank" rel="noopener">Open feedback issue</a>
+        <textarea id="batch-body" rows="8" readonly aria-label="Prepared batch issue body"></textarea>
+      </details>
+    </div>
   </section>
   <details class="panel data-gaps"><summary>Report data gaps (3)</summary><p>These audit summaries report findings without matching refuted property rows. They are not silently counted as confirmed findings.</p><ul><li><a href="https://github.com/Z3Prover/bench/discussions/4516" target="_blank" rel="noopener">manual-quantifier-macro-info-20260927T232729Z</a>: 1 surviving refutation(s) reported, 0 property record(s) recovered.</li><li><a href="https://github.com/Z3Prover/bench/discussions/4836" target="_blank" rel="noopener">manual-sat-clause-use-list-20260929T015056Z</a>: 1 surviving refutation(s) reported, 0 property record(s) recovered.</li><li><a href="https://github.com/Z3Prover/bench/discussions/4493" target="_blank" rel="noopener">manual-seq-axioms-20260927T191012Z</a>: 1 surviving refutation(s) reported, 0 property record(s) recovered.</li></ul></details>
   <noscript><style>.detail-row[hidden] { display: table-row !important; }</style>
@@ -135,16 +155,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-e737cdc914ad1990">Author input</label>
-    <select id="status-e737cdc914ad1990"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-e737cdc914ad1990" data-version="0946078432dbd8fe986c0fe9fdab065baecc7aaff9ed471ad0fd9acce3c1e40f"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-e737cdc914ad1990">Comment</label>
     <textarea id="comment-e737cdc914ad1990" rows="3"></textarea>
+    <p id="feedback-e737cdc914ad1990" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="e737cdc914ad1990">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-e737cdc914ad1990" role="status"></p>
     <textarea id="json-e737cdc914ad1990" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -182,16 +207,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-7eabab76c09ef145">Author input</label>
-    <select id="status-7eabab76c09ef145"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-7eabab76c09ef145" data-version="cb77178f0b397edc995fa2e69c5ddc80e2a342d69bdd00ee76b87e11fc3ed5d3"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-7eabab76c09ef145">Comment</label>
     <textarea id="comment-7eabab76c09ef145" rows="3"></textarea>
+    <p id="feedback-7eabab76c09ef145" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="7eabab76c09ef145">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-7eabab76c09ef145" role="status"></p>
     <textarea id="json-7eabab76c09ef145" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -229,16 +259,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-5598bb077316fcc8">Author input</label>
-    <select id="status-5598bb077316fcc8"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-5598bb077316fcc8" data-version="56a620e24f656f95a4a2d91d21ffb87ebeb7e90eefcaa1c75564bdee7166667a"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-5598bb077316fcc8">Comment</label>
     <textarea id="comment-5598bb077316fcc8" rows="3"></textarea>
+    <p id="feedback-5598bb077316fcc8" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="5598bb077316fcc8">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-5598bb077316fcc8" role="status"></p>
     <textarea id="json-5598bb077316fcc8" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -276,16 +311,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-044a547838b725b9">Author input</label>
-    <select id="status-044a547838b725b9"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-044a547838b725b9" data-version="41952954ee91165555b2cd39ce65d77ce782d7c0225ff568600cd8ccda65752b"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-044a547838b725b9">Comment</label>
     <textarea id="comment-044a547838b725b9" rows="3"></textarea>
+    <p id="feedback-044a547838b725b9" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="044a547838b725b9">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-044a547838b725b9" role="status"></p>
     <textarea id="json-044a547838b725b9" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -323,16 +363,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-59fd9543510e2d49">Author input</label>
-    <select id="status-59fd9543510e2d49"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-59fd9543510e2d49" data-version="39db0e2d6922b5792b8c66561f51976a25f2d9b2acadc696c8e27f66973b0fc5"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-59fd9543510e2d49">Comment</label>
     <textarea id="comment-59fd9543510e2d49" rows="3"></textarea>
+    <p id="feedback-59fd9543510e2d49" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="59fd9543510e2d49">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-59fd9543510e2d49" role="status"></p>
     <textarea id="json-59fd9543510e2d49" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -370,16 +415,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-e698fb1305544910">Author input</label>
-    <select id="status-e698fb1305544910"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-e698fb1305544910" data-version="db3c3ae147f733aedc7ebf37f0f798c72e5055cfcfb8b2abf197007956f1526c"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-e698fb1305544910">Comment</label>
     <textarea id="comment-e698fb1305544910" rows="3"></textarea>
+    <p id="feedback-e698fb1305544910" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="e698fb1305544910">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-e698fb1305544910" role="status"></p>
     <textarea id="json-e698fb1305544910" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -417,16 +467,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-32ab1cf400345cd7">Author input</label>
-    <select id="status-32ab1cf400345cd7"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-32ab1cf400345cd7" data-version="437934c37bf9b1757b7c07262a5cc55904bef3e66f43051ad0abf89c31c9a4c9"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-32ab1cf400345cd7">Comment</label>
     <textarea id="comment-32ab1cf400345cd7" rows="3"></textarea>
+    <p id="feedback-32ab1cf400345cd7" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="32ab1cf400345cd7">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-32ab1cf400345cd7" role="status"></p>
     <textarea id="json-32ab1cf400345cd7" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -464,16 +519,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-cfa726ab7e37a3e5">Author input</label>
-    <select id="status-cfa726ab7e37a3e5"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-cfa726ab7e37a3e5" data-version="9ebfc3861d16c5aacb7733661076539034730bf0c223153d9ef2110b6bd02e3a"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-cfa726ab7e37a3e5">Comment</label>
     <textarea id="comment-cfa726ab7e37a3e5" rows="3"></textarea>
+    <p id="feedback-cfa726ab7e37a3e5" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="cfa726ab7e37a3e5">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-cfa726ab7e37a3e5" role="status"></p>
     <textarea id="json-cfa726ab7e37a3e5" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -511,16 +571,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-423bb89badec07e4">Author input</label>
-    <select id="status-423bb89badec07e4"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-423bb89badec07e4" data-version="0397eba65a867e81e93eb4ec13ac9fc4439cc3446c0604e4354a1c2e63a8bb8d"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-423bb89badec07e4">Comment</label>
     <textarea id="comment-423bb89badec07e4" rows="3"></textarea>
+    <p id="feedback-423bb89badec07e4" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="423bb89badec07e4">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-423bb89badec07e4" role="status"></p>
     <textarea id="json-423bb89badec07e4" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -558,16 +623,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-c66fa92da306bc10">Author input</label>
-    <select id="status-c66fa92da306bc10"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-c66fa92da306bc10" data-version="bbf2c7d49992363e4e81474c8a582cb27dc8c3ad468502d7e6fbf81c8a13a4fa"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-c66fa92da306bc10">Comment</label>
     <textarea id="comment-c66fa92da306bc10" rows="3"></textarea>
+    <p id="feedback-c66fa92da306bc10" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="c66fa92da306bc10">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-c66fa92da306bc10" role="status"></p>
     <textarea id="json-c66fa92da306bc10" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -605,16 +675,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-6ad8b013a7119c7f">Author input</label>
-    <select id="status-6ad8b013a7119c7f"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-6ad8b013a7119c7f" data-version="5ff774b6cbb54aeae1e6fe1744bc92bf0e018aec9721264c4ff51112c573310d"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-6ad8b013a7119c7f">Comment</label>
     <textarea id="comment-6ad8b013a7119c7f" rows="3"></textarea>
+    <p id="feedback-6ad8b013a7119c7f" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="6ad8b013a7119c7f">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-6ad8b013a7119c7f" role="status"></p>
     <textarea id="json-6ad8b013a7119c7f" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -652,16 +727,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-e0c8afa02fb95743">Author input</label>
-    <select id="status-e0c8afa02fb95743"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-e0c8afa02fb95743" data-version="743c39bfba261de7601e67790e7737d2a0c3a71e64647213b468e914cb2189ce"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-e0c8afa02fb95743">Comment</label>
     <textarea id="comment-e0c8afa02fb95743" rows="3"></textarea>
+    <p id="feedback-e0c8afa02fb95743" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="e0c8afa02fb95743">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-e0c8afa02fb95743" role="status"></p>
     <textarea id="json-e0c8afa02fb95743" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -699,16 +779,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-412873202671fcad">Author input</label>
-    <select id="status-412873202671fcad"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-412873202671fcad" data-version="e297a418fe8ea03f2f6408114b322d490fdb0d32034c5f9031bae85e2c0f7d77"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-412873202671fcad">Comment</label>
     <textarea id="comment-412873202671fcad" rows="3"></textarea>
+    <p id="feedback-412873202671fcad" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="412873202671fcad">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-412873202671fcad" role="status"></p>
     <textarea id="json-412873202671fcad" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -746,16 +831,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-3c232ae42192bf0e">Author input</label>
-    <select id="status-3c232ae42192bf0e"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-3c232ae42192bf0e" data-version="4abc574f5ce015d58565144de5dca56d0aca9abca559e4c43e156208de5d9bf5"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-3c232ae42192bf0e">Comment</label>
     <textarea id="comment-3c232ae42192bf0e" rows="3"></textarea>
+    <p id="feedback-3c232ae42192bf0e" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="3c232ae42192bf0e">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-3c232ae42192bf0e" role="status"></p>
     <textarea id="json-3c232ae42192bf0e" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -793,16 +883,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-57c81dc3f6c4a587">Author input</label>
-    <select id="status-57c81dc3f6c4a587"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-57c81dc3f6c4a587" data-version="a9031993e1cff4e8853cc44130b26106f892e58145cdb74eba997933741c2443"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-57c81dc3f6c4a587">Comment</label>
     <textarea id="comment-57c81dc3f6c4a587" rows="3"></textarea>
+    <p id="feedback-57c81dc3f6c4a587" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="57c81dc3f6c4a587">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-57c81dc3f6c4a587" role="status"></p>
     <textarea id="json-57c81dc3f6c4a587" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -840,16 +935,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-4565d92ae57f3104">Author input</label>
-    <select id="status-4565d92ae57f3104"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-4565d92ae57f3104" data-version="a55cbbf71eed6ad1106419e1ba6908f9023988c81ed99852fc0b70a3c7128456"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-4565d92ae57f3104">Comment</label>
     <textarea id="comment-4565d92ae57f3104" rows="3"></textarea>
+    <p id="feedback-4565d92ae57f3104" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="4565d92ae57f3104">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-4565d92ae57f3104" role="status"></p>
     <textarea id="json-4565d92ae57f3104" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -887,16 +987,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-f401b823aa6bcdc2">Author input</label>
-    <select id="status-f401b823aa6bcdc2"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-f401b823aa6bcdc2" data-version="3a736739e6d63f7a12b10bf4f99665ba671b887c6bf349237c6a5f23016443de"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-f401b823aa6bcdc2">Comment</label>
     <textarea id="comment-f401b823aa6bcdc2" rows="3"></textarea>
+    <p id="feedback-f401b823aa6bcdc2" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="f401b823aa6bcdc2">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-f401b823aa6bcdc2" role="status"></p>
     <textarea id="json-f401b823aa6bcdc2" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -934,16 +1039,21 @@
     <section class="author-editor" aria-label="Author feedback">
     <h3>Saved author input: Pending</h3>
     <p class="comment">No author comment yet.</p>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <p>Edit this and any other findings, then use <a href="#submit-feedback">Submit feedback</a> above.
+      All changed rows are included, even when filtered out. One GitHub issue saves the whole batch
+      in one commit after checking your Bench write permission. Comments will be public.</p>
     <label for="status-c51c1156a69e964d">Author input</label>
-    <select id="status-c51c1156a69e964d"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <select id="status-c51c1156a69e964d" data-version="a4ae9e68206980c31d04e9982980ead2c707322959a568a83accf1db521a3d1e"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
     <label for="comment-c51c1156a69e964d">Comment</label>
     <textarea id="comment-c51c1156a69e964d" rows="3"></textarea>
+    <p id="feedback-c51c1156a69e964d" role="status"></p>
+    <details><summary>Advanced: edit review JSON manually</summary>
+    <p>Copy the entry and replace or add it in the GitHub JSON <code>reviews</code> array, then commit or submit a PR.
+      Copying alone does not save.</p>
     <p><button type="button" data-copy="c51c1156a69e964d">Copy review JSON</button>
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-c51c1156a69e964d" role="status"></p>
     <textarea id="json-c51c1156a69e964d" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </details>
     </section>
     </div>
     </td>
@@ -966,7 +1076,96 @@
       && (!selectedAuthor || author === selectedAuthor);
   }
 
+  function feedbackBatch(changes) {
+    if (!changes.length) throw new Error("Edit at least one author response before submitting.");
+    const seen = new Set();
+    const updates = changes.map(({ id, version, original, status, comment }) => {
+      if (!/^[a-f0-9]{16}$/.test(id) || seen.has(id) || !/^[a-f0-9]{64}$/.test(version)) {
+        throw new Error("Invalid or duplicate finding version. Refresh this page.");
+      }
+      seen.add(id);
+      const entry = reviewDraft(original, status, comment);
+      return { finding_id: id, base_review: version, author_input: entry.author_input };
+    });
+    const payload = { schema_version: 1, updates };
+    const body = "NFV author feedback. Click Submit new issue to request saving.\n"
+      + "The comment will be PUBLIC on the dashboard. Bench write permission is required.\n"
+      + "Do not edit the generated payload; submit a new request for later changes.\n\n"
+      + "<!-- nfv-author-feedback:v1 -->\n```json\n"
+      + JSON.stringify(payload) + "\n```\n";
+    if (body.length > 65000) throw new Error("This batch exceeds GitHub's issue-body limit. Submit smaller batches.");
+    const issueUrl = "https://github.com/Z3Prover/bench/issues/new?title="
+      + encodeURIComponent(`[NFV feedback] ${updates.length} findings`);
+    const url = issueUrl + "&body=" + encodeURIComponent(body);
+    return { body, issueUrl, url: url.length <= 7500 ? url : null };
+  }
+
   const drafts = JSON.parse(document.getElementById("review-data").textContent);
+  function changedReviews() {
+    return Object.entries(drafts).flatMap(([id, original]) => {
+      const control = document.getElementById(`status-${id}`);
+      const status = control.value;
+      const comment = document.getElementById(`comment-${id}`).value;
+      if (status === original.author_input.status && comment === original.author_input.comment) return [];
+      return [{ id, version: control.dataset.version, original, status, comment }];
+    });
+  }
+  function updateSubmission() {
+    const count = changedReviews().length;
+    document.getElementById("submit-feedback").textContent = `Submit feedback (${count})`;
+    document.getElementById("submit-feedback").setAttribute("aria-disabled", String(count === 0));
+    document.getElementById("draft-count").textContent = count
+      ? `${count} unsaved response(s), including filtered-out rows.`
+      : "No unsaved changes.";
+    document.getElementById("large-batch").hidden = true;
+    document.getElementById("batch-body").value = "";
+    document.getElementById("submission-feedback").textContent = "";
+  }
+  function prepareSubmission(event) {
+    const link = document.getElementById("submit-feedback");
+    const feedback = document.getElementById("submission-feedback");
+    link.href = "#submission-feedback";
+    try {
+      const batch = feedbackBatch(changedReviews());
+      if (batch.url) {
+        link.href = batch.url;
+        feedback.textContent = "Not saved yet: click Submit new issue on GitHub. Confirmation will appear there.";
+      } else {
+        event.preventDefault();
+        const fallback = document.getElementById("large-batch");
+        fallback.hidden = false;
+        fallback.open = true;
+        document.getElementById("batch-body").value = batch.body;
+        document.getElementById("batch-issue").href = batch.issueUrl;
+        feedback.textContent = "Not saved: this batch needs the single-paste submission below.";
+      }
+    } catch (error) {
+      event.preventDefault();
+      feedback.textContent = `Not saved: ${error.message}`;
+    }
+  }
+  ["click", "auxclick"].forEach(event =>
+    document.getElementById("submit-feedback").addEventListener(event, prepareSubmission));
+  document.getElementById("copy-batch").addEventListener("click", async () => {
+    const feedback = document.getElementById("submission-feedback");
+    try {
+      const body = document.getElementById("batch-body").value;
+      if (!body) throw new Error("Prepare the current batch before copying.");
+      await navigator.clipboard.writeText(body);
+      feedback.textContent = "Copied, not saved. Paste the body into the feedback issue and click Submit new issue.";
+    } catch (error) {
+      feedback.textContent = `Not saved: ${error.message} You can copy the prepared body manually.`;
+    }
+  });
+  Object.keys(drafts).forEach(id => {
+    for (const prefix of ["status", "comment"]) {
+      document.getElementById(`${prefix}-${id}`).addEventListener("input", updateSubmission);
+    }
+  });
+  window.addEventListener("beforeunload", event => {
+    if (changedReviews().length) { event.preventDefault(); event.returnValue = ""; }
+  });
+  updateSubmission();
   function setExpanded(id, expanded, focusComment = false) {
     document.getElementById(`details-${id}`).hidden = !expanded;
     const toggle = document.getElementById(`toggle-${id}`);
