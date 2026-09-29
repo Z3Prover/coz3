@@ -8,16 +8,17 @@
     :root { --ink: #1e2128; --muted: #5e6673; --line: #d8d2c7; --panel: #fffdf8; }
     * { box-sizing: border-box; }
     body { margin: 0; color: var(--ink); background: #f6f4ef; font-family: "Segoe UI", sans-serif; line-height: 1.5; }
-    main { max-width: 1300px; margin: auto; padding: 22px 14px 40px; }
-    header { border-radius: 14px; padding: 20px; color: #f8fbff; background: linear-gradient(135deg, #203349, #1f6156); }
+    main { max-width: 1600px; margin: auto; padding: 18px 14px 30px; }
+    header { border-radius: 14px; padding: 14px 18px; color: #f8fbff; background: linear-gradient(135deg, #203349, #1f6156); }
     header a { color: #cfe7ef; }
-    h1 { margin: 10px 0; }
+    header p { margin: 6px 0; }
+    h1 { margin: 6px 0; font-size: 1.7rem; }
     h2 { font-size: 1.1rem; margin-top: 0; }
     a { color: #215f9f; }
-    .panel, .finding { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; margin-top: 14px; }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px; margin-top: 12px; }
     .identity, .meta { font-size: 0.85rem; color: var(--muted); overflow-wrap: anywhere; }
     .explanation, .comment { white-space: pre-wrap; }
-    .badge { display: inline-block; border-radius: 5px; padding: 3px 8px; background: #ebe7df; font-weight: 600; }
+    .badge { display: inline-block; border-radius: 5px; padding: 2px 6px; background: #ebe7df; font-weight: 600; font-size: 0.8rem; }
     .possible_bug { background: #fff0dc; color: #804500; }
     .addressed { background: #e1f2e7; color: #146c43; }
     .likely_false_alarm { background: #e8edf4; color: #304b6c; }
@@ -26,8 +27,32 @@
     input, select, textarea, button { font: inherit; padding: 7px; border: 1px solid var(--line); border-radius: 5px; }
     textarea { width: 100%; background: white; }
     button, summary { cursor: pointer; }
-    details { border-top: 1px solid var(--line); padding-top: 12px; }
+    .about { margin-top: 8px; font-size: 0.9rem; }
+    .table-scroll { overflow: auto; max-height: 72vh; padding: 0; }
+    table { width: 100%; min-width: 1050px; table-layout: fixed; border-collapse: separate; border-spacing: 0; font-size: 0.85rem; }
+    caption { text-align: left; padding: 8px 12px; color: var(--muted); }
+    th, td { padding: 9px 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+    thead th { position: sticky; top: 0; z-index: 1; background: #f0ebe1; color: #1c3856; }
+    .summary-row th { font-weight: 500; }
+    .summary-row:hover { background: #f5f1e8; }
+    .finding { scroll-margin-top: 48px; }
+    .preview { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+    .comment-preview { border: 0; background: none; color: #215f9f; padding: 0; text-align: left; width: 100%; }
+    .toggle { padding: 1px 4px; white-space: nowrap; background: white; }
+    .references { font-size: 0.8rem; overflow-wrap: anywhere; }
+    .detail-row > td { background: #f8f6f0; padding: 18px; }
+    .detail-content { display: grid; grid-template-columns: minmax(0, 3fr) minmax(260px, 2fr); gap: 24px; }
+    .detail-content h3 { font-size: 0.95rem; margin: 12px 0 4px; }
+    .detail-content p { margin: 6px 0 12px; overflow-wrap: anywhere; }
+    .author-editor { border-left: 1px solid var(--line); padding-left: 20px; }
+    dt { font-weight: 600; }
+    dd { margin: 3px 0 10px; overflow-wrap: anywhere; white-space: pre-wrap; }
+    @media (max-width: 750px) {
+      .detail-content { display: block; }
+      .author-editor { margin-top: 16px; border-left: 0; padding-left: 0; }
+    }
     .filters { display: flex; gap: 15px; flex-wrap: wrap; align-items: end; }
+    .filter-panel p { margin: 4px 0; font-size: 0.85rem; }
     .filters input { min-width: 260px; }
     [hidden] { display: none !important; }
   </style>
@@ -38,18 +63,20 @@
     <nav><a href="index.html">CoZ3 dashboards</a> &middot; <a href="nfv_dashboard.html">Audit dashboard</a>
       &middot; <a href="nfv_coverage_map.html">Coverage map</a></nav>
     <h1>NFV Refutation Review</h1>
-    <p>Historical surviving refutations, their preliminary source-level assessments, and author feedback.
-      A proved counterexample to a generated model is not necessarily a Z3 bug.
-      Reviews reject or question specific witnesses; they do not prove the C++ correct.</p>
+    <p>Historical refutations and author feedback. Expand a row for evidence or click a comment to review it.</p>
+    <details class="about"><summary>Interpretation and saving feedback</summary>
+    <p>A counterexample to a generated model is not necessarily a Z3 bug.
+      These preliminary assessments question specific witnesses; they do not prove the C++ correct.</p>
     <p>Feedback is backed by
       <a href="https://github.com/Z3Prover/bench/blob/main/nfv-refutation-reviews.json">version-controlled review JSON in Z3Prover/bench</a>.
       Automatic imports never overwrite it. Author OK means agreement with the assessment, not verification of a fix.</p>
+    <p>Initial assessments are source/report inspection, not independently replayed NFV proofs.
+      Linked issue/PR status is recorded at review time, not checked live.</p>
+    </details>
   </header>
-  <section class="panel">
+  <section class="panel filter-panel">
     <p><strong>18 historical findings</strong> (including unmapped and addressed findings).</p>
     <p>Not yet triaged: 0 &middot; Possible bug: 2 &middot; Likely false alarm: 11 &middot; Needs investigation: 2 &middot; Addressed: 2 &middot; Previously reported: 1</p>
-    <p class="meta">Initial assessments are source/report inspection, not independently replayed NFV proofs.
-      Linked issue/PR status is recorded at review time; it is not a live GitHub status check.</p>
     <div class="filters">
       <div><label for="search">Search</label><input id="search" type="search" placeholder="Property, function, explanation..."></div>
       <div><label for="assessment">Assessment</label><select id="assessment">
@@ -65,412 +92,49 @@
     </div>
     <p id="visible" role="status"></p>
   </section>
-  <aside class="panel"><h2>Report data gaps</h2><p>These audit summaries report findings without matching refuted property rows. They are not silently counted as confirmed findings.</p><ul><li><a href="https://github.com/Z3Prover/bench/discussions/4516" target="_blank" rel="noopener">manual-quantifier-macro-info-20260927T232729Z</a>: 1 surviving refutation(s) reported, 0 property record(s) recovered.</li><li><a href="https://github.com/Z3Prover/bench/discussions/4836" target="_blank" rel="noopener">manual-sat-clause-use-list-20260929T015056Z</a>: 1 surviving refutation(s) reported, 0 property record(s) recovered.</li><li><a href="https://github.com/Z3Prover/bench/discussions/4493" target="_blank" rel="noopener">manual-seq-axioms-20260927T191012Z</a>: 1 surviving refutation(s) reported, 0 property record(s) recovered.</li></ul></aside>
-  <section aria-label="Refutation assessments">
-    
-<article class="finding" id="finding-e698fb1305544910" data-assessment="likely_false_alarm" data-author="pending">
-  <h2>Regex default-orientation witness contradicts the actual default</h2>
-  <p class="identity"><code>regex_solver_construction_honors_configuration</code><br>
-    Z3Prover/z3#10519 &middot; <code>th</code><br>
-    src/smt/seq_regex.cpp (Reviewed location)</p>
-  <p><span class="badge likely_false_alarm">Likely false alarm</span></p>
-  <p class="explanation">The translated documented_default_fparams permits reversed orientation, while the actual initialization and stated environment require forward. The report explicitly notes that the forward-orientation constraint was omitted from the axiom.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/3859" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10519" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/params/theory_seq_params.h#L31" target="_blank" rel="noopener">Actual parameter defaults</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-e698fb1305544910">Author input</label>
-    <select id="status-e698fb1305544910"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-e698fb1305544910">Comment</label>
-    <textarea id="comment-e698fb1305544910" rows="3"></textarea>
-    <p><button type="button" data-copy="e698fb1305544910">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-e698fb1305544910" role="status"></p>
-    <textarea id="json-e698fb1305544910" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-32ab1cf400345cd7" data-assessment="likely_false_alarm" data-author="pending">
-  <h2>Regex conversion witness requires an empty predicate with two ranges</h2>
-  <p class="identity"><code>output_is_safe_for_regex_set_merging</code><br>
-    Z3Prover/z3#10715 &middot; <code>range_predicate_to_regex</code><br>
-    src/ast/rewriter/seq_range_collapse.cpp (Reviewed location)</p>
-  <p><span class="badge likely_false_alarm">Likely false alarm</span></p>
-  <p class="explanation">The model chooses is_empty == true and num_ranges == 2. Both real accessors inspect the same m_ranges container, so this witness cannot describe a real range_predicate. This rejects the reported witness, not every possible bug in the conversion.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/3866" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10715" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/rewriter/seq_range_predicate.h" target="_blank" rel="noopener">Container accessors</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-32ab1cf400345cd7">Author input</label>
-    <select id="status-32ab1cf400345cd7"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-32ab1cf400345cd7">Comment</label>
-    <textarea id="comment-32ab1cf400345cd7" rows="3"></textarea>
-    <p><button type="button" data-copy="32ab1cf400345cd7">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-32ab1cf400345cd7" role="status"></p>
-    <textarea id="json-32ab1cf400345cd7" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-59fd9543510e2d49" data-assessment="already_reported" data-author="pending">
-  <h2>Witness materialization and state restoration after backtracking</h2>
-  <p class="identity"><code>optional_witness_materialization</code><br>
-    Z3Prover/z3#10764 &middot; <code>view_witness::materialize_witness</code><br>
-    src/ast/seq/seq_view_witness.cpp (Reviewed location)</p>
-  <p><span class="badge already_reported">Previously reported</span></p>
-  <p class="explanation">The exact NFV witness uses an asserted non-sequence expression after a successful check, which the real check does not permit. A related sequence-sorted backtracking case was investigated in the linked PR. That PR was closed without merging: this is already reported, not a confirmed landed fix.</p>
-  
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/3861" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10764" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10802" target="_blank" rel="noopener">Z3Prover/z3#10802 - closed, not merged</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-59fd9543510e2d49">Author input</label>
-    <select id="status-59fd9543510e2d49"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-59fd9543510e2d49">Comment</label>
-    <textarea id="comment-59fd9543510e2d49" rows="3"></textarea>
-    <p><button type="button" data-copy="59fd9543510e2d49">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-59fd9543510e2d49" role="status"></p>
-    <textarea id="json-59fd9543510e2d49" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-cfa726ab7e37a3e5" data-assessment="likely_false_alarm" data-author="pending">
-  <h2>Recursive-definition undo counterexample uses disconnected pre-states</h2>
-  <p class="identity"><code>undo_erases_scope_local_definitions</code><br>
-    Z3Prover/z3#10857 &middot; <code>undo</code><br>
-    src/ast/simplifiers/recfun_finder.cpp (Reviewed location)</p>
-  <p><span class="badge likely_false_alarm">Likely false alarm</span></p>
-  <p class="explanation">The witness gives before.m_definitions one element but starts the actual undo with an empty vector. The supposed pre-state is not linked to the state being executed. Returning immediately then contradicts the unrelated snapshot, not the real undo contract. The coverage map&#x27;s util/trail.h attribution was heuristic; the relevant implementation is recfun_finder.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4169" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10857" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/simplifiers/recfun_finder.cpp#L117-L126" target="_blank" rel="noopener">Undo implementation</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-cfa726ab7e37a3e5">Author input</label>
-    <select id="status-cfa726ab7e37a3e5"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-cfa726ab7e37a3e5">Comment</label>
-    <textarea id="comment-cfa726ab7e37a3e5" rows="3"></textarea>
-    <p><button type="button" data-copy="cfa726ab7e37a3e5">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-cfa726ab7e37a3e5" role="status"></p>
-    <textarea id="json-cfa726ab7e37a3e5" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-423bb89badec07e4" data-assessment="likely_false_alarm" data-author="pending">
-  <h2>Transcendental registration count is disconnected from its container</h2>
-  <p class="identity"><code>enabled_iff_applications_registered</code><br>
-    Z3Prover/z3#10870 &middot; <code>solver::transcendentals_enabled</code><br>
-    src/nlsat/nlsat_solver.cpp (Reviewed location)</p>
-  <p><span class="badge likely_false_alarm">Likely false alarm</span></p>
-  <p class="explanation">The model chooses an empty registration container and an independent count of one. The real method returns !m_imp-&gt;m_transcendentals.empty(). The report notes that the stated relation between the container and count is absent from the artifact.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4208" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10870" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/nlsat/nlsat_solver.cpp#L4892-L4894" target="_blank" rel="noopener">Enabled query</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-423bb89badec07e4">Author input</label>
-    <select id="status-423bb89badec07e4"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-423bb89badec07e4">Comment</label>
-    <textarea id="comment-423bb89badec07e4" rows="3"></textarea>
-    <p><button type="button" data-copy="423bb89badec07e4">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-423bb89badec07e4" role="status"></p>
-    <textarea id="json-423bb89badec07e4" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-f401b823aa6bcdc2" data-assessment="addressed" data-author="pending">
-  <h2>Huge FP precision wraps the auxiliary significand width</h2>
-  <p class="identity"><code>non_power_normal_equal_gaps</code><br>
-    Z3Prover/z3#10888 &middot; <code>fpa2bv_converter::mk_to_fp_real</code><br>
-    src/ast/fpa/fpa2bv_converter.cpp (Reviewed location)</p>
-  <p><span class="badge addressed">Addressed</span></p>
-  <p class="explanation">The witness uses sbits = 4294967292 so sbits + 4 wraps to zero. The merged precision-limit guard rejects sbits above MPF_MAX_SBITS = 65535 before creating the FP sort. That excludes this witness in current code; it is not a fresh verification of the entire conversion.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4225" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10888" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10801" target="_blank" rel="noopener">Z3Prover/z3#10801 - merged</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/fpa_decl_plugin.cpp#L200-L211" target="_blank" rel="noopener">Precision guard</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-f401b823aa6bcdc2">Author input</label>
-    <select id="status-f401b823aa6bcdc2"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-f401b823aa6bcdc2">Comment</label>
-    <textarea id="comment-f401b823aa6bcdc2" rows="3"></textarea>
-    <p><button type="button" data-copy="f401b823aa6bcdc2">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-f401b823aa6bcdc2" role="status"></p>
-    <textarea id="json-f401b823aa6bcdc2" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-c66fa92da306bc10" data-assessment="likely_false_alarm" data-author="pending">
-  <h2>MBQI witness has an impossible argument-count/storage combination</h2>
-  <p class="identity"><code>sat_mbqi_preserves_auf_extraction</code><br>
-    Z3Prover/z3#10910 &middot; <code>mbqi::extract_var_args</code><br>
-    src/sat/smt/q_mbi.cpp (Reviewed location)</p>
-  <p><span class="badge likely_false_alarm">Likely false alarm</span></p>
-  <p class="explanation">The witness supplies 2^32+1 null arguments while modeling arity as one after truncation. A valid Z3 application stores its actual argument count as unsigned and must have matching, valid argument storage. The model witness violates those representation invariants.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4328" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10910" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/ast.h#L754-L778" target="_blank" rel="noopener">Application representation</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-c66fa92da306bc10">Author input</label>
-    <select id="status-c66fa92da306bc10"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-c66fa92da306bc10">Comment</label>
-    <textarea id="comment-c66fa92da306bc10" rows="3"></textarea>
-    <p><button type="button" data-copy="c66fa92da306bc10">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-c66fa92da306bc10" role="status"></p>
-    <textarea id="json-c66fa92da306bc10" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-c51c1156a69e964d" data-assessment="addressed" data-author="pending">
-  <h2>Integer-to-FP infinity threshold overflow at huge precision</h2>
-  <p class="identity"><code>integer_conversion_infinity_thresholds</code><br>
-    Z3Prover/z3#9038 &middot; <code>fpa_rewriter::mk_is_inf_of_int</code><br>
-    src/ast/rewriter/fpa_rewriter.cpp (Reviewed location)</p>
-  <p><span class="badge addressed">Addressed</span></p>
-  <p class="explanation">The historical NFV witness used RNE, ebits=2, sbits=0xffffffff, x=4 and exposed narrowing/overflow in the infinity threshold. The linked merged PR records an end-to-end reproducer and fixes both the threshold and constant-folding paths. Kept here as addressed history even though it is absent from the current coverage map.</p>
-  
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/3890" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/9038" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10801" target="_blank" rel="noopener">Z3Prover/z3#10801 - merged</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-c51c1156a69e964d">Author input</label>
-    <select id="status-c51c1156a69e964d"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-c51c1156a69e964d">Comment</label>
-    <textarea id="comment-c51c1156a69e964d" rows="3"></textarea>
-    <p><button type="button" data-copy="c51c1156a69e964d">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-c51c1156a69e964d" role="status"></p>
-    <textarea id="json-c51c1156a69e964d" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-6ad8b013a7119c7f" data-assessment="likely_false_alarm" data-author="pending">
-  <h2>Floor-axiom model omits VERIFY&#x27;s assignment to the operand</h2>
-  <p class="identity"><code>to_int_axiom_characterizes_floor</code><br>
-    manual-arith-axioms-20260928T201803Z &middot; <code>solver::mk_to_int_axiom</code><br>
-    src/sat/smt/arith_axioms.cpp (Reviewed location)</p>
-  <p><span class="badge likely_false_alarm">Likely false alarm</span></p>
-  <p class="explanation">The witness leaves x null because the translation does not execute VERIFY(a.is_to_int(n, x)). The real macro evaluates the recognizer and assigns x. The reported floor mismatch therefore depends on an incorrect translation of side effects.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4778" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/sat/smt/arith_axioms.cpp#L34-L43" target="_blank" rel="noopener">Operand extraction</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-6ad8b013a7119c7f">Author input</label>
-    <select id="status-6ad8b013a7119c7f"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-6ad8b013a7119c7f">Comment</label>
-    <textarea id="comment-6ad8b013a7119c7f" rows="3"></textarea>
-    <p><button type="button" data-copy="6ad8b013a7119c7f">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-6ad8b013a7119c7f" role="status"></p>
-    <textarea id="json-6ad8b013a7119c7f" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-5598bb077316fcc8" data-assessment="needs_investigation" data-author="pending">
-  <h2>HNF gather contract may not match the private helper&#x27;s caller invariant</h2>
-  <p class="identity"><code>create_b_gathers_requested_basis_rows</code><br>
-    manual-hnf-cutter-20260927T163447Z &middot; <code>hnf_cutter::create_b</code><br>
-    src/math/lp/hnf_cutter.cpp (Reviewed location)</p>
-  <p><span class="badge needs_investigation">Needs investigation</span></p>
-  <p class="explanation">The witness uses duplicate basis rows [0,0], but the caller produces distinct pivot-row indices. In the full-rank case it keeps the matrix and RHS together in original order. Always permuting the RHS may be wrong for that caller. This is a preliminary contract-mismatch assessment, not a proof that every reachable input is safe; confirm the producer/caller invariant before proposing a fix.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4466" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/hnf_cutter.cpp#L184-L207" target="_blank" rel="noopener">Caller and row shrinking</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/hnf.h#L198-L211" target="_blank" rel="noopener">Basis-row producer</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-5598bb077316fcc8">Author input</label>
-    <select id="status-5598bb077316fcc8"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-5598bb077316fcc8">Comment</label>
-    <textarea id="comment-5598bb077316fcc8" rows="3"></textarea>
-    <p><button type="button" data-copy="5598bb077316fcc8">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-5598bb077316fcc8" role="status"></p>
-    <textarea id="json-5598bb077316fcc8" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-e0c8afa02fb95743" data-assessment="likely_false_alarm" data-author="pending">
-  <h2>Unmapped hash-consistency finding models the equality operator instead</h2>
-  <p class="identity"><code>equal_terms_have_equal_hashes</code><br>
-    manual-lar-solver-20260927T163527Z &middot; <code>operator</code><br>
-    src/math/lp/lar_solver.cpp (Reviewed location)</p>
-  <p><span class="badge likely_false_alarm">Likely false alarm</span></p>
-  <p class="explanation">This is the extra record whose source the coverage map could not resolve, not one of its 16 mapped findings. The reported model compares a Boolean equality result for two empty terms against an independently postulated hash_run value. It does not establish a failure of the real term_hasher. Any separate hash-order concern needs its own investigation.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4477" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/lar_solver.cpp#L20-L45" target="_blank" rel="noopener">Distinct hasher and comparer</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-e0c8afa02fb95743">Author input</label>
-    <select id="status-e0c8afa02fb95743"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-e0c8afa02fb95743">Comment</label>
-    <textarea id="comment-e0c8afa02fb95743" rows="3"></textarea>
-    <p><button type="button" data-copy="e0c8afa02fb95743">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-e0c8afa02fb95743" role="status"></p>
-    <textarea id="json-e0c8afa02fb95743" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-412873202671fcad" data-assessment="likely_false_alarm" data-author="pending">
-  <h2>Handler-call assertion confuses the final counter with one additional call</h2>
-  <p class="identity"><code>check_routes_empty_monomial_case_through_transcendentals</code><br>
-    manual-nla-core-20260927T163619Z &middot; <code>core::check</code><br>
-    src/math/lp/nla_core.cpp (Reviewed location)</p>
-  <p><span class="badge likely_false_alarm">Likely false alarm</span></p>
-  <p class="explanation">The witness starts the handler call counter at one. Calling the handler exactly once increments it to two, contradicting a contract that requires the final counter to equal one. The intended obligation is a delta of one or an explicitly zero initial counter.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4460" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_core.cpp#L959-L975" target="_blank" rel="noopener">Empty-monomial route</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-412873202671fcad">Author input</label>
-    <select id="status-412873202671fcad"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-412873202671fcad">Comment</label>
-    <textarea id="comment-412873202671fcad" rows="3"></textarea>
-    <p><button type="button" data-copy="412873202671fcad">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-412873202671fcad" role="status"></p>
-    <textarea id="json-412873202671fcad" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-044a547838b725b9" data-assessment="needs_investigation" data-author="pending">
-  <h2>Empty-refinement schedule claim needs a finishing-helper frame contract</h2>
-  <p class="identity"><code>empty_refinement_still_checks_transcendentals</code><br>
-    manual-nla-core-20260927T163619Z &middot; <code>core::on_to_refine_empty</code><br>
-    src/math/lp/nla_core.cpp (Reviewed location)</p>
-  <p><span class="badge needs_investigation">Needs investigation</span></p>
-  <p class="explanation">The postulated finishing helper arbitrarily replaces the schedule after the notification. The real wrapper does notify the schedule and return the finishing result. The counterexample exposes an unconstrained helper effect, but inspection of the wrapper alone does not prove what the actual helper preserves. Further helper/frame-contract analysis is needed.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4460" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_core.cpp#L951-L957" target="_blank" rel="noopener">Empty-refinement wrapper</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-044a547838b725b9">Author input</label>
-    <select id="status-044a547838b725b9"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-044a547838b725b9">Comment</label>
-    <textarea id="comment-044a547838b725b9" rows="3"></textarea>
-    <p><button type="button" data-copy="044a547838b725b9">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-044a547838b725b9" role="status"></p>
-    <textarea id="json-044a547838b725b9" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-3c232ae42192bf0e" data-assessment="likely_false_alarm" data-author="pending">
-  <h2>Power-grounding witness takes a guard excluded by the stated assumptions</h2>
-  <p class="identity"><code>integer_ground_instance_refinement_is_exact</code><br>
-    manual-nla-powers-20260927T163649Z &middot; <code>powers::check</code><br>
-    src/math/lp/nla_powers.cpp (Reviewed location)</p>
-  <p><span class="badge likely_false_alarm">Likely false alarm</span></p>
-  <p class="explanation">The witness selects null_lpvar, which deliberately returns l_undef. The property assumes valid selected values and that no earlier guard applies. The generated witness therefore does not satisfy the intended branch precondition.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4479" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_powers.cpp#L81-L85" target="_blank" rel="noopener">Null-variable guard</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-3c232ae42192bf0e">Author input</label>
-    <select id="status-3c232ae42192bf0e"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-3c232ae42192bf0e">Comment</label>
-    <textarea id="comment-3c232ae42192bf0e" rows="3"></textarea>
-    <p><button type="button" data-copy="3c232ae42192bf0e">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-3c232ae42192bf0e" role="status"></p>
-    <textarea id="json-3c232ae42192bf0e" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-57c81dc3f6c4a587" data-assessment="likely_false_alarm" data-author="pending">
-  <h2>ITE-distribution model omits VERIFY output assignments</h2>
-  <p class="identity"><code>builds_first_ite_distribution</code><br>
-    manual-push-app-ite-20260928T164350Z &middot; <code>push_app_ite_cfg::reduce_app</code><br>
-    src/ast/rewriter/push_app_ite.cpp (Reviewed location)</p>
-  <p><span class="badge likely_false_alarm">Likely false alarm</span></p>
-  <p class="explanation">The model leaves c, t, and e null instead of executing their assignments inside VERIFY(m.is_ite(...)). The C++ VERIFY macro evaluates its argument, including those side effects. The reported witness relies on this translation error.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4676" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/util/debug.h#L108-L111" target="_blank" rel="noopener">VERIFY evaluates its expression</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
-    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
-      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
-    <label for="status-57c81dc3f6c4a587">Author input</label>
-    <select id="status-57c81dc3f6c4a587"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
-    <label for="comment-57c81dc3f6c4a587">Comment</label>
-    <textarea id="comment-57c81dc3f6c4a587" rows="3"></textarea>
-    <p><button type="button" data-copy="57c81dc3f6c4a587">Copy review JSON</button>
-      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
-    <p id="feedback-57c81dc3f6c4a587" role="status"></p>
-    <textarea id="json-57c81dc3f6c4a587" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-e737cdc914ad1990" data-assessment="possible_bug" data-author="pending">
-  <h2>seq.eq recognizer reads arguments without checking arity</h2>
-  <p class="identity"><code>eq_recognizer_requires_binary_marker</code><br>
-    manual-seq-skolem-20260927T191033Z &middot; <code>skolem::is_eq</code><br>
-    src/ast/seq/seq_skolem.cpp (Reviewed location)</p>
-  <p><span class="badge possible_bug">Possible bug</span></p>
-  <p class="explanation">The family/symbol predicate does not require binary arity before argument reads. The generic internal constructor accepts nonbinary markers, while the dedicated mk_eq constructor creates binary ones. This is an internal robustness concern; no path from ordinary SMT-LIB input or wrong solver answer has been established.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4489" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/issues/10958" target="_blank" rel="noopener">Z3Prover/z3#10958 - issue filed</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
+  <details class="panel data-gaps"><summary>Report data gaps (3)</summary><p>These audit summaries report findings without matching refuted property rows. They are not silently counted as confirmed findings.</p><ul><li><a href="https://github.com/Z3Prover/bench/discussions/4516" target="_blank" rel="noopener">manual-quantifier-macro-info-20260927T232729Z</a>: 1 surviving refutation(s) reported, 0 property record(s) recovered.</li><li><a href="https://github.com/Z3Prover/bench/discussions/4836" target="_blank" rel="noopener">manual-sat-clause-use-list-20260929T015056Z</a>: 1 surviving refutation(s) reported, 0 property record(s) recovered.</li><li><a href="https://github.com/Z3Prover/bench/discussions/4493" target="_blank" rel="noopener">manual-seq-axioms-20260927T191012Z</a>: 1 surviving refutation(s) reported, 0 property record(s) recovered.</li></ul></details>
+  <noscript><style>.detail-row[hidden] { display: table-row !important; }</style>
+    <p>JavaScript is disabled: all details are shown. Edit saved feedback directly on GitHub.</p></noscript>
+  <section class="panel table-scroll" aria-label="Refutation assessments" tabindex="0">
+    <table>
+      <caption>Possible bugs and investigation-needed findings first. Comments and statuses show saved feedback.</caption>
+      <colgroup><col style="width:32%"><col style="width:14%"><col style="width:19%">
+        <col style="width:9%"><col style="width:18%"><col style="width:8%"></colgroup>
+      <thead><tr><th scope="col">Finding</th><th scope="col">Assessment</th>
+        <th scope="col">Issue / PR</th><th scope="col">Author status</th>
+        <th scope="col">Author comment</th><th scope="col">Details</th></tr></thead>
+      <tbody class="finding" id="finding-e737cdc914ad1990" data-assessment="possible_bug" data-author="pending" data-search="manual-seq-skolem-20260927T191033Z eq_recognizer_requires_binary_marker skolem::is_eq seq.eq recognizer reads arguments without checking arity The family/symbol predicate does not require binary arity before argument reads. The generic internal constructor accepts nonbinary markers, while the dedicated mk_eq constructor creates binary ones. This is an internal robustness concern; no path from ordinary SMT-LIB input or wrong solver answer has been established. src/ast/seq/seq_skolem.cpp  e is any well-formed expression; result.a and result.b denote the output-reference values after the call. result == (is_seq_skolem_app(e) &amp;&amp; skolem_symbol(e) == &quot;seq.eq&quot; &amp;&amp; num_args(e) == 2) &amp;&amp; (result =&gt; result.a == arg(e,0) &amp;&amp; result.b == arg(e,1)) is_seq_skolem_app(e) &amp;&amp; skolem_symbol(e) == &quot;seq.eq&quot; &amp;&amp; num_args(e) == 0 d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4489  Z3Prover/z3#10958 - issue filed https://github.com/Z3Prover/z3/issues/10958">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="seq.eq recognizer reads arguments without checking arity">seq.eq recognizer reads arguments without checking arity</span></th>
+    <td><span class="badge possible_bug">Possible bug</span></td>
+    <td class="references"><a href="https://github.com/Z3Prover/z3/issues/10958" target="_blank" rel="noopener">Z3Prover/z3#10958 - issue filed</a></td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="e737cdc914ad1990"
+      aria-controls="details-e737cdc914ad1990" title="Add an author comment"
+      aria-label="Read or edit author comment: seq.eq recognizer reads arguments without checking arity">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-e737cdc914ad1990" data-toggle="e737cdc914ad1990"
+      aria-expanded="false" aria-controls="details-e737cdc914ad1990"
+      aria-label="Toggle details: seq.eq recognizer reads arguments without checking arity">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-e737cdc914ad1990" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>seq.eq recognizer reads arguments without checking arity</h2>
+      <p class="identity"><code>eq_recognizer_requires_binary_marker</code><br>
+        manual-seq-skolem-20260927T191033Z &middot; <code>skolem::is_eq</code><br>
+        src/ast/seq/seq_skolem.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The family/symbol predicate does not require binary arity before argument reads. The generic internal constructor accepts nonbinary markers, while the dedicated mk_eq constructor creates binary ones. This is an internal robustness concern; no path from ordinary SMT-LIB input or wrong solver answer has been established.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>e is any well-formed expression; result.a and result.b denote the output-reference values after the call.</dd><dt>Asserted claim</dt><dd>result == (is_seq_skolem_app(e) &amp;&amp; skolem_symbol(e) == &quot;seq.eq&quot; &amp;&amp; num_args(e) == 2) &amp;&amp; (result =&gt; result.a == arg(e,0) &amp;&amp; result.b == arg(e,1))</dd><dt>Reported witness</dt><dd>is_seq_skolem_app(e) &amp;&amp; skolem_symbol(e) == &quot;seq.eq&quot; &amp;&amp; num_args(e) == 0</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4489" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/issues/10958" target="_blank" rel="noopener">Z3Prover/z3#10958 - issue filed</a></p>
+      <a href="#finding-e737cdc914ad1990">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
     <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
       JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
     <label for="status-e737cdc914ad1990">Author input</label>
@@ -481,22 +145,43 @@
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
     <p id="feedback-e737cdc914ad1990" role="status"></p>
     <textarea id="json-e737cdc914ad1990" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
-
-<article class="finding" id="finding-7eabab76c09ef145" data-assessment="possible_bug" data-author="pending">
-  <h2>SAT/SMT SLS best-phase accessor always returns false</h2>
-  <p class="identity"><code>best_phase_lookup_returns_stored_phase</code><br>
-    manual-sls-solver-20260928T201911Z &middot; <code>solver::get_best_phase</code><br>
-    src/sat/smt/sls_solver.cpp (Reviewed location)</p>
-  <p><span class="badge possible_bug">Possible bug</span></p>
-  <p class="explanation">The adapter unconditionally returns false, while the underlying SAT solver has a stored best-phase accessor. The mismatch is visible in source. Downstream phase application is currently disabled under #if 0, so no current solver-soundness or performance regression is established.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4761" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/issues/10959" target="_blank" rel="noopener">Z3Prover/z3#10959 - issue filed</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-7eabab76c09ef145" data-assessment="possible_bug" data-author="pending" data-search="manual-sls-solver-20260928T201911Z best_phase_lookup_returns_stored_phase solver::get_best_phase SAT/SMT SLS best-phase accessor always returns false The adapter unconditionally returns false, while the underlying SAT solver has a stored best-phase accessor. The mismatch is visible in source. Downstream phase application is currently disabled under #if 0, so no current solver-soundness or performance regression is established. src/sat/smt/sls_solver.cpp  0 &lt;= v &amp;&amp; v &lt; length(best_phase) result == best_phase[v] v == 0; best_phase == [true] d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4761  Z3Prover/z3#10959 - issue filed https://github.com/Z3Prover/z3/issues/10959">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="SAT/SMT SLS best-phase accessor always returns false">SAT/SMT SLS best-phase accessor always returns false</span></th>
+    <td><span class="badge possible_bug">Possible bug</span></td>
+    <td class="references"><a href="https://github.com/Z3Prover/z3/issues/10959" target="_blank" rel="noopener">Z3Prover/z3#10959 - issue filed</a></td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="7eabab76c09ef145"
+      aria-controls="details-7eabab76c09ef145" title="Add an author comment"
+      aria-label="Read or edit author comment: SAT/SMT SLS best-phase accessor always returns false">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-7eabab76c09ef145" data-toggle="7eabab76c09ef145"
+      aria-expanded="false" aria-controls="details-7eabab76c09ef145"
+      aria-label="Toggle details: SAT/SMT SLS best-phase accessor always returns false">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-7eabab76c09ef145" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>SAT/SMT SLS best-phase accessor always returns false</h2>
+      <p class="identity"><code>best_phase_lookup_returns_stored_phase</code><br>
+        manual-sls-solver-20260928T201911Z &middot; <code>solver::get_best_phase</code><br>
+        src/sat/smt/sls_solver.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The adapter unconditionally returns false, while the underlying SAT solver has a stored best-phase accessor. The mismatch is visible in source. Downstream phase application is currently disabled under #if 0, so no current solver-soundness or performance regression is established.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>0 &lt;= v &amp;&amp; v &lt; length(best_phase)</dd><dt>Asserted claim</dt><dd>result == best_phase[v]</dd><dt>Reported witness</dt><dd>v == 0; best_phase == [true]</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4761" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/issues/10959" target="_blank" rel="noopener">Z3Prover/z3#10959 - issue filed</a></p>
+      <a href="#finding-7eabab76c09ef145">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
     <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
       JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
     <label for="status-7eabab76c09ef145">Author input</label>
@@ -507,22 +192,654 @@
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
     <p id="feedback-7eabab76c09ef145" role="status"></p>
     <textarea id="json-7eabab76c09ef145" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-5598bb077316fcc8" data-assessment="needs_investigation" data-author="pending" data-search="manual-hnf-cutter-20260927T163447Z create_b_gathers_requested_basis_rows hnf_cutter::create_b HNF gather contract may not match the private helper&#x27;s caller invariant The witness uses duplicate basis rows [0,0], but the caller produces distinct pivot-row indices. In the full-rank case it keeps the matrix and RHS together in original order. Always permuting the RHS may be wrong for that caller. This is a preliminary contract-mismatch assessment, not a proof that every reachable input is safe; confirm the producer/caller invariant before proposing a fix. src/math/lp/hnf_cutter.cpp  forall k &lt; basis_rows.size(): basis_rows[k] &lt; m_right_sides.size() result.size() == basis_rows.size() &amp;&amp; forall k &lt; result.size(): result[k] == m_right_sides[basis_rows[k]] basis_rows == [0, 0]; |m_right_sides| == 2; m_right_sides[0] != m_right_sides[1] d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4466  Caller and row shrinking https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/hnf_cutter.cpp#L184-L207 Basis-row producer https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/hnf.h#L198-L211">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="HNF gather contract may not match the private helper&#x27;s caller invariant">HNF gather contract may not match the private helper&#x27;s caller invariant</span></th>
+    <td><span class="badge needs_investigation">Needs investigation</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="5598bb077316fcc8"
+      aria-controls="details-5598bb077316fcc8" title="Add an author comment"
+      aria-label="Read or edit author comment: HNF gather contract may not match the private helper&#x27;s caller invariant">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-5598bb077316fcc8" data-toggle="5598bb077316fcc8"
+      aria-expanded="false" aria-controls="details-5598bb077316fcc8"
+      aria-label="Toggle details: HNF gather contract may not match the private helper&#x27;s caller invariant">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-5598bb077316fcc8" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>HNF gather contract may not match the private helper&#x27;s caller invariant</h2>
+      <p class="identity"><code>create_b_gathers_requested_basis_rows</code><br>
+        manual-hnf-cutter-20260927T163447Z &middot; <code>hnf_cutter::create_b</code><br>
+        src/math/lp/hnf_cutter.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The witness uses duplicate basis rows [0,0], but the caller produces distinct pivot-row indices. In the full-rank case it keeps the matrix and RHS together in original order. Always permuting the RHS may be wrong for that caller. This is a preliminary contract-mismatch assessment, not a proof that every reachable input is safe; confirm the producer/caller invariant before proposing a fix.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>forall k &lt; basis_rows.size(): basis_rows[k] &lt; m_right_sides.size()</dd><dt>Asserted claim</dt><dd>result.size() == basis_rows.size() &amp;&amp; forall k &lt; result.size(): result[k] == m_right_sides[basis_rows[k]]</dd><dt>Reported witness</dt><dd>basis_rows == [0, 0]; |m_right_sides| == 2; m_right_sides[0] != m_right_sides[1]</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4466" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/hnf_cutter.cpp#L184-L207" target="_blank" rel="noopener">Caller and row shrinking</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/hnf.h#L198-L211" target="_blank" rel="noopener">Basis-row producer</a></p>
+      <a href="#finding-5598bb077316fcc8">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-5598bb077316fcc8">Author input</label>
+    <select id="status-5598bb077316fcc8"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-5598bb077316fcc8">Comment</label>
+    <textarea id="comment-5598bb077316fcc8" rows="3"></textarea>
+    <p><button type="button" data-copy="5598bb077316fcc8">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-5598bb077316fcc8" role="status"></p>
+    <textarea id="json-5598bb077316fcc8" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-044a547838b725b9" data-assessment="needs_investigation" data-author="pending" data-search="manual-nla-core-20260927T163619Z empty_refinement_still_checks_transcendentals core::on_to_refine_empty Empty-refinement schedule claim needs a finishing-helper frame contract The postulated finishing helper arbitrarily replaces the schedule after the notification. The real wrapper does notify the schedule and return the finishing result. The counterexample exposes an unconstrained helper effect, but inspection of the wrapper alone does not prove what the actual helper preserves. Further helper/frame-contract analysis is needed. src/math/lp/nla_core.cpp  m_to_refine is empty on entry; Finish(S) denotes the return and post-state of check_transcendentals_and_finish() from state S. result.squeeze_schedule == OnNothingToRefine(pre.m_squeeze_schedule) &amp;&amp; result.return == Finish(state_after_schedule_notification).return &amp;&amp; result.state_after_finish == Finish(state_after_schedule_notification).state m_to_refine == []; pre == CoreState(SqueezeSchedule(0), 0); finishEnvironment == ((s: CoreState) =&gt; FinishResult(l_true, CoreState(SqueezeSchedule(1), 0))) d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4460  Empty-refinement wrapper https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_core.cpp#L951-L957">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Empty-refinement schedule claim needs a finishing-helper frame contract">Empty-refinement schedule claim needs a finishing-helper frame contract</span></th>
+    <td><span class="badge needs_investigation">Needs investigation</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="044a547838b725b9"
+      aria-controls="details-044a547838b725b9" title="Add an author comment"
+      aria-label="Read or edit author comment: Empty-refinement schedule claim needs a finishing-helper frame contract">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-044a547838b725b9" data-toggle="044a547838b725b9"
+      aria-expanded="false" aria-controls="details-044a547838b725b9"
+      aria-label="Toggle details: Empty-refinement schedule claim needs a finishing-helper frame contract">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-044a547838b725b9" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Empty-refinement schedule claim needs a finishing-helper frame contract</h2>
+      <p class="identity"><code>empty_refinement_still_checks_transcendentals</code><br>
+        manual-nla-core-20260927T163619Z &middot; <code>core::on_to_refine_empty</code><br>
+        src/math/lp/nla_core.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The postulated finishing helper arbitrarily replaces the schedule after the notification. The real wrapper does notify the schedule and return the finishing result. The counterexample exposes an unconstrained helper effect, but inspection of the wrapper alone does not prove what the actual helper preserves. Further helper/frame-contract analysis is needed.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>m_to_refine is empty on entry; Finish(S) denotes the return and post-state of check_transcendentals_and_finish() from state S.</dd><dt>Asserted claim</dt><dd>result.squeeze_schedule == OnNothingToRefine(pre.m_squeeze_schedule) &amp;&amp; result.return == Finish(state_after_schedule_notification).return &amp;&amp; result.state_after_finish == Finish(state_after_schedule_notification).state</dd><dt>Reported witness</dt><dd>m_to_refine == []; pre == CoreState(SqueezeSchedule(0), 0); finishEnvironment == ((s: CoreState) =&gt; FinishResult(l_true, CoreState(SqueezeSchedule(1), 0)))</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4460" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_core.cpp#L951-L957" target="_blank" rel="noopener">Empty-refinement wrapper</a></p>
+      <a href="#finding-044a547838b725b9">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-044a547838b725b9">Author input</label>
+    <select id="status-044a547838b725b9"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-044a547838b725b9">Comment</label>
+    <textarea id="comment-044a547838b725b9" rows="3"></textarea>
+    <p><button type="button" data-copy="044a547838b725b9">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-044a547838b725b9" role="status"></p>
+    <textarea id="json-044a547838b725b9" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-59fd9543510e2d49" data-assessment="already_reported" data-author="pending" data-search="Z3Prover/z3#10764 optional_witness_materialization view_witness::materialize_witness Witness materialization and state restoration after backtracking The exact NFV witness uses an asserted non-sequence expression after a successful check, which the real check does not permit. A related sequence-sorted backtracking case was investigated in the linked PR. That PR was closed without merging: this is already reported, not a confirmed landed fix. src/ast/seq/seq_view_witness.cpp  m_enable_witness is true, m_last_result is l_true, stored witnesses were produced by a semantically correct successful check, and x is a live expression. (exists(a in m_assertions, a.var == x) -&gt; !is_null(result) &amp;&amp; forall(a in m_assertions, a.var == x, view_accepts(a.view, denote_seq(result)))) &amp;&amp; (!exists(a in m_assertions, a.var == x) &amp;&amp; is_sequence_sort(x.sort) -&gt; denote_seq(result) == []) &amp;&amp; (!exists(a in m_assertions, a.var == x) &amp;&amp; !is_sequence_sort(x.sort) -&gt; is_null(result)) m == Manager(0); x == OtherExpr(Manager(0), 0, BasicSort(Manager(0), 0)); m_witnesses == WitnessMap(map[]); m_assertions == [MaterializationAssertion(x, View(0))]  https://github.com/Z3Prover/bench/discussions/3861 https://github.com/Z3Prover/z3/pull/10764 Z3Prover/z3#10802 - closed, not merged https://github.com/Z3Prover/z3/pull/10802">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Witness materialization and state restoration after backtracking">Witness materialization and state restoration after backtracking</span></th>
+    <td><span class="badge already_reported">Previously reported</span></td>
+    <td class="references"><a href="https://github.com/Z3Prover/z3/pull/10802" target="_blank" rel="noopener">Z3Prover/z3#10802 - closed, not merged</a></td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="59fd9543510e2d49"
+      aria-controls="details-59fd9543510e2d49" title="Add an author comment"
+      aria-label="Read or edit author comment: Witness materialization and state restoration after backtracking">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-59fd9543510e2d49" data-toggle="59fd9543510e2d49"
+      aria-expanded="false" aria-controls="details-59fd9543510e2d49"
+      aria-label="Toggle details: Witness materialization and state restoration after backtracking">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-59fd9543510e2d49" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Witness materialization and state restoration after backtracking</h2>
+      <p class="identity"><code>optional_witness_materialization</code><br>
+        Z3Prover/z3#10764 &middot; <code>view_witness::materialize_witness</code><br>
+        src/ast/seq/seq_view_witness.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The exact NFV witness uses an asserted non-sequence expression after a successful check, which the real check does not permit. A related sequence-sorted backtracking case was investigated in the linked PR. That PR was closed without merging: this is already reported, not a confirmed landed fix.</p>
 
-<article class="finding" id="finding-4565d92ae57f3104" data-assessment="likely_false_alarm" data-author="pending">
-  <h2>Finalization witness disconnects the pre-state plugin from execution</h2>
-  <p class="identity"><code>finalize_releases_active_plugin</code><br>
-    manual-sls-solver-20260928T201911Z &middot; <code>solver::finalize</code><br>
-    src/sat/smt/sls_solver.cpp (Reviewed location)</p>
-  <p><span class="badge likely_false_alarm">Likely false alarm</span></p>
-  <p class="explanation">The model requires a nonnull pre-state plugin but allows the current plugin to be null, taking the early return. The real active-plugin path invokes finalize and then clears both model and plugin references. The witness is not tied to that input state.</p>
-  <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
-  <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4761" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/sat/smt/sls_solver.cpp#L71-L78" target="_blank" rel="noopener">Finalization path</a></p>
-  <p><strong>Saved author input: Pending</strong></p>
-  <p class="comment">No author comment yet.</p>
-  <details>
-    <summary>Set OK or add an author comment</summary>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>m_enable_witness is true, m_last_result is l_true, stored witnesses were produced by a semantically correct successful check, and x is a live expression.</dd><dt>Asserted claim</dt><dd>(exists(a in m_assertions, a.var == x) -&gt; !is_null(result) &amp;&amp; forall(a in m_assertions, a.var == x, view_accepts(a.view, denote_seq(result)))) &amp;&amp; (!exists(a in m_assertions, a.var == x) &amp;&amp; is_sequence_sort(x.sort) -&gt; denote_seq(result) == []) &amp;&amp; (!exists(a in m_assertions, a.var == x) &amp;&amp; !is_sequence_sort(x.sort) -&gt; is_null(result))</dd><dt>Reported witness</dt><dd>m == Manager(0); x == OtherExpr(Manager(0), 0, BasicSort(Manager(0), 0)); m_witnesses == WitnessMap(map[]); m_assertions == [MaterializationAssertion(x, View(0))]</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/3861" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10764" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10802" target="_blank" rel="noopener">Z3Prover/z3#10802 - closed, not merged</a></p>
+      <a href="#finding-59fd9543510e2d49">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-59fd9543510e2d49">Author input</label>
+    <select id="status-59fd9543510e2d49"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-59fd9543510e2d49">Comment</label>
+    <textarea id="comment-59fd9543510e2d49" rows="3"></textarea>
+    <p><button type="button" data-copy="59fd9543510e2d49">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-59fd9543510e2d49" role="status"></p>
+    <textarea id="json-59fd9543510e2d49" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-e698fb1305544910" data-assessment="likely_false_alarm" data-author="pending" data-search="Z3Prover/z3#10519 regex_solver_construction_honors_configuration th Regex default-orientation witness contradicts the actual default The translated documented_default_fparams permits reversed orientation, while the actual initialization and stated environment require forward. The report explicitly notes that the forward-orientation constraint was omitted from the axiom. src/smt/seq_regex.cpp  th.get_context().get_fparams().m_seq_regex_transition_mode is &quot;light-ant&quot; or &quot;brz&quot;, and m_seq_regex_orientation is &quot;forward&quot;, &quot;reversed&quot;, or &quot;retry&quot; result.monadic.transition_mode == monadic_transition_mode(fp.m_seq_regex_transition_mode) &amp;&amp; result.monadic.budget == fp.m_seq_regex_budget &amp;&amp; result.monadic.orientation == monadic_orientation(fp.m_seq_regex_orientation) &amp;&amp; result.monadic.split_rounds == fp.m_seq_regex_split &amp;&amp; (forall e: result.monadic.is_var(e) == th.is_var(e)) &amp;&amp; result.eq_approx.limit == 4096 &amp;&amp; result.live_states.transition_mode == seq::transition_mode::brzozowski_tm &amp;&amp; result.live_states.limit == 10000 &amp;&amp; (fp == documented_default_fparams =&gt; (result.monadic.orientation == seq::monadic::orientation::forward &amp;&amp; forall q: observable_verdict(result, q) == observable_verdict(master_reference(th), q) &amp;&amp; observable_rlimit_count(result, q) == observable_rlimit_count(master_reference(th), q))) th.get_context().get_fparams() == documented_default_fparams(); th.get_context().get_fparams().m_seq_regex_orientation == &quot;reversed&quot; d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/3859 https://github.com/Z3Prover/z3/pull/10519 Actual parameter defaults https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/params/theory_seq_params.h#L31">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Regex default-orientation witness contradicts the actual default">Regex default-orientation witness contradicts the actual default</span></th>
+    <td><span class="badge likely_false_alarm">Likely false alarm</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="e698fb1305544910"
+      aria-controls="details-e698fb1305544910" title="Add an author comment"
+      aria-label="Read or edit author comment: Regex default-orientation witness contradicts the actual default">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-e698fb1305544910" data-toggle="e698fb1305544910"
+      aria-expanded="false" aria-controls="details-e698fb1305544910"
+      aria-label="Toggle details: Regex default-orientation witness contradicts the actual default">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-e698fb1305544910" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Regex default-orientation witness contradicts the actual default</h2>
+      <p class="identity"><code>regex_solver_construction_honors_configuration</code><br>
+        Z3Prover/z3#10519 &middot; <code>th</code><br>
+        src/smt/seq_regex.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The translated documented_default_fparams permits reversed orientation, while the actual initialization and stated environment require forward. The report explicitly notes that the forward-orientation constraint was omitted from the axiom.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>th.get_context().get_fparams().m_seq_regex_transition_mode is &quot;light-ant&quot; or &quot;brz&quot;, and m_seq_regex_orientation is &quot;forward&quot;, &quot;reversed&quot;, or &quot;retry&quot;</dd><dt>Asserted claim</dt><dd>result.monadic.transition_mode == monadic_transition_mode(fp.m_seq_regex_transition_mode) &amp;&amp; result.monadic.budget == fp.m_seq_regex_budget &amp;&amp; result.monadic.orientation == monadic_orientation(fp.m_seq_regex_orientation) &amp;&amp; result.monadic.split_rounds == fp.m_seq_regex_split &amp;&amp; (forall e: result.monadic.is_var(e) == th.is_var(e)) &amp;&amp; result.eq_approx.limit == 4096 &amp;&amp; result.live_states.transition_mode == seq::transition_mode::brzozowski_tm &amp;&amp; result.live_states.limit == 10000 &amp;&amp; (fp == documented_default_fparams =&gt; (result.monadic.orientation == seq::monadic::orientation::forward &amp;&amp; forall q: observable_verdict(result, q) == observable_verdict(master_reference(th), q) &amp;&amp; observable_rlimit_count(result, q) == observable_rlimit_count(master_reference(th), q)))</dd><dt>Reported witness</dt><dd>th.get_context().get_fparams() == documented_default_fparams(); th.get_context().get_fparams().m_seq_regex_orientation == &quot;reversed&quot;</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/3859" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10519" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/params/theory_seq_params.h#L31" target="_blank" rel="noopener">Actual parameter defaults</a></p>
+      <a href="#finding-e698fb1305544910">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-e698fb1305544910">Author input</label>
+    <select id="status-e698fb1305544910"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-e698fb1305544910">Comment</label>
+    <textarea id="comment-e698fb1305544910" rows="3"></textarea>
+    <p><button type="button" data-copy="e698fb1305544910">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-e698fb1305544910" role="status"></p>
+    <textarea id="json-e698fb1305544910" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-32ab1cf400345cd7" data-assessment="likely_false_alarm" data-author="pending" data-search="Z3Prover/z3#10715 output_is_safe_for_regex_set_merging range_predicate_to_regex Regex conversion witness requires an empty predicate with two ranges The model chooses is_empty == true and num_ranges == 2. Both real accessors inspect the same m_ranges container, so this witness cannot describe a real range_predicate. This rejects the reported witness, not every possible bug in the conversion. src/ast/rewriter/seq_range_collapse.cpp  seq_sort is a valid sequence sort, p is well formed, p.num_ranges() &gt; 1, and q is a well-sorted canonical regex set of the same regex sort accepted by seq_rewriter::merge_regex_sets. is_id_sorted_regex_set(result) &amp;&amp; language(seq_rewriter::merge_regex_sets(result, q)) == language(result) union language(q) p.empty_value; p.num_ranges_value == 2; p.well_formed_value; |p.range_values| == 2 d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/3866 https://github.com/Z3Prover/z3/pull/10715 Container accessors https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/rewriter/seq_range_predicate.h">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Regex conversion witness requires an empty predicate with two ranges">Regex conversion witness requires an empty predicate with two ranges</span></th>
+    <td><span class="badge likely_false_alarm">Likely false alarm</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="32ab1cf400345cd7"
+      aria-controls="details-32ab1cf400345cd7" title="Add an author comment"
+      aria-label="Read or edit author comment: Regex conversion witness requires an empty predicate with two ranges">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-32ab1cf400345cd7" data-toggle="32ab1cf400345cd7"
+      aria-expanded="false" aria-controls="details-32ab1cf400345cd7"
+      aria-label="Toggle details: Regex conversion witness requires an empty predicate with two ranges">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-32ab1cf400345cd7" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Regex conversion witness requires an empty predicate with two ranges</h2>
+      <p class="identity"><code>output_is_safe_for_regex_set_merging</code><br>
+        Z3Prover/z3#10715 &middot; <code>range_predicate_to_regex</code><br>
+        src/ast/rewriter/seq_range_collapse.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The model chooses is_empty == true and num_ranges == 2. Both real accessors inspect the same m_ranges container, so this witness cannot describe a real range_predicate. This rejects the reported witness, not every possible bug in the conversion.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>seq_sort is a valid sequence sort, p is well formed, p.num_ranges() &gt; 1, and q is a well-sorted canonical regex set of the same regex sort accepted by seq_rewriter::merge_regex_sets.</dd><dt>Asserted claim</dt><dd>is_id_sorted_regex_set(result) &amp;&amp; language(seq_rewriter::merge_regex_sets(result, q)) == language(result) union language(q)</dd><dt>Reported witness</dt><dd>p.empty_value; p.num_ranges_value == 2; p.well_formed_value; |p.range_values| == 2</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/3866" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10715" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/rewriter/seq_range_predicate.h" target="_blank" rel="noopener">Container accessors</a></p>
+      <a href="#finding-32ab1cf400345cd7">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-32ab1cf400345cd7">Author input</label>
+    <select id="status-32ab1cf400345cd7"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-32ab1cf400345cd7">Comment</label>
+    <textarea id="comment-32ab1cf400345cd7" rows="3"></textarea>
+    <p><button type="button" data-copy="32ab1cf400345cd7">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-32ab1cf400345cd7" role="status"></p>
+    <textarea id="json-32ab1cf400345cd7" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-cfa726ab7e37a3e5" data-assessment="likely_false_alarm" data-author="pending" data-search="Z3Prover/z3#10857 undo_erases_scope_local_definitions undo Recursive-definition undo counterexample uses disconnected pre-states The witness gives before.m_definitions one element but starts the actual undo with an empty vector. The supposed pre-state is not linked to the state being executed. Returning immediately then contradicts the unrelated snapshot, not the real undo contract. The coverage map&#x27;s util/trail.h attribution was heuristic; the relevant implementation is recfun_finder. src/ast/simplifiers/recfun_finder.cpp  sz &lt;= before.m_definitions.size() and tracked_suffix == before.m_definitions[sz:before.m_definitions.size()] result.m_definitions == before.m_definitions[0:sz] &amp;&amp; (forall d in tracked_suffix : !result.plugin.has_def(d)) &amp;&amp; (forall d not in tracked_suffix : result.plugin.definition_of(d) == before.plugin.definition_of(d)) sz == 1; |before.m_definitions| == 1; tracked_suffix == []; |s.m_definitions.elements| == 0 d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4169 https://github.com/Z3Prover/z3/pull/10857 Undo implementation https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/simplifiers/recfun_finder.cpp#L117-L126">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Recursive-definition undo counterexample uses disconnected pre-states">Recursive-definition undo counterexample uses disconnected pre-states</span></th>
+    <td><span class="badge likely_false_alarm">Likely false alarm</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="cfa726ab7e37a3e5"
+      aria-controls="details-cfa726ab7e37a3e5" title="Add an author comment"
+      aria-label="Read or edit author comment: Recursive-definition undo counterexample uses disconnected pre-states">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-cfa726ab7e37a3e5" data-toggle="cfa726ab7e37a3e5"
+      aria-expanded="false" aria-controls="details-cfa726ab7e37a3e5"
+      aria-label="Toggle details: Recursive-definition undo counterexample uses disconnected pre-states">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-cfa726ab7e37a3e5" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Recursive-definition undo counterexample uses disconnected pre-states</h2>
+      <p class="identity"><code>undo_erases_scope_local_definitions</code><br>
+        Z3Prover/z3#10857 &middot; <code>undo</code><br>
+        src/ast/simplifiers/recfun_finder.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The witness gives before.m_definitions one element but starts the actual undo with an empty vector. The supposed pre-state is not linked to the state being executed. Returning immediately then contradicts the unrelated snapshot, not the real undo contract. The coverage map&#x27;s util/trail.h attribution was heuristic; the relevant implementation is recfun_finder.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>sz &lt;= before.m_definitions.size() and tracked_suffix == before.m_definitions[sz:before.m_definitions.size()]</dd><dt>Asserted claim</dt><dd>result.m_definitions == before.m_definitions[0:sz] &amp;&amp; (forall d in tracked_suffix : !result.plugin.has_def(d)) &amp;&amp; (forall d not in tracked_suffix : result.plugin.definition_of(d) == before.plugin.definition_of(d))</dd><dt>Reported witness</dt><dd>sz == 1; |before.m_definitions| == 1; tracked_suffix == []; |s.m_definitions.elements| == 0</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4169" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10857" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/simplifiers/recfun_finder.cpp#L117-L126" target="_blank" rel="noopener">Undo implementation</a></p>
+      <a href="#finding-cfa726ab7e37a3e5">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-cfa726ab7e37a3e5">Author input</label>
+    <select id="status-cfa726ab7e37a3e5"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-cfa726ab7e37a3e5">Comment</label>
+    <textarea id="comment-cfa726ab7e37a3e5" rows="3"></textarea>
+    <p><button type="button" data-copy="cfa726ab7e37a3e5">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-cfa726ab7e37a3e5" role="status"></p>
+    <textarea id="json-cfa726ab7e37a3e5" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-423bb89badec07e4" data-assessment="likely_false_alarm" data-author="pending" data-search="Z3Prover/z3#10870 enabled_iff_applications_registered solver::transcendentals_enabled Transcendental registration count is disconnected from its container The model chooses an empty registration container and an independent count of one. The real method returns !m_imp-&gt;m_transcendentals.empty(). The report notes that the stated relation between the container and count is absent from the artifact. src/nlsat/nlsat_solver.cpp  true result == (registered_transcendental_application_count &gt; 0) m_imp == [SolverImp([])]; registered_transcendental_application_count == 1 d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4208 https://github.com/Z3Prover/z3/pull/10870 Enabled query https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/nlsat/nlsat_solver.cpp#L4892-L4894">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Transcendental registration count is disconnected from its container">Transcendental registration count is disconnected from its container</span></th>
+    <td><span class="badge likely_false_alarm">Likely false alarm</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="423bb89badec07e4"
+      aria-controls="details-423bb89badec07e4" title="Add an author comment"
+      aria-label="Read or edit author comment: Transcendental registration count is disconnected from its container">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-423bb89badec07e4" data-toggle="423bb89badec07e4"
+      aria-expanded="false" aria-controls="details-423bb89badec07e4"
+      aria-label="Toggle details: Transcendental registration count is disconnected from its container">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-423bb89badec07e4" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Transcendental registration count is disconnected from its container</h2>
+      <p class="identity"><code>enabled_iff_applications_registered</code><br>
+        Z3Prover/z3#10870 &middot; <code>solver::transcendentals_enabled</code><br>
+        src/nlsat/nlsat_solver.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The model chooses an empty registration container and an independent count of one. The real method returns !m_imp-&gt;m_transcendentals.empty(). The report notes that the stated relation between the container and count is absent from the artifact.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>true</dd><dt>Asserted claim</dt><dd>result == (registered_transcendental_application_count &gt; 0)</dd><dt>Reported witness</dt><dd>m_imp == [SolverImp([])]; registered_transcendental_application_count == 1</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4208" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10870" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/nlsat/nlsat_solver.cpp#L4892-L4894" target="_blank" rel="noopener">Enabled query</a></p>
+      <a href="#finding-423bb89badec07e4">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-423bb89badec07e4">Author input</label>
+    <select id="status-423bb89badec07e4"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-423bb89badec07e4">Comment</label>
+    <textarea id="comment-423bb89badec07e4" rows="3"></textarea>
+    <p><button type="button" data-copy="423bb89badec07e4">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-423bb89badec07e4" role="status"></p>
+    <textarea id="json-423bb89badec07e4" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-c66fa92da306bc10" data-assessment="likely_false_alarm" data-author="pending" data-search="Z3Prover/z3#10910 sat_mbqi_preserves_auf_extraction mbqi::extract_var_args MBQI witness has an impossible argument-count/storage combination The witness supplies 2^32+1 null arguments while modeling arity as one after truncation. A valid Z3 application stores its actual argument count as unsigned and must have matching, valid argument storage. The model witness violates those representation invariants. src/sat/smt/q_mbi.cpp  _t is well formed; result is the set of pairs newly appended to qb.var_args; AUFOnly(a) means is_uninterp(a) &amp;&amp; !is_recfun_with_ground_recursion_args(a) filter(result, (a,i) =&gt; AUFOnly(a)) == { (a,i) | a in Visited(_t) &amp;&amp; !is_ground(a) &amp;&amp; is_app(a) &amp;&amp; arity(a) &gt; 0 &amp;&amp; AUFOnly(a) &amp;&amp; 0 &lt;= i &lt; arity(a) &amp;&amp; !is_ground(arg(a,i)) &amp;&amp; !is_uninterp(arg(a,i)) &amp;&amp; !qb.is_free(arg(a,i)) } t_input != null; GroundSubterms(t_input) == [t_input]; !is_ground(t_input) &amp;&amp; is_app(t_input) &amp;&amp; to_app(t_input) == t_input; is_uninterp(t_input) &amp;&amp; !is_recfun_with_ground_recursion_args(t_input); AppArgs(t_input) == seq(0x100000001, j =&gt; null); !is_ground(null) &amp;&amp; !is_uninterp(null) &amp;&amp; null !in qb.free_exprs d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4328 https://github.com/Z3Prover/z3/pull/10910 Application representation https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/ast.h#L754-L778">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="MBQI witness has an impossible argument-count/storage combination">MBQI witness has an impossible argument-count/storage combination</span></th>
+    <td><span class="badge likely_false_alarm">Likely false alarm</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="c66fa92da306bc10"
+      aria-controls="details-c66fa92da306bc10" title="Add an author comment"
+      aria-label="Read or edit author comment: MBQI witness has an impossible argument-count/storage combination">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-c66fa92da306bc10" data-toggle="c66fa92da306bc10"
+      aria-expanded="false" aria-controls="details-c66fa92da306bc10"
+      aria-label="Toggle details: MBQI witness has an impossible argument-count/storage combination">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-c66fa92da306bc10" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>MBQI witness has an impossible argument-count/storage combination</h2>
+      <p class="identity"><code>sat_mbqi_preserves_auf_extraction</code><br>
+        Z3Prover/z3#10910 &middot; <code>mbqi::extract_var_args</code><br>
+        src/sat/smt/q_mbi.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The witness supplies 2^32+1 null arguments while modeling arity as one after truncation. A valid Z3 application stores its actual argument count as unsigned and must have matching, valid argument storage. The model witness violates those representation invariants.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>_t is well formed; result is the set of pairs newly appended to qb.var_args; AUFOnly(a) means is_uninterp(a) &amp;&amp; !is_recfun_with_ground_recursion_args(a)</dd><dt>Asserted claim</dt><dd>filter(result, (a,i) =&gt; AUFOnly(a)) == { (a,i) | a in Visited(_t) &amp;&amp; !is_ground(a) &amp;&amp; is_app(a) &amp;&amp; arity(a) &gt; 0 &amp;&amp; AUFOnly(a) &amp;&amp; 0 &lt;= i &lt; arity(a) &amp;&amp; !is_ground(arg(a,i)) &amp;&amp; !is_uninterp(arg(a,i)) &amp;&amp; !qb.is_free(arg(a,i)) }</dd><dt>Reported witness</dt><dd>t_input != null; GroundSubterms(t_input) == [t_input]; !is_ground(t_input) &amp;&amp; is_app(t_input) &amp;&amp; to_app(t_input) == t_input; is_uninterp(t_input) &amp;&amp; !is_recfun_with_ground_recursion_args(t_input); AppArgs(t_input) == seq(0x100000001, j =&gt; null); !is_ground(null) &amp;&amp; !is_uninterp(null) &amp;&amp; null !in qb.free_exprs</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4328" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10910" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/ast.h#L754-L778" target="_blank" rel="noopener">Application representation</a></p>
+      <a href="#finding-c66fa92da306bc10">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-c66fa92da306bc10">Author input</label>
+    <select id="status-c66fa92da306bc10"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-c66fa92da306bc10">Comment</label>
+    <textarea id="comment-c66fa92da306bc10" rows="3"></textarea>
+    <p><button type="button" data-copy="c66fa92da306bc10">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-c66fa92da306bc10" role="status"></p>
+    <textarea id="json-c66fa92da306bc10" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-6ad8b013a7119c7f" data-assessment="likely_false_alarm" data-author="pending" data-search="manual-arith-axioms-20260928T201803Z to_int_axiom_characterizes_floor solver::mk_to_int_axiom Floor-axiom model omits VERIFY&#x27;s assignment to the operand The witness leaves x null because the translation does not execute VERIFY(a.is_to_int(n, x)). The real macro evaluates the recognizer and assigns x. The reported floor mismatch therefore depends on an incorrect translation of side effects. src/sat/smt/arith_axioms.cpp  n is the application to_int(x), with x real-valued and n integer-valued if x is syntactically to_real(y) then denote_bool(conjunction(result.added_clauses)) == (denote(n) == denote(y)); otherwise denote_bool(conjunction(result.added_clauses)) == (denote(n) &lt;= denote(x) &amp;&amp; denote(x) &lt; denote(n) + 1) n == to_int(atom(0, 1.0, RealSort)) d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4778  Operand extraction https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/sat/smt/arith_axioms.cpp#L34-L43">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Floor-axiom model omits VERIFY&#x27;s assignment to the operand">Floor-axiom model omits VERIFY&#x27;s assignment to the operand</span></th>
+    <td><span class="badge likely_false_alarm">Likely false alarm</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="6ad8b013a7119c7f"
+      aria-controls="details-6ad8b013a7119c7f" title="Add an author comment"
+      aria-label="Read or edit author comment: Floor-axiom model omits VERIFY&#x27;s assignment to the operand">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-6ad8b013a7119c7f" data-toggle="6ad8b013a7119c7f"
+      aria-expanded="false" aria-controls="details-6ad8b013a7119c7f"
+      aria-label="Toggle details: Floor-axiom model omits VERIFY&#x27;s assignment to the operand">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-6ad8b013a7119c7f" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Floor-axiom model omits VERIFY&#x27;s assignment to the operand</h2>
+      <p class="identity"><code>to_int_axiom_characterizes_floor</code><br>
+        manual-arith-axioms-20260928T201803Z &middot; <code>solver::mk_to_int_axiom</code><br>
+        src/sat/smt/arith_axioms.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The witness leaves x null because the translation does not execute VERIFY(a.is_to_int(n, x)). The real macro evaluates the recognizer and assigns x. The reported floor mismatch therefore depends on an incorrect translation of side effects.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>n is the application to_int(x), with x real-valued and n integer-valued</dd><dt>Asserted claim</dt><dd>if x is syntactically to_real(y) then denote_bool(conjunction(result.added_clauses)) == (denote(n) == denote(y)); otherwise denote_bool(conjunction(result.added_clauses)) == (denote(n) &lt;= denote(x) &amp;&amp; denote(x) &lt; denote(n) + 1)</dd><dt>Reported witness</dt><dd>n == to_int(atom(0, 1.0, RealSort))</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4778" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/sat/smt/arith_axioms.cpp#L34-L43" target="_blank" rel="noopener">Operand extraction</a></p>
+      <a href="#finding-6ad8b013a7119c7f">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-6ad8b013a7119c7f">Author input</label>
+    <select id="status-6ad8b013a7119c7f"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-6ad8b013a7119c7f">Comment</label>
+    <textarea id="comment-6ad8b013a7119c7f" rows="3"></textarea>
+    <p><button type="button" data-copy="6ad8b013a7119c7f">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-6ad8b013a7119c7f" role="status"></p>
+    <textarea id="json-6ad8b013a7119c7f" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-e0c8afa02fb95743" data-assessment="likely_false_alarm" data-author="pending" data-search="manual-lar-solver-20260927T163527Z equal_terms_have_equal_hashes operator Unmapped hash-consistency finding models the equality operator instead This is the extra record whose source the coverage map could not resolve, not one of its 16 mapped findings. The reported model compares a Boolean equality result for two empty terms against an independently postulated hash_run value. It does not establish a failure of the real term_hasher. Any separate hash-order concern needs its own investigation. src/math/lp/lar_solver.cpp  a and b are finite valid lar_terms, have equal sizes, and for every monomial of either term the other term contains the same variable with the same coefficient; result is the hash returned for a. result == hash_run(b) a == LarTerm([], 0, Coefficients(map[]), true, false); b == LarTerm([], 0, Coefficients(map[]), true, false) d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4477  Distinct hasher and comparer https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/lar_solver.cpp#L20-L45">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Unmapped hash-consistency finding models the equality operator instead">Unmapped hash-consistency finding models the equality operator instead</span></th>
+    <td><span class="badge likely_false_alarm">Likely false alarm</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="e0c8afa02fb95743"
+      aria-controls="details-e0c8afa02fb95743" title="Add an author comment"
+      aria-label="Read or edit author comment: Unmapped hash-consistency finding models the equality operator instead">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-e0c8afa02fb95743" data-toggle="e0c8afa02fb95743"
+      aria-expanded="false" aria-controls="details-e0c8afa02fb95743"
+      aria-label="Toggle details: Unmapped hash-consistency finding models the equality operator instead">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-e0c8afa02fb95743" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Unmapped hash-consistency finding models the equality operator instead</h2>
+      <p class="identity"><code>equal_terms_have_equal_hashes</code><br>
+        manual-lar-solver-20260927T163527Z &middot; <code>operator</code><br>
+        src/math/lp/lar_solver.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">This is the extra record whose source the coverage map could not resolve, not one of its 16 mapped findings. The reported model compares a Boolean equality result for two empty terms against an independently postulated hash_run value. It does not establish a failure of the real term_hasher. Any separate hash-order concern needs its own investigation.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>a and b are finite valid lar_terms, have equal sizes, and for every monomial of either term the other term contains the same variable with the same coefficient; result is the hash returned for a.</dd><dt>Asserted claim</dt><dd>result == hash_run(b)</dd><dt>Reported witness</dt><dd>a == LarTerm([], 0, Coefficients(map[]), true, false); b == LarTerm([], 0, Coefficients(map[]), true, false)</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4477" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/lar_solver.cpp#L20-L45" target="_blank" rel="noopener">Distinct hasher and comparer</a></p>
+      <a href="#finding-e0c8afa02fb95743">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-e0c8afa02fb95743">Author input</label>
+    <select id="status-e0c8afa02fb95743"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-e0c8afa02fb95743">Comment</label>
+    <textarea id="comment-e0c8afa02fb95743" rows="3"></textarea>
+    <p><button type="button" data-copy="e0c8afa02fb95743">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-e0c8afa02fb95743" role="status"></p>
+    <textarea id="json-e0c8afa02fb95743" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-412873202671fcad" data-assessment="likely_false_alarm" data-author="pending" data-search="manual-nla-core-20260927T163619Z check_routes_empty_monomial_case_through_transcendentals core::check Handler-call assertion confuses the final counter with one additional call The witness starts the handler call counter at one. Calling the handler exactly once increments it to two, contradicting a contract that requires the final counter to equal one. The intended obligation is a delta of one or an explicitly zero initial counter. src/math/lp/nla_core.cpp  After the initial get_rid_of_inf_eps() and init_to_refine(), lra status is OPTIMAL or FEASIBLE and m_to_refine is empty; H is the return and post-state of on_to_refine_empty() at the point it is called. result.return == H.return &amp;&amp; result.state == H.state &amp;&amp; on_to_refine_empty_call_count == 1 &amp;&amp; init_search_call_count == 0 env.m_nla_calls == UInt(16, 0); env.on_to_refine_empty_call_count == 1 d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4460  Empty-monomial route https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_core.cpp#L959-L975">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Handler-call assertion confuses the final counter with one additional call">Handler-call assertion confuses the final counter with one additional call</span></th>
+    <td><span class="badge likely_false_alarm">Likely false alarm</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="412873202671fcad"
+      aria-controls="details-412873202671fcad" title="Add an author comment"
+      aria-label="Read or edit author comment: Handler-call assertion confuses the final counter with one additional call">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-412873202671fcad" data-toggle="412873202671fcad"
+      aria-expanded="false" aria-controls="details-412873202671fcad"
+      aria-label="Toggle details: Handler-call assertion confuses the final counter with one additional call">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-412873202671fcad" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Handler-call assertion confuses the final counter with one additional call</h2>
+      <p class="identity"><code>check_routes_empty_monomial_case_through_transcendentals</code><br>
+        manual-nla-core-20260927T163619Z &middot; <code>core::check</code><br>
+        src/math/lp/nla_core.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The witness starts the handler call counter at one. Calling the handler exactly once increments it to two, contradicting a contract that requires the final counter to equal one. The intended obligation is a delta of one or an explicitly zero initial counter.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>After the initial get_rid_of_inf_eps() and init_to_refine(), lra status is OPTIMAL or FEASIBLE and m_to_refine is empty; H is the return and post-state of on_to_refine_empty() at the point it is called.</dd><dt>Asserted claim</dt><dd>result.return == H.return &amp;&amp; result.state == H.state &amp;&amp; on_to_refine_empty_call_count == 1 &amp;&amp; init_search_call_count == 0</dd><dt>Reported witness</dt><dd>env.m_nla_calls == UInt(16, 0); env.on_to_refine_empty_call_count == 1</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4460" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_core.cpp#L959-L975" target="_blank" rel="noopener">Empty-monomial route</a></p>
+      <a href="#finding-412873202671fcad">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-412873202671fcad">Author input</label>
+    <select id="status-412873202671fcad"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-412873202671fcad">Comment</label>
+    <textarea id="comment-412873202671fcad" rows="3"></textarea>
+    <p><button type="button" data-copy="412873202671fcad">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-412873202671fcad" role="status"></p>
+    <textarea id="json-412873202671fcad" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-3c232ae42192bf0e" data-assessment="likely_false_alarm" data-author="pending" data-search="manual-nla-powers-20260927T163649Z integer_ground_instance_refinement_is_exact powers::check Power-grounding witness takes a guard excluded by the stated assumptions The witness selects null_lpvar, which deliberately returns l_undef. The property assumes valid selected values and that no earlier guard applies. The generated witness therefore does not satisfy the intended branch precondition. src/math/lp/nla_powers.cpp  The exact selected values satisfy Vx&gt;0, Vy is unsigned, Vr!=power(Vx,Vy), no earlier guard applies, and c.random()%2==0. result.status == l_false &amp;&amp; result.lemmas == [(X!=Vx || Y!=Vy || R==power(Vx,Vy))] &amp;&amp; !result.lemmas[0](Vx,Vy,Vr) &amp;&amp; forall X,Y,R. Power(X,Y,R) -&gt; result.lemmas[0](X,Y,R) x == -1 d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4479  Null-variable guard https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_powers.cpp#L81-L85">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Power-grounding witness takes a guard excluded by the stated assumptions">Power-grounding witness takes a guard excluded by the stated assumptions</span></th>
+    <td><span class="badge likely_false_alarm">Likely false alarm</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="3c232ae42192bf0e"
+      aria-controls="details-3c232ae42192bf0e" title="Add an author comment"
+      aria-label="Read or edit author comment: Power-grounding witness takes a guard excluded by the stated assumptions">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-3c232ae42192bf0e" data-toggle="3c232ae42192bf0e"
+      aria-expanded="false" aria-controls="details-3c232ae42192bf0e"
+      aria-label="Toggle details: Power-grounding witness takes a guard excluded by the stated assumptions">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-3c232ae42192bf0e" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Power-grounding witness takes a guard excluded by the stated assumptions</h2>
+      <p class="identity"><code>integer_ground_instance_refinement_is_exact</code><br>
+        manual-nla-powers-20260927T163649Z &middot; <code>powers::check</code><br>
+        src/math/lp/nla_powers.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The witness selects null_lpvar, which deliberately returns l_undef. The property assumes valid selected values and that no earlier guard applies. The generated witness therefore does not satisfy the intended branch precondition.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>The exact selected values satisfy Vx&gt;0, Vy is unsigned, Vr!=power(Vx,Vy), no earlier guard applies, and c.random()%2==0.</dd><dt>Asserted claim</dt><dd>result.status == l_false &amp;&amp; result.lemmas == [(X!=Vx || Y!=Vy || R==power(Vx,Vy))] &amp;&amp; !result.lemmas[0](Vx,Vy,Vr) &amp;&amp; forall X,Y,R. Power(X,Y,R) -&gt; result.lemmas[0](X,Y,R)</dd><dt>Reported witness</dt><dd>x == -1</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4479" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_powers.cpp#L81-L85" target="_blank" rel="noopener">Null-variable guard</a></p>
+      <a href="#finding-3c232ae42192bf0e">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-3c232ae42192bf0e">Author input</label>
+    <select id="status-3c232ae42192bf0e"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-3c232ae42192bf0e">Comment</label>
+    <textarea id="comment-3c232ae42192bf0e" rows="3"></textarea>
+    <p><button type="button" data-copy="3c232ae42192bf0e">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-3c232ae42192bf0e" role="status"></p>
+    <textarea id="json-3c232ae42192bf0e" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-57c81dc3f6c4a587" data-assessment="likely_false_alarm" data-author="pending" data-search="manual-push-app-ite-20260928T164350Z builds_first_ite_distribution push_app_ite_cfg::reduce_app ITE-distribution model omits VERIFY output assignments The model leaves c, t, and e null instead of executing their assignments inside VERIFY(m.is_ite(...)). The C++ VERIFY macro evaluates its argument, including those side effects. The reported witness relies on this translation error. src/ast/rewriter/push_app_ite.cpp  is_target(f, num, args) is true; args initially contains well-sorted arguments for f; j = min({i | 0 &lt;= i &lt; num &amp;&amp; is_ite(args[i])}); j &lt;= INT_MAX; args[j] = ite(c, t, e) status == BR_REWRITE2 &amp;&amp; ast_eq(result, ite(c, app(f, args_before[j := t]), app(f, args_before[j := e]))) &amp;&amp; args_after == args_before f == FuncDeclValue(0); num == 1; args.Length == 1; args[0] == IteExpr(AtomExpr(0), AtomExpr(1), AtomExpr(2)) d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4676  VERIFY evaluates its expression https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/util/debug.h#L108-L111">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="ITE-distribution model omits VERIFY output assignments">ITE-distribution model omits VERIFY output assignments</span></th>
+    <td><span class="badge likely_false_alarm">Likely false alarm</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="57c81dc3f6c4a587"
+      aria-controls="details-57c81dc3f6c4a587" title="Add an author comment"
+      aria-label="Read or edit author comment: ITE-distribution model omits VERIFY output assignments">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-57c81dc3f6c4a587" data-toggle="57c81dc3f6c4a587"
+      aria-expanded="false" aria-controls="details-57c81dc3f6c4a587"
+      aria-label="Toggle details: ITE-distribution model omits VERIFY output assignments">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-57c81dc3f6c4a587" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>ITE-distribution model omits VERIFY output assignments</h2>
+      <p class="identity"><code>builds_first_ite_distribution</code><br>
+        manual-push-app-ite-20260928T164350Z &middot; <code>push_app_ite_cfg::reduce_app</code><br>
+        src/ast/rewriter/push_app_ite.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The model leaves c, t, and e null instead of executing their assignments inside VERIFY(m.is_ite(...)). The C++ VERIFY macro evaluates its argument, including those side effects. The reported witness relies on this translation error.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>is_target(f, num, args) is true; args initially contains well-sorted arguments for f; j = min({i | 0 &lt;= i &lt; num &amp;&amp; is_ite(args[i])}); j &lt;= INT_MAX; args[j] = ite(c, t, e)</dd><dt>Asserted claim</dt><dd>status == BR_REWRITE2 &amp;&amp; ast_eq(result, ite(c, app(f, args_before[j := t]), app(f, args_before[j := e]))) &amp;&amp; args_after == args_before</dd><dt>Reported witness</dt><dd>f == FuncDeclValue(0); num == 1; args.Length == 1; args[0] == IteExpr(AtomExpr(0), AtomExpr(1), AtomExpr(2))</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4676" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/util/debug.h#L108-L111" target="_blank" rel="noopener">VERIFY evaluates its expression</a></p>
+      <a href="#finding-57c81dc3f6c4a587">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-57c81dc3f6c4a587">Author input</label>
+    <select id="status-57c81dc3f6c4a587"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-57c81dc3f6c4a587">Comment</label>
+    <textarea id="comment-57c81dc3f6c4a587" rows="3"></textarea>
+    <p><button type="button" data-copy="57c81dc3f6c4a587">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-57c81dc3f6c4a587" role="status"></p>
+    <textarea id="json-57c81dc3f6c4a587" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-4565d92ae57f3104" data-assessment="likely_false_alarm" data-author="pending" data-search="manual-sls-solver-20260928T201911Z finalize_releases_active_plugin solver::finalize Finalization witness disconnects the pre-state plugin from execution The model requires a nonnull pre-state plugin but allows the current plugin to be null, taking the early return. The real active-plugin path invokes finalize and then clears both model and plugin references. The witness is not tied to that input state. src/sat/smt/sls_solver.cpp  result.pre.m_smt_plugin != null result.calls == [result.pre.m_smt_plugin.finalize(result.pre.m_model, result.pre.m_st)] &amp;&amp; result.post.m_smt_plugin == null &amp;&amp; result.post.m_model == null result.post.m_smt_plugin == null &amp;&amp; result.post.m_model != null d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4761  Finalization path https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/sat/smt/sls_solver.cpp#L71-L78">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Finalization witness disconnects the pre-state plugin from execution">Finalization witness disconnects the pre-state plugin from execution</span></th>
+    <td><span class="badge likely_false_alarm">Likely false alarm</span></td>
+    <td class="references">&mdash;</td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="4565d92ae57f3104"
+      aria-controls="details-4565d92ae57f3104" title="Add an author comment"
+      aria-label="Read or edit author comment: Finalization witness disconnects the pre-state plugin from execution">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-4565d92ae57f3104" data-toggle="4565d92ae57f3104"
+      aria-expanded="false" aria-controls="details-4565d92ae57f3104"
+      aria-label="Toggle details: Finalization witness disconnects the pre-state plugin from execution">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-4565d92ae57f3104" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Finalization witness disconnects the pre-state plugin from execution</h2>
+      <p class="identity"><code>finalize_releases_active_plugin</code><br>
+        manual-sls-solver-20260928T201911Z &middot; <code>solver::finalize</code><br>
+        src/sat/smt/sls_solver.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The model requires a nonnull pre-state plugin but allows the current plugin to be null, taking the early return. The real active-plugin path invokes finalize and then clears both model and plugin references. The witness is not tied to that input state.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>result.pre.m_smt_plugin != null</dd><dt>Asserted claim</dt><dd>result.calls == [result.pre.m_smt_plugin.finalize(result.pre.m_model, result.pre.m_st)] &amp;&amp; result.post.m_smt_plugin == null &amp;&amp; result.post.m_model == null</dd><dt>Reported witness</dt><dd>result.post.m_smt_plugin == null &amp;&amp; result.post.m_model != null</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4761" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/sat/smt/sls_solver.cpp#L71-L78" target="_blank" rel="noopener">Finalization path</a></p>
+      <a href="#finding-4565d92ae57f3104">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
     <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
       JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
     <label for="status-4565d92ae57f3104">Author input</label>
@@ -533,11 +850,109 @@
       <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
     <p id="feedback-4565d92ae57f3104" role="status"></p>
     <textarea id="json-4565d92ae57f3104" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
-  </details>
-</article>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-f401b823aa6bcdc2" data-assessment="addressed" data-author="pending" data-search="Z3Prover/z3#10888 non_power_normal_equal_gaps fpa2bv_converter::mk_to_fp_real Huge FP precision wraps the auxiliary significand width The witness uses sbits = 4294967292 so sbits + 4 wraps to zero. The merged precision-limit guard rejects sbits above MPF_MAX_SBITS = 65535 before creating the FP sort. That excludes this witness in current code; it is not a fresh verification of the entire conversion. src/ast/fpa/fpa2bv_converter.cpp  is_symbolic_arith(x) &amp;&amp; is_valid_rm(rm) &amp;&amp; ebits &gt;= 2 &amp;&amp; sbits &gt;= 2 &amp;&amp; fp_is_finite(round_real_to_fp(x, rm, ebits, sbits)) &amp;&amp; fp_exp_field(round_real_to_fp(x, rm, ebits, sbits)) &gt; 0 &amp;&amp; fp_sig_field(round_real_to_fp(x, rm, ebits, sbits)) != 0 denote_fp(result) == round_real_to_fp(denote_real(x), denote_rm(rm), ebits, sbits) ebits == 2; sbits == 4294967292 d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98 https://github.com/Z3Prover/bench/discussions/4225 https://github.com/Z3Prover/z3/pull/10888 Z3Prover/z3#10801 - merged https://github.com/Z3Prover/z3/pull/10801 Precision guard https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/fpa_decl_plugin.cpp#L200-L211">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Huge FP precision wraps the auxiliary significand width">Huge FP precision wraps the auxiliary significand width</span></th>
+    <td><span class="badge addressed">Addressed</span></td>
+    <td class="references"><a href="https://github.com/Z3Prover/z3/pull/10801" target="_blank" rel="noopener">Z3Prover/z3#10801 - merged</a></td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="f401b823aa6bcdc2"
+      aria-controls="details-f401b823aa6bcdc2" title="Add an author comment"
+      aria-label="Read or edit author comment: Huge FP precision wraps the auxiliary significand width">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-f401b823aa6bcdc2" data-toggle="f401b823aa6bcdc2"
+      aria-expanded="false" aria-controls="details-f401b823aa6bcdc2"
+      aria-label="Toggle details: Huge FP precision wraps the auxiliary significand width">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-f401b823aa6bcdc2" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Huge FP precision wraps the auxiliary significand width</h2>
+      <p class="identity"><code>non_power_normal_equal_gaps</code><br>
+        Z3Prover/z3#10888 &middot; <code>fpa2bv_converter::mk_to_fp_real</code><br>
+        src/ast/fpa/fpa2bv_converter.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The witness uses sbits = 4294967292 so sbits + 4 wraps to zero. The merged precision-limit guard rejects sbits above MPF_MAX_SBITS = 65535 before creating the FP sort. That excludes this witness in current code; it is not a fresh verification of the entire conversion.</p>
+      <p class="meta">Source inspected: <code>d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98</code></p>
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>is_symbolic_arith(x) &amp;&amp; is_valid_rm(rm) &amp;&amp; ebits &gt;= 2 &amp;&amp; sbits &gt;= 2 &amp;&amp; fp_is_finite(round_real_to_fp(x, rm, ebits, sbits)) &amp;&amp; fp_exp_field(round_real_to_fp(x, rm, ebits, sbits)) &gt; 0 &amp;&amp; fp_sig_field(round_real_to_fp(x, rm, ebits, sbits)) != 0</dd><dt>Asserted claim</dt><dd>denote_fp(result) == round_real_to_fp(denote_real(x), denote_rm(rm), ebits, sbits)</dd><dt>Reported witness</dt><dd>ebits == 2; sbits == 4294967292</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/4225" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10888" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10801" target="_blank" rel="noopener">Z3Prover/z3#10801 - merged</a> &middot; <a href="https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/fpa_decl_plugin.cpp#L200-L211" target="_blank" rel="noopener">Precision guard</a></p>
+      <a href="#finding-f401b823aa6bcdc2">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-f401b823aa6bcdc2">Author input</label>
+    <select id="status-f401b823aa6bcdc2"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-f401b823aa6bcdc2">Comment</label>
+    <textarea id="comment-f401b823aa6bcdc2" rows="3"></textarea>
+    <p><button type="button" data-copy="f401b823aa6bcdc2">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-f401b823aa6bcdc2" role="status"></p>
+    <textarea id="json-f401b823aa6bcdc2" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+<tbody class="finding" id="finding-c51c1156a69e964d" data-assessment="addressed" data-author="pending" data-search="Z3Prover/z3#9038 integer_conversion_infinity_thresholds fpa_rewriter::mk_is_inf_of_int Integer-to-FP infinity threshold overflow at huge precision The historical NFV witness used RNE, ebits=2, sbits=0xffffffff, x=4 and exposed narrowing/overflow in the infinity threshold. The linked merged PR records an end-to-end reproducer and fixes both the threshold and constant-folding paths. Kept here as addressed history even though it is absent from the current coverage map. src/ast/rewriter/fpa_rewriter.cpp  ebits &gt;= 2; sbits &gt;= 2; int_expr denotes an arbitrary mathematical integer x; rm is one of RNE, RNA, RTP, RTN, or RTZ; M is the exact largest finite value of format (ebits,sbits); E is that format&#x27;s maximum unbiased exponent; U = 2^(E-sbits+1); and H = U/2. denote_bool(result) == ite(rm == RNE or rm == RNA, x &gt;= M + H or x &lt;= -(M + H), ite(rm == RTP, x &gt; M, ite(rm == RTN, x &lt; -M, false))) rm == RNE; ebits == 2; sbits == 0xffffffff; x == 4  https://github.com/Z3Prover/bench/discussions/3890 https://github.com/Z3Prover/z3/pull/9038 Z3Prover/z3#10801 - merged https://github.com/Z3Prover/z3/pull/10801">
+  <tr class="summary-row">
+    <th scope="row"><span class="preview" title="Integer-to-FP infinity threshold overflow at huge precision">Integer-to-FP infinity threshold overflow at huge precision</span></th>
+    <td><span class="badge addressed">Addressed</span></td>
+    <td class="references"><a href="https://github.com/Z3Prover/z3/pull/10801" target="_blank" rel="noopener">Z3Prover/z3#10801 - merged</a></td>
+    <td>Pending</td>
+    <td><button type="button" class="comment-preview preview" data-open="c51c1156a69e964d"
+      aria-controls="details-c51c1156a69e964d" title="Add an author comment"
+      aria-label="Read or edit author comment: Integer-to-FP infinity threshold overflow at huge precision">Add comment</button></td>
+    <td><button type="button" class="toggle" id="toggle-c51c1156a69e964d" data-toggle="c51c1156a69e964d"
+      aria-expanded="false" aria-controls="details-c51c1156a69e964d"
+      aria-label="Toggle details: Integer-to-FP infinity threshold overflow at huge precision">Details &#9656;</button></td>
+  </tr>
+  <tr class="detail-row" id="details-c51c1156a69e964d" hidden>
+    <td colspan="6">
+    <div class="detail-content">
+    <section aria-label="Finding evidence">
+      <h2>Integer-to-FP infinity threshold overflow at huge precision</h2>
+      <p class="identity"><code>integer_conversion_infinity_thresholds</code><br>
+        Z3Prover/z3#9038 &middot; <code>fpa_rewriter::mk_is_inf_of_int</code><br>
+        src/ast/rewriter/fpa_rewriter.cpp (Reviewed location)</p>
+      <h3>Assessment and caveats</h3>
+      <p class="explanation">The historical NFV witness used RNE, ebits=2, sbits=0xffffffff, x=4 and exposed narrowing/overflow in the infinity threshold. The linked merged PR records an end-to-end reproducer and fixes both the threshold and constant-folding paths. Kept here as addressed history even though it is absent from the current coverage map.</p>
+
+      <h3>Reported model evidence</h3>
+      <dl><dt>Assumption</dt><dd>ebits &gt;= 2; sbits &gt;= 2; int_expr denotes an arbitrary mathematical integer x; rm is one of RNE, RNA, RTP, RTN, or RTZ; M is the exact largest finite value of format (ebits,sbits); E is that format&#x27;s maximum unbiased exponent; U = 2^(E-sbits+1); and H = U/2.</dd><dt>Asserted claim</dt><dd>denote_bool(result) == ite(rm == RNE or rm == RNA, x &gt;= M + H or x &lt;= -(M + H), ite(rm == RTP, x &gt; M, ite(rm == RTN, x &lt; -M, false)))</dd><dt>Reported witness</dt><dd>rm == RNE; ebits == 2; sbits == 0xffffffff; x == 4</dd></dl>
+      <p class="links"><a href="https://github.com/Z3Prover/bench/discussions/3890" target="_blank" rel="noopener">NFV report</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/9038" target="_blank" rel="noopener">Audited PR</a> &middot; <a href="https://github.com/Z3Prover/z3/pull/10801" target="_blank" rel="noopener">Z3Prover/z3#10801 - merged</a></p>
+      <a href="#finding-c51c1156a69e964d">Link to this finding</a>
+    </section>
+    <section class="author-editor" aria-label="Author feedback">
+    <h3>Saved author input: Pending</h3>
+    <p class="comment">No author comment yet.</p>
+    <p>These fields are drafts, not saved feedback. Copy the review entry, replace or add it in the
+      JSON <code>reviews</code> array on GitHub, then commit or submit a PR. Publication follows automatically.</p>
+    <label for="status-c51c1156a69e964d">Author input</label>
+    <select id="status-c51c1156a69e964d"><option value="pending" selected>Pending</option><option value="ok">OK</option><option value="comment">Comment</option></select>
+    <label for="comment-c51c1156a69e964d">Comment</label>
+    <textarea id="comment-c51c1156a69e964d" rows="3"></textarea>
+    <p><button type="button" data-copy="c51c1156a69e964d">Copy review JSON</button>
+      <a href="https://github.com/Z3Prover/bench/edit/main/nfv-refutation-reviews.json" target="_blank" rel="noopener">Edit review on GitHub</a></p>
+    <p id="feedback-c51c1156a69e964d" role="status"></p>
+    <textarea id="json-c51c1156a69e964d" aria-label="Review JSON to copy manually" rows="8" readonly hidden></textarea>
+    </section>
+    </div>
+    </td>
+  </tr>
+</tbody>
+    </table>
   </section>
 </main>
-<script id="review-data" type="application/json">{"e698fb1305544910": {"pr": "Z3Prover/z3#10519", "property": "regex_solver_construction_honors_configuration", "function": "th", "summary": "Regex default-orientation witness contradicts the actual default", "assessment": "likely_false_alarm", "explanation": "The translated documented_default_fparams permits reversed orientation, while the actual initialization and stated environment require forward. The report explicitly notes that the forward-orientation constraint was omitted from the axiom.", "source_file": "src/smt/seq_regex.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/3859", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Actual parameter defaults", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/params/theory_seq_params.h#L31"}], "author_input": {"status": "pending", "comment": ""}}, "32ab1cf400345cd7": {"pr": "Z3Prover/z3#10715", "property": "output_is_safe_for_regex_set_merging", "function": "range_predicate_to_regex", "summary": "Regex conversion witness requires an empty predicate with two ranges", "assessment": "likely_false_alarm", "explanation": "The model chooses is_empty == true and num_ranges == 2. Both real accessors inspect the same m_ranges container, so this witness cannot describe a real range_predicate. This rejects the reported witness, not every possible bug in the conversion.", "source_file": "src/ast/rewriter/seq_range_collapse.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/3866", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Container accessors", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/rewriter/seq_range_predicate.h"}], "author_input": {"status": "pending", "comment": ""}}, "59fd9543510e2d49": {"pr": "Z3Prover/z3#10764", "property": "optional_witness_materialization", "function": "view_witness::materialize_witness", "summary": "Witness materialization and state restoration after backtracking", "assessment": "already_reported", "explanation": "The exact NFV witness uses an asserted non-sequence expression after a successful check, which the real check does not permit. A related sequence-sorted backtracking case was investigated in the linked PR. That PR was closed without merging: this is already reported, not a confirmed landed fix.", "source_file": "src/ast/seq/seq_view_witness.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/3861", "links": [{"label": "Z3Prover/z3#10802 - closed, not merged", "url": "https://github.com/Z3Prover/z3/pull/10802"}], "author_input": {"status": "pending", "comment": ""}}, "cfa726ab7e37a3e5": {"pr": "Z3Prover/z3#10857", "property": "undo_erases_scope_local_definitions", "function": "undo", "summary": "Recursive-definition undo counterexample uses disconnected pre-states", "assessment": "likely_false_alarm", "explanation": "The witness gives before.m_definitions one element but starts the actual undo with an empty vector. The supposed pre-state is not linked to the state being executed. Returning immediately then contradicts the unrelated snapshot, not the real undo contract. The coverage map's util/trail.h attribution was heuristic; the relevant implementation is recfun_finder.", "source_file": "src/ast/simplifiers/recfun_finder.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4169", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Undo implementation", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/simplifiers/recfun_finder.cpp#L117-L126"}], "author_input": {"status": "pending", "comment": ""}}, "423bb89badec07e4": {"pr": "Z3Prover/z3#10870", "property": "enabled_iff_applications_registered", "function": "solver::transcendentals_enabled", "summary": "Transcendental registration count is disconnected from its container", "assessment": "likely_false_alarm", "explanation": "The model chooses an empty registration container and an independent count of one. The real method returns !m_imp->m_transcendentals.empty(). The report notes that the stated relation between the container and count is absent from the artifact.", "source_file": "src/nlsat/nlsat_solver.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4208", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Enabled query", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/nlsat/nlsat_solver.cpp#L4892-L4894"}], "author_input": {"status": "pending", "comment": ""}}, "f401b823aa6bcdc2": {"pr": "Z3Prover/z3#10888", "property": "non_power_normal_equal_gaps", "function": "fpa2bv_converter::mk_to_fp_real", "summary": "Huge FP precision wraps the auxiliary significand width", "assessment": "addressed", "explanation": "The witness uses sbits = 4294967292 so sbits + 4 wraps to zero. The merged precision-limit guard rejects sbits above MPF_MAX_SBITS = 65535 before creating the FP sort. That excludes this witness in current code; it is not a fresh verification of the entire conversion.", "source_file": "src/ast/fpa/fpa2bv_converter.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4225", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Z3Prover/z3#10801 - merged", "url": "https://github.com/Z3Prover/z3/pull/10801"}, {"label": "Precision guard", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/fpa_decl_plugin.cpp#L200-L211"}], "author_input": {"status": "pending", "comment": ""}}, "c66fa92da306bc10": {"pr": "Z3Prover/z3#10910", "property": "sat_mbqi_preserves_auf_extraction", "function": "mbqi::extract_var_args", "summary": "MBQI witness has an impossible argument-count/storage combination", "assessment": "likely_false_alarm", "explanation": "The witness supplies 2^32+1 null arguments while modeling arity as one after truncation. A valid Z3 application stores its actual argument count as unsigned and must have matching, valid argument storage. The model witness violates those representation invariants.", "source_file": "src/sat/smt/q_mbi.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4328", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Application representation", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/ast.h#L754-L778"}], "author_input": {"status": "pending", "comment": ""}}, "c51c1156a69e964d": {"pr": "Z3Prover/z3#9038", "property": "integer_conversion_infinity_thresholds", "function": "fpa_rewriter::mk_is_inf_of_int", "summary": "Integer-to-FP infinity threshold overflow at huge precision", "assessment": "addressed", "explanation": "The historical NFV witness used RNE, ebits=2, sbits=0xffffffff, x=4 and exposed narrowing/overflow in the infinity threshold. The linked merged PR records an end-to-end reproducer and fixes both the threshold and constant-folding paths. Kept here as addressed history even though it is absent from the current coverage map.", "source_file": "src/ast/rewriter/fpa_rewriter.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/3890", "links": [{"label": "Z3Prover/z3#10801 - merged", "url": "https://github.com/Z3Prover/z3/pull/10801"}], "author_input": {"status": "pending", "comment": ""}}, "6ad8b013a7119c7f": {"pr": "manual-arith-axioms-20260928T201803Z", "property": "to_int_axiom_characterizes_floor", "function": "solver::mk_to_int_axiom", "summary": "Floor-axiom model omits VERIFY's assignment to the operand", "assessment": "likely_false_alarm", "explanation": "The witness leaves x null because the translation does not execute VERIFY(a.is_to_int(n, x)). The real macro evaluates the recognizer and assigns x. The reported floor mismatch therefore depends on an incorrect translation of side effects.", "source_file": "src/sat/smt/arith_axioms.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4778", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Operand extraction", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/sat/smt/arith_axioms.cpp#L34-L43"}], "author_input": {"status": "pending", "comment": ""}}, "5598bb077316fcc8": {"pr": "manual-hnf-cutter-20260927T163447Z", "property": "create_b_gathers_requested_basis_rows", "function": "hnf_cutter::create_b", "summary": "HNF gather contract may not match the private helper's caller invariant", "assessment": "needs_investigation", "explanation": "The witness uses duplicate basis rows [0,0], but the caller produces distinct pivot-row indices. In the full-rank case it keeps the matrix and RHS together in original order. Always permuting the RHS may be wrong for that caller. This is a preliminary contract-mismatch assessment, not a proof that every reachable input is safe; confirm the producer/caller invariant before proposing a fix.", "source_file": "src/math/lp/hnf_cutter.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4466", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Caller and row shrinking", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/hnf_cutter.cpp#L184-L207"}, {"label": "Basis-row producer", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/hnf.h#L198-L211"}], "author_input": {"status": "pending", "comment": ""}}, "e0c8afa02fb95743": {"pr": "manual-lar-solver-20260927T163527Z", "property": "equal_terms_have_equal_hashes", "function": "operator", "summary": "Unmapped hash-consistency finding models the equality operator instead", "assessment": "likely_false_alarm", "explanation": "This is the extra record whose source the coverage map could not resolve, not one of its 16 mapped findings. The reported model compares a Boolean equality result for two empty terms against an independently postulated hash_run value. It does not establish a failure of the real term_hasher. Any separate hash-order concern needs its own investigation.", "source_file": "src/math/lp/lar_solver.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4477", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Distinct hasher and comparer", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/lar_solver.cpp#L20-L45"}], "author_input": {"status": "pending", "comment": ""}}, "412873202671fcad": {"pr": "manual-nla-core-20260927T163619Z", "property": "check_routes_empty_monomial_case_through_transcendentals", "function": "core::check", "summary": "Handler-call assertion confuses the final counter with one additional call", "assessment": "likely_false_alarm", "explanation": "The witness starts the handler call counter at one. Calling the handler exactly once increments it to two, contradicting a contract that requires the final counter to equal one. The intended obligation is a delta of one or an explicitly zero initial counter.", "source_file": "src/math/lp/nla_core.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4460", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Empty-monomial route", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_core.cpp#L959-L975"}], "author_input": {"status": "pending", "comment": ""}}, "044a547838b725b9": {"pr": "manual-nla-core-20260927T163619Z", "property": "empty_refinement_still_checks_transcendentals", "function": "core::on_to_refine_empty", "summary": "Empty-refinement schedule claim needs a finishing-helper frame contract", "assessment": "needs_investigation", "explanation": "The postulated finishing helper arbitrarily replaces the schedule after the notification. The real wrapper does notify the schedule and return the finishing result. The counterexample exposes an unconstrained helper effect, but inspection of the wrapper alone does not prove what the actual helper preserves. Further helper/frame-contract analysis is needed.", "source_file": "src/math/lp/nla_core.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4460", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Empty-refinement wrapper", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_core.cpp#L951-L957"}], "author_input": {"status": "pending", "comment": ""}}, "3c232ae42192bf0e": {"pr": "manual-nla-powers-20260927T163649Z", "property": "integer_ground_instance_refinement_is_exact", "function": "powers::check", "summary": "Power-grounding witness takes a guard excluded by the stated assumptions", "assessment": "likely_false_alarm", "explanation": "The witness selects null_lpvar, which deliberately returns l_undef. The property assumes valid selected values and that no earlier guard applies. The generated witness therefore does not satisfy the intended branch precondition.", "source_file": "src/math/lp/nla_powers.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4479", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Null-variable guard", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_powers.cpp#L81-L85"}], "author_input": {"status": "pending", "comment": ""}}, "57c81dc3f6c4a587": {"pr": "manual-push-app-ite-20260928T164350Z", "property": "builds_first_ite_distribution", "function": "push_app_ite_cfg::reduce_app", "summary": "ITE-distribution model omits VERIFY output assignments", "assessment": "likely_false_alarm", "explanation": "The model leaves c, t, and e null instead of executing their assignments inside VERIFY(m.is_ite(...)). The C++ VERIFY macro evaluates its argument, including those side effects. The reported witness relies on this translation error.", "source_file": "src/ast/rewriter/push_app_ite.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4676", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "VERIFY evaluates its expression", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/util/debug.h#L108-L111"}], "author_input": {"status": "pending", "comment": ""}}, "e737cdc914ad1990": {"pr": "manual-seq-skolem-20260927T191033Z", "property": "eq_recognizer_requires_binary_marker", "function": "skolem::is_eq", "summary": "seq.eq recognizer reads arguments without checking arity", "assessment": "possible_bug", "explanation": "The family/symbol predicate does not require binary arity before argument reads. The generic internal constructor accepts nonbinary markers, while the dedicated mk_eq constructor creates binary ones. This is an internal robustness concern; no path from ordinary SMT-LIB input or wrong solver answer has been established.", "source_file": "src/ast/seq/seq_skolem.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4489", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Z3Prover/z3#10958 - issue filed", "url": "https://github.com/Z3Prover/z3/issues/10958"}], "author_input": {"status": "pending", "comment": ""}}, "7eabab76c09ef145": {"pr": "manual-sls-solver-20260928T201911Z", "property": "best_phase_lookup_returns_stored_phase", "function": "solver::get_best_phase", "summary": "SAT/SMT SLS best-phase accessor always returns false", "assessment": "possible_bug", "explanation": "The adapter unconditionally returns false, while the underlying SAT solver has a stored best-phase accessor. The mismatch is visible in source. Downstream phase application is currently disabled under #if 0, so no current solver-soundness or performance regression is established.", "source_file": "src/sat/smt/sls_solver.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4761", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Z3Prover/z3#10959 - issue filed", "url": "https://github.com/Z3Prover/z3/issues/10959"}], "author_input": {"status": "pending", "comment": ""}}, "4565d92ae57f3104": {"pr": "manual-sls-solver-20260928T201911Z", "property": "finalize_releases_active_plugin", "function": "solver::finalize", "summary": "Finalization witness disconnects the pre-state plugin from execution", "assessment": "likely_false_alarm", "explanation": "The model requires a nonnull pre-state plugin but allows the current plugin to be null, taking the early return. The real active-plugin path invokes finalize and then clears both model and plugin references. The witness is not tied to that input state.", "source_file": "src/sat/smt/sls_solver.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4761", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Finalization path", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/sat/smt/sls_solver.cpp#L71-L78"}], "author_input": {"status": "pending", "comment": ""}}}</script>
+<script id="review-data" type="application/json">{"e737cdc914ad1990": {"pr": "manual-seq-skolem-20260927T191033Z", "property": "eq_recognizer_requires_binary_marker", "function": "skolem::is_eq", "summary": "seq.eq recognizer reads arguments without checking arity", "assessment": "possible_bug", "explanation": "The family/symbol predicate does not require binary arity before argument reads. The generic internal constructor accepts nonbinary markers, while the dedicated mk_eq constructor creates binary ones. This is an internal robustness concern; no path from ordinary SMT-LIB input or wrong solver answer has been established.", "source_file": "src/ast/seq/seq_skolem.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4489", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Z3Prover/z3#10958 - issue filed", "url": "https://github.com/Z3Prover/z3/issues/10958"}], "author_input": {"status": "pending", "comment": ""}}, "7eabab76c09ef145": {"pr": "manual-sls-solver-20260928T201911Z", "property": "best_phase_lookup_returns_stored_phase", "function": "solver::get_best_phase", "summary": "SAT/SMT SLS best-phase accessor always returns false", "assessment": "possible_bug", "explanation": "The adapter unconditionally returns false, while the underlying SAT solver has a stored best-phase accessor. The mismatch is visible in source. Downstream phase application is currently disabled under #if 0, so no current solver-soundness or performance regression is established.", "source_file": "src/sat/smt/sls_solver.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4761", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Z3Prover/z3#10959 - issue filed", "url": "https://github.com/Z3Prover/z3/issues/10959"}], "author_input": {"status": "pending", "comment": ""}}, "5598bb077316fcc8": {"pr": "manual-hnf-cutter-20260927T163447Z", "property": "create_b_gathers_requested_basis_rows", "function": "hnf_cutter::create_b", "summary": "HNF gather contract may not match the private helper's caller invariant", "assessment": "needs_investigation", "explanation": "The witness uses duplicate basis rows [0,0], but the caller produces distinct pivot-row indices. In the full-rank case it keeps the matrix and RHS together in original order. Always permuting the RHS may be wrong for that caller. This is a preliminary contract-mismatch assessment, not a proof that every reachable input is safe; confirm the producer/caller invariant before proposing a fix.", "source_file": "src/math/lp/hnf_cutter.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4466", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Caller and row shrinking", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/hnf_cutter.cpp#L184-L207"}, {"label": "Basis-row producer", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/hnf.h#L198-L211"}], "author_input": {"status": "pending", "comment": ""}}, "044a547838b725b9": {"pr": "manual-nla-core-20260927T163619Z", "property": "empty_refinement_still_checks_transcendentals", "function": "core::on_to_refine_empty", "summary": "Empty-refinement schedule claim needs a finishing-helper frame contract", "assessment": "needs_investigation", "explanation": "The postulated finishing helper arbitrarily replaces the schedule after the notification. The real wrapper does notify the schedule and return the finishing result. The counterexample exposes an unconstrained helper effect, but inspection of the wrapper alone does not prove what the actual helper preserves. Further helper/frame-contract analysis is needed.", "source_file": "src/math/lp/nla_core.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4460", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Empty-refinement wrapper", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_core.cpp#L951-L957"}], "author_input": {"status": "pending", "comment": ""}}, "59fd9543510e2d49": {"pr": "Z3Prover/z3#10764", "property": "optional_witness_materialization", "function": "view_witness::materialize_witness", "summary": "Witness materialization and state restoration after backtracking", "assessment": "already_reported", "explanation": "The exact NFV witness uses an asserted non-sequence expression after a successful check, which the real check does not permit. A related sequence-sorted backtracking case was investigated in the linked PR. That PR was closed without merging: this is already reported, not a confirmed landed fix.", "source_file": "src/ast/seq/seq_view_witness.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/3861", "links": [{"label": "Z3Prover/z3#10802 - closed, not merged", "url": "https://github.com/Z3Prover/z3/pull/10802"}], "author_input": {"status": "pending", "comment": ""}}, "e698fb1305544910": {"pr": "Z3Prover/z3#10519", "property": "regex_solver_construction_honors_configuration", "function": "th", "summary": "Regex default-orientation witness contradicts the actual default", "assessment": "likely_false_alarm", "explanation": "The translated documented_default_fparams permits reversed orientation, while the actual initialization and stated environment require forward. The report explicitly notes that the forward-orientation constraint was omitted from the axiom.", "source_file": "src/smt/seq_regex.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/3859", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Actual parameter defaults", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/params/theory_seq_params.h#L31"}], "author_input": {"status": "pending", "comment": ""}}, "32ab1cf400345cd7": {"pr": "Z3Prover/z3#10715", "property": "output_is_safe_for_regex_set_merging", "function": "range_predicate_to_regex", "summary": "Regex conversion witness requires an empty predicate with two ranges", "assessment": "likely_false_alarm", "explanation": "The model chooses is_empty == true and num_ranges == 2. Both real accessors inspect the same m_ranges container, so this witness cannot describe a real range_predicate. This rejects the reported witness, not every possible bug in the conversion.", "source_file": "src/ast/rewriter/seq_range_collapse.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/3866", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Container accessors", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/rewriter/seq_range_predicate.h"}], "author_input": {"status": "pending", "comment": ""}}, "cfa726ab7e37a3e5": {"pr": "Z3Prover/z3#10857", "property": "undo_erases_scope_local_definitions", "function": "undo", "summary": "Recursive-definition undo counterexample uses disconnected pre-states", "assessment": "likely_false_alarm", "explanation": "The witness gives before.m_definitions one element but starts the actual undo with an empty vector. The supposed pre-state is not linked to the state being executed. Returning immediately then contradicts the unrelated snapshot, not the real undo contract. The coverage map's util/trail.h attribution was heuristic; the relevant implementation is recfun_finder.", "source_file": "src/ast/simplifiers/recfun_finder.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4169", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Undo implementation", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/simplifiers/recfun_finder.cpp#L117-L126"}], "author_input": {"status": "pending", "comment": ""}}, "423bb89badec07e4": {"pr": "Z3Prover/z3#10870", "property": "enabled_iff_applications_registered", "function": "solver::transcendentals_enabled", "summary": "Transcendental registration count is disconnected from its container", "assessment": "likely_false_alarm", "explanation": "The model chooses an empty registration container and an independent count of one. The real method returns !m_imp->m_transcendentals.empty(). The report notes that the stated relation between the container and count is absent from the artifact.", "source_file": "src/nlsat/nlsat_solver.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4208", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Enabled query", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/nlsat/nlsat_solver.cpp#L4892-L4894"}], "author_input": {"status": "pending", "comment": ""}}, "c66fa92da306bc10": {"pr": "Z3Prover/z3#10910", "property": "sat_mbqi_preserves_auf_extraction", "function": "mbqi::extract_var_args", "summary": "MBQI witness has an impossible argument-count/storage combination", "assessment": "likely_false_alarm", "explanation": "The witness supplies 2^32+1 null arguments while modeling arity as one after truncation. A valid Z3 application stores its actual argument count as unsigned and must have matching, valid argument storage. The model witness violates those representation invariants.", "source_file": "src/sat/smt/q_mbi.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4328", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Application representation", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/ast.h#L754-L778"}], "author_input": {"status": "pending", "comment": ""}}, "6ad8b013a7119c7f": {"pr": "manual-arith-axioms-20260928T201803Z", "property": "to_int_axiom_characterizes_floor", "function": "solver::mk_to_int_axiom", "summary": "Floor-axiom model omits VERIFY's assignment to the operand", "assessment": "likely_false_alarm", "explanation": "The witness leaves x null because the translation does not execute VERIFY(a.is_to_int(n, x)). The real macro evaluates the recognizer and assigns x. The reported floor mismatch therefore depends on an incorrect translation of side effects.", "source_file": "src/sat/smt/arith_axioms.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4778", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Operand extraction", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/sat/smt/arith_axioms.cpp#L34-L43"}], "author_input": {"status": "pending", "comment": ""}}, "e0c8afa02fb95743": {"pr": "manual-lar-solver-20260927T163527Z", "property": "equal_terms_have_equal_hashes", "function": "operator", "summary": "Unmapped hash-consistency finding models the equality operator instead", "assessment": "likely_false_alarm", "explanation": "This is the extra record whose source the coverage map could not resolve, not one of its 16 mapped findings. The reported model compares a Boolean equality result for two empty terms against an independently postulated hash_run value. It does not establish a failure of the real term_hasher. Any separate hash-order concern needs its own investigation.", "source_file": "src/math/lp/lar_solver.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4477", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Distinct hasher and comparer", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/lar_solver.cpp#L20-L45"}], "author_input": {"status": "pending", "comment": ""}}, "412873202671fcad": {"pr": "manual-nla-core-20260927T163619Z", "property": "check_routes_empty_monomial_case_through_transcendentals", "function": "core::check", "summary": "Handler-call assertion confuses the final counter with one additional call", "assessment": "likely_false_alarm", "explanation": "The witness starts the handler call counter at one. Calling the handler exactly once increments it to two, contradicting a contract that requires the final counter to equal one. The intended obligation is a delta of one or an explicitly zero initial counter.", "source_file": "src/math/lp/nla_core.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4460", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Empty-monomial route", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_core.cpp#L959-L975"}], "author_input": {"status": "pending", "comment": ""}}, "3c232ae42192bf0e": {"pr": "manual-nla-powers-20260927T163649Z", "property": "integer_ground_instance_refinement_is_exact", "function": "powers::check", "summary": "Power-grounding witness takes a guard excluded by the stated assumptions", "assessment": "likely_false_alarm", "explanation": "The witness selects null_lpvar, which deliberately returns l_undef. The property assumes valid selected values and that no earlier guard applies. The generated witness therefore does not satisfy the intended branch precondition.", "source_file": "src/math/lp/nla_powers.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4479", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Null-variable guard", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/math/lp/nla_powers.cpp#L81-L85"}], "author_input": {"status": "pending", "comment": ""}}, "57c81dc3f6c4a587": {"pr": "manual-push-app-ite-20260928T164350Z", "property": "builds_first_ite_distribution", "function": "push_app_ite_cfg::reduce_app", "summary": "ITE-distribution model omits VERIFY output assignments", "assessment": "likely_false_alarm", "explanation": "The model leaves c, t, and e null instead of executing their assignments inside VERIFY(m.is_ite(...)). The C++ VERIFY macro evaluates its argument, including those side effects. The reported witness relies on this translation error.", "source_file": "src/ast/rewriter/push_app_ite.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4676", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "VERIFY evaluates its expression", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/util/debug.h#L108-L111"}], "author_input": {"status": "pending", "comment": ""}}, "4565d92ae57f3104": {"pr": "manual-sls-solver-20260928T201911Z", "property": "finalize_releases_active_plugin", "function": "solver::finalize", "summary": "Finalization witness disconnects the pre-state plugin from execution", "assessment": "likely_false_alarm", "explanation": "The model requires a nonnull pre-state plugin but allows the current plugin to be null, taking the early return. The real active-plugin path invokes finalize and then clears both model and plugin references. The witness is not tied to that input state.", "source_file": "src/sat/smt/sls_solver.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4761", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Finalization path", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/sat/smt/sls_solver.cpp#L71-L78"}], "author_input": {"status": "pending", "comment": ""}}, "f401b823aa6bcdc2": {"pr": "Z3Prover/z3#10888", "property": "non_power_normal_equal_gaps", "function": "fpa2bv_converter::mk_to_fp_real", "summary": "Huge FP precision wraps the auxiliary significand width", "assessment": "addressed", "explanation": "The witness uses sbits = 4294967292 so sbits + 4 wraps to zero. The merged precision-limit guard rejects sbits above MPF_MAX_SBITS = 65535 before creating the FP sort. That excludes this witness in current code; it is not a fresh verification of the entire conversion.", "source_file": "src/ast/fpa/fpa2bv_converter.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/4225", "reviewed_revision": "d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98", "links": [{"label": "Z3Prover/z3#10801 - merged", "url": "https://github.com/Z3Prover/z3/pull/10801"}, {"label": "Precision guard", "url": "https://github.com/Z3Prover/z3/blob/d799f787d6fc9c16eb4a3ebbe63e6593e9b23a98/src/ast/fpa_decl_plugin.cpp#L200-L211"}], "author_input": {"status": "pending", "comment": ""}}, "c51c1156a69e964d": {"pr": "Z3Prover/z3#9038", "property": "integer_conversion_infinity_thresholds", "function": "fpa_rewriter::mk_is_inf_of_int", "summary": "Integer-to-FP infinity threshold overflow at huge precision", "assessment": "addressed", "explanation": "The historical NFV witness used RNE, ebits=2, sbits=0xffffffff, x=4 and exposed narrowing/overflow in the infinity threshold. The linked merged PR records an end-to-end reproducer and fixes both the threshold and constant-folding paths. Kept here as addressed history even though it is absent from the current coverage map.", "source_file": "src/ast/rewriter/fpa_rewriter.cpp", "discussion_url": "https://github.com/Z3Prover/bench/discussions/3890", "links": [{"label": "Z3Prover/z3#10801 - merged", "url": "https://github.com/Z3Prover/z3/pull/10801"}], "author_input": {"status": "pending", "comment": ""}}}</script>
 <script>
   function reviewDraft(original, status, comment) {
     if (!["pending", "ok", "comment"].includes(status)) throw new Error("Invalid author status.");
@@ -552,6 +967,22 @@
   }
 
   const drafts = JSON.parse(document.getElementById("review-data").textContent);
+  function setExpanded(id, expanded, focusComment = false) {
+    document.getElementById(`details-${id}`).hidden = !expanded;
+    const toggle = document.getElementById(`toggle-${id}`);
+    toggle.setAttribute("aria-expanded", String(expanded));
+    toggle.textContent = expanded ? "Details \u25be" : "Details \u25b8";
+    if (focusComment) document.getElementById(`comment-${id}`).focus();
+  }
+  document.querySelectorAll("[data-toggle]").forEach(button => {
+    button.addEventListener("click", () => {
+      const id = button.dataset.toggle;
+      setExpanded(id, document.getElementById(`details-${id}`).hidden);
+    });
+  });
+  document.querySelectorAll("[data-open]").forEach(button => {
+    button.addEventListener("click", () => setExpanded(button.dataset.open, true, true));
+  });
   document.querySelectorAll("[data-copy]").forEach(button => {
     button.addEventListener("click", async () => {
       const id = button.dataset.copy;
@@ -573,17 +1004,29 @@
   });
   function filter() {
     let visible = 0;
-    const cards = document.querySelectorAll(".finding");
-    cards.forEach(card => {
-      card.hidden = !matchesFinding(card.textContent, card.dataset.assessment, card.dataset.author,
+    const rows = document.querySelectorAll(".finding");
+    rows.forEach(row => {
+      row.hidden = !matchesFinding(row.dataset.search, row.dataset.assessment, row.dataset.author,
         document.getElementById("search").value, document.getElementById("assessment").value,
         document.getElementById("author").value);
-      if (!card.hidden) visible++;
+      if (!row.hidden) visible++;
     });
-    document.getElementById("visible").textContent = `${visible} of ${cards.length} findings shown`;
+    document.getElementById("visible").textContent = `${visible} of ${rows.length} findings shown`;
+  }
+  function openLinkedFinding() {
+    const match = window.location.hash.match(/^#finding-([a-f0-9]{16})$/);
+    if (!match) return;
+    const row = document.getElementById(`finding-${match[1]}`);
+    if (!row) return;
+    ["search", "assessment", "author"].forEach(id => { document.getElementById(id).value = ""; });
+    filter();
+    setExpanded(match[1], true);
+    row.scrollIntoView({ block: "nearest" });
   }
   ["search", "assessment", "author"].forEach(id => document.getElementById(id).addEventListener("input", filter));
   filter();
+  window.addEventListener("hashchange", openLinkedFinding);
+  openLinkedFinding();
 </script>
 </body>
 </html>
