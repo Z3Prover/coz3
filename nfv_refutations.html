@@ -1095,7 +1095,7 @@
       + JSON.stringify(payload) + "\n```\n";
     if (body.length > 65000) throw new Error("This batch exceeds GitHub's issue-body limit. Submit smaller batches.");
     const issueUrl = "https://github.com/Z3Prover/bench/issues/new?title="
-      + encodeURIComponent(`[NFV feedback] ${updates.length} findings`);
+      + encodeURIComponent(`[NFV author feedback on refutation] ${updates.length} findings`);
     const url = issueUrl + "&body=" + encodeURIComponent(body);
     return { body, issueUrl, url: url.length <= 7500 ? url : null };
   }
