@@ -117,45 +117,35 @@
     .empty, .error { padding: 28px; color: var(--muted); text-align: center; }
     .error { color: var(--bad); }
 
-    /* "Request an NFV audit" modal, opened by clicking a leaf (file) tile. */
-    #audit-backdrop {
-      display: none; position: fixed; inset: 0; background: rgba(20, 20, 16, 0.45);
-      z-index: 20; align-items: center; justify-content: center;
+    /* Per-function outcome panel, opened by clicking a leaf (file) tile.
+       Anchored next to the clicked tile -- not a full-screen modal -- and
+       read-only: it summarizes proved/refuted/abstained outcomes, it does
+       not offer any way to dispatch a new audit. */
+    #file-panel {
+      display: none; position: absolute; z-index: 20; width: min(420px, 90vw);
+      max-height: 60vh; overflow-y: auto; background: var(--panel);
+      border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow);
+      padding: 12px 14px; font-size: 12px; color: var(--ink);
     }
-    #audit-backdrop.open { display: flex; }
-    #audit-modal {
-      width: min(640px, 92vw); max-height: 88vh; overflow-y: auto;
-      background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
-      box-shadow: var(--shadow); padding: 18px 20px;
+    #file-panel.open { display: block; }
+    #file-panel h3 { margin: 0 0 4px; font-size: 13px; color: var(--accent); }
+    #file-panel .file-path { font-family: monospace; font-size: 11.5px; color: var(--muted); word-break: break-all; }
+    #file-panel label { display: block; font-size: 11.5px; font-weight: 600; margin: 10px 0 4px; }
+    #file-panel .hint { font-weight: 400; color: var(--muted); }
+    #file-panel select {
+      width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 5px 7px;
+      font-size: 12.5px; font-family: inherit; background: #fff; color: var(--ink);
     }
-    #audit-modal h2 { margin: 0 0 4px; font-size: 1.15rem; color: var(--accent); }
-    #audit-modal .file-path { font-family: monospace; font-size: 12px; color: var(--muted); word-break: break-all; }
-    #audit-modal label { display: block; font-size: 12px; font-weight: 600; margin: 12px 0 4px; }
-    #audit-modal .hint { font-weight: 400; color: var(--muted); }
-    #audit-modal select, #audit-modal textarea, #audit-modal input[type=text] {
-      width: 100%; border: 1px solid var(--line); border-radius: 6px; padding: 7px 9px;
-      font-size: 13px; font-family: inherit; background: #fff; color: var(--ink);
+    #file-panel .prop { margin: 6px 0; line-height: 1.5; }
+    #file-panel .proved { color: var(--good); }
+    #file-panel .refuted { color: var(--bad); }
+    #file-panel .abstain { color: var(--warn); }
+    #file-panel .empty-note { color: var(--muted); margin-top: 8px; }
+    #file-panel button.close {
+      position: absolute; top: 8px; right: 8px; border: none; background: none;
+      color: var(--muted); cursor: pointer; font-size: 15px; line-height: 1; padding: 2px 4px;
     }
-    #audit-modal textarea { min-height: 64px; resize: vertical; }
-    #audit-modal .cmd-block {
-      margin-top: 8px; background: #1e2128; color: #dfe6ee; border-radius: 8px;
-      padding: 10px 12px; font-family: monospace; font-size: 11.5px; line-height: 1.5;
-      white-space: pre-wrap; word-break: break-all; position: relative;
-    }
-    #audit-modal .cmd-label { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
-    #audit-modal button.copy {
-      font-size: 11px; border: 1px solid var(--accent); color: var(--accent); background: #fff;
-      border-radius: 6px; padding: 3px 9px; cursor: pointer;
-    }
-    #audit-modal button.copy:hover { background: #eaf5f1; }
-    #audit-modal button.copy.copied { border-color: var(--good); color: var(--good); }
-    #audit-modal .actions { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; gap: 10px; flex-wrap: wrap; }
-    #audit-modal .actions a { font-size: 12px; color: #215f9f; }
-    #audit-modal button.close {
-      border: 1px solid var(--line); background: #fff; color: var(--ink); border-radius: 6px;
-      padding: 6px 14px; cursor: pointer; font-size: 13px;
-    }
-    #audit-modal p.note { font-size: 11.5px; color: var(--muted); margin-top: 4px; }
+    #file-panel button.close:hover { color: var(--ink); }
   </style>
 </head>
 
@@ -173,8 +163,9 @@
         no proof. A small red dot marks a file or folder containing a property
         Dafny <em>refuted</em>, without changing its coverage color. Hover a tile
         for refutation counts and, on files, the established
-        properties. <strong>Click any file tile</strong> (not a folder) to
-        request a new NFV audit of that file or one of its functions.</p>
+        properties. <strong>Click any file tile</strong> (not a folder) to open
+        a summary of that file's functions and their proved/refuted/abstained
+        properties.</p>
     </header>
 
     <section class="panel">
@@ -197,42 +188,15 @@
 
   <div id="tooltip"></div>
 
-  <div id="audit-backdrop">
-    <div id="audit-modal" role="dialog" aria-labelledby="audit-title">
-      <h2 id="audit-title">Request an NFV audit</h2>
-      <div class="file-path" id="audit-file-path"></div>
+  <div id="file-panel" role="dialog" aria-labelledby="file-panel-title">
+    <button class="close" id="file-panel-close" type="button" aria-label="Close">&times;</button>
+    <h3 id="file-panel-title">File coverage summary</h3>
+    <div class="file-path" id="file-panel-path"></div>
 
-      <label for="audit-function">Function <span class="hint">(optional — leave as "whole file" to postulate properties over every function in it)</span></label>
-      <select id="audit-function"></select>
+    <label for="file-panel-function">Function <span class="hint">(summarizes proved/refuted/abstained outcomes; choose "all functions" for the whole file)</span></label>
+    <select id="file-panel-function"></select>
 
-      <label for="audit-instruction">What to verify <span class="hint">(optional — free text; left blank, the pipeline postulates from the code itself, exactly like an unannotated pull request)</span></label>
-      <textarea id="audit-instruction" placeholder="e.g. check that this never returns a bound worse than its input, or that the result is always non-negative"></textarea>
-
-      <label for="audit-spec">Specification <span class="hint">(optional — a contract to check the code against, taken as authoritative)</span></label>
-      <textarea id="audit-spec" placeholder="e.g. requires x &gt;= 0; ensures result &lt;= x"></textarea>
-
-      <p class="note">This dashboard is static and cannot dispatch workflow runs directly
-        (that needs a repo-write credential this page must never hold). Copy one of the
-        commands below and run it wherever you already have access — a maintainer's
-        shell, or a Codespace.</p>
-
-      <div class="cmd-label">
-        <label style="margin:0">gh CLI <span class="hint">(needs the <code>gh</code> CLI and push access to Z3Prover/bench)</span></label>
-        <button class="copy" id="audit-copy-gh" type="button">Copy</button>
-      </div>
-      <div class="cmd-block" id="audit-cmd-gh"></div>
-
-      <div class="cmd-label">
-        <label style="margin:0">REST API <span class="hint">(needs a token with <code>actions:write</code> on Z3Prover/bench, e.g. <code>GITHUB_TOKEN=&hellip;</code>)</span></label>
-        <button class="copy" id="audit-copy-curl" type="button">Copy</button>
-      </div>
-      <div class="cmd-block" id="audit-cmd-curl"></div>
-
-      <div class="actions">
-        <a href="https://github.com/Z3Prover/bench/actions/workflows/nfv-formal-audit.lock.yml" target="_blank" rel="noopener">Open the workflow on GitHub &rarr;</a>
-        <button class="close" id="audit-close" type="button">Close</button>
-      </div>
-    </div>
+    <div id="file-panel-results"></div>
   </div>
 
 
@@ -350,7 +314,7 @@ window.NFV_COVERAGE_DATA={"schema_version":1,"updated_at":"2026-10-01T18:29:21.9
         .on("click", (event, d) => {
           if (d === node) return;
           if (d.children) { zoomIn(d); return; }
-          openAuditModal(d);
+          openFilePanel(event, d);
         })
         .on("mousemove", (event, d) => showTooltip(event, d))
         .on("mouseleave", () => tooltip.style("display", "none"));
@@ -458,104 +422,97 @@ window.NFV_COVERAGE_DATA={"schema_version":1,"updated_at":"2026-10-01T18:29:21.9
 
     svg.on("dblclick", () => { if (focus.parent) zoomIn(focus.parent); });
 
-    // ---- "Request an NFV audit" modal -------------------------------------
-    // This page is served as a static GitHub Pages site: it has no backend
-    // and must never hold a repo-write credential, so it cannot dispatch the
-    // workflow itself. Instead it builds the exact command a maintainer would
-    // run (gh CLI, or a REST curl for anyone without gh), pre-filled from the
-    // clicked tile, and lets them copy it.
-    const AUDIT_REPO = "Z3Prover/bench";
-    const AUDIT_WORKFLOW = "nfv-formal-audit.lock.yml";
-
-    const backdropEl = document.getElementById("audit-backdrop");
-    const filePathEl = document.getElementById("audit-file-path");
-    const functionEl = document.getElementById("audit-function");
-    const instructionEl = document.getElementById("audit-instruction");
-    const specEl = document.getElementById("audit-spec");
-    const cmdGhEl = document.getElementById("audit-cmd-gh");
-    const cmdCurlEl = document.getElementById("audit-cmd-curl");
-
-    // Single-quote a value for a POSIX shell: close the quote, escape the
-    // embedded quote, reopen it. Used for every `gh workflow run -f k=v`.
-    function shQuote(s) {
-      return "'" + String(s).replace(/'/g, "'\\''") + "'";
-    }
-
-    function functionsOf(d) {
-      const seen = new Set();
-      ["proved", "refuted", "abstain"].forEach(k => {
-        (d.data[k] || []).forEach(p => { if (p.function) seen.add(p.function); });
-      });
-      return Array.from(seen).sort();
-    }
+    // ---- File coverage panel -----------------------------------------------
+    // Read-only summary of what NFV has already established for the clicked
+    // file: a dropdown of its functions, each annotated with proved/refuted/
+    // abstained counts, and the matching property details below it. This
+    // page is served as a static GitHub Pages site and must never hold a
+    // repo-write credential, so it does not offer any way to dispatch a new
+    // audit -- that capability was removed along with the old modal.
+    const panelEl = document.getElementById("file-panel");
+    const filePathEl = document.getElementById("file-panel-path");
+    const functionEl = document.getElementById("file-panel-function");
+    const resultsEl = document.getElementById("file-panel-results");
 
     function toRepoPath(d) {
       return `src/${d.data.path}`;
     }
 
-    function renderCommands(d) {
-      const file = toRepoPath(d);
-      const fn = functionEl.value;
-      const instruction = instructionEl.value.trim();
-      const spec = specEl.value.trim();
-
-      const ghArgs = [`gh workflow run ${AUDIT_WORKFLOW}`, `-R ${AUDIT_REPO}`,
-        `-f file=${shQuote(file)}`];
-      if (fn) ghArgs.push(`-f function=${shQuote(fn)}`);
-      if (instruction) ghArgs.push(`-f instruction=${shQuote(instruction)}`);
-      if (spec) ghArgs.push(`-f spec=${shQuote(spec)}`);
-      cmdGhEl.textContent = ghArgs.join(" \\\n  ");
-
-      const fields = { ref: "main", inputs: { file } };
-      if (fn) fields.inputs.function = fn;
-      if (instruction) fields.inputs.instruction = instruction;
-      if (spec) fields.inputs.spec = spec;
-      cmdCurlEl.textContent =
-        `curl -sS -X POST \\\n` +
-        `  -H "Authorization: Bearer $GITHUB_TOKEN" \\\n` +
-        `  -H "Accept: application/vnd.github+json" \\\n` +
-        `  https://api.github.com/repos/${AUDIT_REPO}/actions/workflows/${AUDIT_WORKFLOW}/dispatches \\\n` +
-        `  -d ${shQuote(JSON.stringify(fields))}`;
-    }
-
-    let auditTile = null;
-
-    function openAuditModal(d) {
-      auditTile = d;
-      filePathEl.textContent = toRepoPath(d);
-      functionEl.innerHTML = "";
-      functionEl.appendChild(new Option("(whole file)", ""));
-      functionsOf(d).forEach(fn => functionEl.appendChild(new Option(fn, fn)));
-      instructionEl.value = "";
-      specEl.value = "";
-      renderCommands(d);
-      backdropEl.classList.add("open");
-    }
-
-    function closeAuditModal() {
-      backdropEl.classList.remove("open");
-      auditTile = null;
-    }
-
-    [functionEl, instructionEl, specEl].forEach(el =>
-      el.addEventListener("input", () => { if (auditTile) renderCommands(auditTile); }));
-
-    document.getElementById("audit-close").addEventListener("click", closeAuditModal);
-    backdropEl.addEventListener("click", (e) => { if (e.target === backdropEl) closeAuditModal(); });
-    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeAuditModal(); });
-
-    function wireCopyButton(buttonId, sourceEl) {
-      document.getElementById(buttonId).addEventListener("click", () => {
-        const btn = document.getElementById(buttonId);
-        navigator.clipboard.writeText(sourceEl.textContent).then(() => {
-          btn.textContent = "Copied!";
-          btn.classList.add("copied");
-          setTimeout(() => { btn.textContent = "Copy"; btn.classList.remove("copied"); }, 1500);
+    function functionsOf(d) {
+      const counts = new Map();
+      ["proved", "refuted", "abstain"].forEach(k => {
+        (d.data[k] || []).forEach(p => {
+          if (!p.function) return;
+          if (!counts.has(p.function)) counts.set(p.function, { proved: 0, refuted: 0, abstain: 0 });
+          counts.get(p.function)[k]++;
         });
       });
+      return new Map([...counts.entries()].sort());
     }
-    wireCopyButton("audit-copy-gh", cmdGhEl);
-    wireCopyButton("audit-copy-curl", cmdCurlEl);
+
+    function renderProps(label, items, className) {
+      if (!items.length) return "";
+      return items.map(p =>
+        `<div class="prop ${className}">${label} <b>${p.property}</b> \u2014 ${p.detail} ` +
+        `<i>(<a href="${p.pr_url}" target="_blank" rel="noopener">${p.pr}</a>)</i></div>`
+      ).join("");
+    }
+
+    function renderResults(d) {
+      const fn = functionEl.value;
+      const proved = fn ? (d.data.proved || []).filter(p => p.function === fn) : (d.data.proved || []);
+      const refuted = fn ? (d.data.refuted || []).filter(p => p.function === fn) : (d.data.refuted || []);
+      const abstain = fn ? (d.data.abstain || []).filter(p => p.function === fn) : (d.data.abstain || []);
+      const html = renderProps("\u2713 proved:", proved, "proved")
+        + renderProps("\u2717 refuted:", refuted, "refuted")
+        + renderProps("? abstained:", abstain, "abstain");
+      resultsEl.innerHTML = html
+        || `<div class="empty-note">No NFV audit has covered ${fn ? "this function" : "this file"} yet.</div>`;
+    }
+
+    let panelTile = null;
+
+    function openFilePanel(event, d) {
+      panelTile = d;
+      filePathEl.textContent = toRepoPath(d);
+      functionEl.innerHTML = "";
+      functionEl.appendChild(new Option("(all functions)", ""));
+      functionsOf(d).forEach((counts, fn) => {
+        const label = `${fn}  (\u2713${counts.proved} \u2717${counts.refuted} ?${counts.abstain})`;
+        functionEl.appendChild(new Option(label, fn));
+      });
+      renderResults(d);
+      panelEl.classList.add("open");
+
+      const pageX = event.pageX || 0;
+      const pageY = event.pageY || 0;
+      panelEl.style.visibility = "hidden";
+      panelEl.style.left = "0px";
+      panelEl.style.top = "0px";
+      requestAnimationFrame(() => {
+        const rect = panelEl.getBoundingClientRect();
+        const maxLeft = window.innerWidth - rect.width - 12;
+        const maxTop = window.innerHeight - rect.height - 12 + window.scrollY;
+        panelEl.style.left = `${Math.max(12, Math.min(pageX + 12, maxLeft))}px`;
+        panelEl.style.top = `${Math.max(12, Math.min(pageY + 12, maxTop))}px`;
+        panelEl.style.visibility = "visible";
+      });
+    }
+
+    function closeFilePanel() {
+      panelEl.classList.remove("open");
+      panelTile = null;
+    }
+
+    functionEl.addEventListener("change", () => { if (panelTile) renderResults(panelTile); });
+
+    document.getElementById("file-panel-close").addEventListener("click", closeFilePanel);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeFilePanel(); });
+    document.addEventListener("click", (e) => {
+      if (!panelEl.classList.contains("open")) return;
+      if (panelEl.contains(e.target) || e.target.closest(".cell")) return;
+      closeFilePanel();
+    });
 
     function showError(message) {
       statsEl.textContent = "Coverage data unavailable.";
