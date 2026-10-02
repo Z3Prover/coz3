@@ -435,7 +435,7 @@
     </td>
   </tr>
 </tbody>
-<tbody class="finding" id="finding-f42255e85b964438" data-assessment="unreviewed" data-author="pending" data-search="manual-min-cut-20260930T020818Z add_edge_materializes_source_index min_cut::add_edge Adding an edge materializes any required source slot and appends exactly the requested directed edge while preserving all other adjacency entries. Not yet triaged. A refutation of the generated model is not a confirmed Z3 defect. util/min_cut.cpp  j &lt; old(m_edges.length) result.m_edges.length == max(old(m_edges.length), i + 1) &amp;&amp; result.m_edges[i] == old_entry_or_empty(old(m_edges), i) ++ [edge(j, capacity)] &amp;&amp; forall k != i: result.m_edges[k] == old_entry_or_empty(old(m_edges), k) m_edges == Adjacency([CppVector([], 0, 0), CppVector([], 0, 1)], 1, 2, 2); i == 1; j == 0; capacity == 0  https://github.com/Z3Prover/bench/discussions/5042 ">
+<tbody class="finding" id="finding-f42255e85b964438" data-assessment="unreviewed" data-author="pending" data-search="manual-min-cut-20260930T020818Z add_edge_materializes_source_index min_cut::add_edge Adding an edge materializes any required source slot and appends exactly the requested directed edge while preserving all other adjacency entries. Not yet triaged. A refutation of the generated model is not a confirmed Z3 defect. src/util/min_cut.cpp  j &lt; old(m_edges.length) result.m_edges.length == max(old(m_edges.length), i + 1) &amp;&amp; result.m_edges[i] == old_entry_or_empty(old(m_edges), i) ++ [edge(j, capacity)] &amp;&amp; forall k != i: result.m_edges[k] == old_entry_or_empty(old(m_edges), k) m_edges == Adjacency([CppVector([], 0, 0), CppVector([], 0, 1)], 1, 2, 2); i == 1; j == 0; capacity == 0  https://github.com/Z3Prover/bench/discussions/5042 ">
   <tr class="summary-row">
     <th scope="row"><span class="preview" title="Adding an edge materializes any required source slot and appends exactly the requested directed edge while preserving all other adjacency entries.">Adding an edge materializes any required source slot and appends exactly the requested directed edge while preserving all other adjacency entries.</span></th>
     <td><span class="badge unreviewed">Not yet triaged</span></td>
@@ -455,7 +455,7 @@
       <h2>Adding an edge materializes any required source slot and appends exactly the requested directed edge while preserving all other adjacency entries.</h2>
       <p class="identity"><code>add_edge_materializes_source_index</code><br>
         manual-min-cut-20260930T020818Z &middot; <code>min_cut::add_edge</code><br>
-        util/min_cut.cpp (Coverage resolver (heuristic))</p>
+        src/util/min_cut.cpp (Requested source file)</p>
       <h3>Assessment and caveats</h3>
       <p class="explanation">Not yet triaged. A refutation of the generated model is not a confirmed Z3 defect.</p>
 
@@ -487,7 +487,7 @@
     </td>
   </tr>
 </tbody>
-<tbody class="finding" id="finding-1ebd81e29df0a625" data-assessment="unreviewed" data-author="pending" data-search="manual-theory-fpa-20260930T020711Z decode_valid_rounding_mode theory_fpa::fpa_rm_value_proc::mk_value For every valid three-bit rounding-mode encoding, the returned rounding-mode numeral is the mode designated by that encoding. Not yet triaged. A refutation of the generated model is not a confirmed Z3 defect. smt/theory_fpa.cpp  values has length 1, values[0] is a width-3 bit-vector numeral, and denote_bv(values[0]) is one of BV_RM_TIES_TO_AWAY, BV_RM_TIES_TO_EVEN, BV_RM_TO_NEGATIVE, BV_RM_TO_POSITIVE, or BV_RM_TO_ZERO denote_rm(result) == rm_of_code(denote_bv(values[0])), where rm_of_code maps the five named BV_RM constants respectively to roundNearestTiesToAway, roundNearestTiesToEven, roundTowardNegative, roundTowardPositive, and roundTowardZero denote_bv(values[0]) == BV_RM_TIES_TO_EVEN  https://github.com/Z3Prover/bench/discussions/5068 ">
+<tbody class="finding" id="finding-1ebd81e29df0a625" data-assessment="unreviewed" data-author="pending" data-search="manual-theory-fpa-20260930T020711Z decode_valid_rounding_mode theory_fpa::fpa_rm_value_proc::mk_value For every valid three-bit rounding-mode encoding, the returned rounding-mode numeral is the mode designated by that encoding. Not yet triaged. A refutation of the generated model is not a confirmed Z3 defect. src/smt/theory_fpa.cpp  values has length 1, values[0] is a width-3 bit-vector numeral, and denote_bv(values[0]) is one of BV_RM_TIES_TO_AWAY, BV_RM_TIES_TO_EVEN, BV_RM_TO_NEGATIVE, BV_RM_TO_POSITIVE, or BV_RM_TO_ZERO denote_rm(result) == rm_of_code(denote_bv(values[0])), where rm_of_code maps the five named BV_RM constants respectively to roundNearestTiesToAway, roundNearestTiesToEven, roundTowardNegative, roundTowardPositive, and roundTowardZero denote_bv(values[0]) == BV_RM_TIES_TO_EVEN  https://github.com/Z3Prover/bench/discussions/5068 ">
   <tr class="summary-row">
     <th scope="row"><span class="preview" title="For every valid three-bit rounding-mode encoding, the returned rounding-mode numeral is the mode designated by that encoding.">For every valid three-bit rounding-mode encoding, the returned rounding-mode numeral is the mode designated by that encoding.</span></th>
     <td><span class="badge unreviewed">Not yet triaged</span></td>
@@ -507,7 +507,7 @@
       <h2>For every valid three-bit rounding-mode encoding, the returned rounding-mode numeral is the mode designated by that encoding.</h2>
       <p class="identity"><code>decode_valid_rounding_mode</code><br>
         manual-theory-fpa-20260930T020711Z &middot; <code>theory_fpa::fpa_rm_value_proc::mk_value</code><br>
-        smt/theory_fpa.cpp (Coverage resolver (heuristic))</p>
+        src/smt/theory_fpa.cpp (Requested source file)</p>
       <h3>Assessment and caveats</h3>
       <p class="explanation">Not yet triaged. A refutation of the generated model is not a confirmed Z3 defect.</p>
 
