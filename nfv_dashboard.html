@@ -238,8 +238,12 @@ window.NFV_DASHBOARD_DATA={"schema_version":1,"updated_at":"2026-10-04T03:58:23.
         const tr = document.createElement("tr");
         const prCell = document.createElement("td");
         const link = document.createElement("a");
-        link.href = `https://github.com/Z3Prover/z3/pull/${encodeURIComponent(audit.pr)}`;
-        link.textContent = `#${audit.pr}`;
+        const isPr = /^\d+$/.test(String(audit.pr));
+        link.href = isPr
+          ? `https://github.com/Z3Prover/z3/pull/${encodeURIComponent(audit.pr)}`
+          : [audit.report_url, audit.discussion_url, audit.run_url]
+              .find(url => /^https:\/\/github\.com\//.test(url || "")) || "nfv_coverage_map.html";
+        link.textContent = isPr ? `#${audit.pr}` : String(audit.pr || audit.sha || "Audit");
         if (audit.run_url) link.title = `Audit run: ${audit.run_url}`;
         prCell.appendChild(link);
         tr.appendChild(prCell);

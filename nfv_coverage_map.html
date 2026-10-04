@@ -400,9 +400,9 @@ window.NFV_COVERAGE_DATA={"schema_version":1,"updated_at":"2026-10-04T06:41:56.5
       if (d.children && d.data.refuted_count > 0) {
         html += `<div class="prop refuted">${d.data.refuted_count} refuted properties in this folder. Click to explore.</div>`;
       }
-      proved.forEach(p => html += `<div class="prop proved">\u2713 proved: <b>${p.property}</b> \u2014 ${p.detail} <i>(<a href="${p.pr_url}" target="_blank" rel="noopener">${p.pr}</a>)</i></div>`);
-      refuted.forEach(p => html += `<div class="prop refuted">\u2717 refuted: <b>${p.property}</b> \u2014 ${p.detail} <i>(<a href="${p.pr_url}" target="_blank" rel="noopener">${p.pr}</a>)</i></div>`);
-      abstain.forEach(p => html += `<div class="prop abstain">? abstained: <b>${p.property}</b> \u2014 ${p.detail} <i>(<a href="${p.pr_url}" target="_blank" rel="noopener">${p.pr}</a>)</i></div>`);
+      proved.forEach(p => html += `<div class="prop proved">\u2713 proved: <b>${p.property}</b> \u2014 ${p.detail} <i>(<a href="${p.pr_url}" target="_blank" rel="noopener">${p.pr}</a>)</i>${evidenceLinks(p)}</div>`);
+      refuted.forEach(p => html += `<div class="prop refuted">\u2717 refuted: <b>${p.property}</b> \u2014 ${p.detail} <i>(<a href="${p.pr_url}" target="_blank" rel="noopener">${p.pr}</a>)</i>${evidenceLinks(p)}</div>`);
+      abstain.forEach(p => html += `<div class="prop abstain">? abstained: <b>${p.property}</b> \u2014 ${p.detail} <i>(<a href="${p.pr_url}" target="_blank" rel="noopener">${p.pr}</a>)</i>${evidenceLinks(p)}</div>`);
       tooltip.html(html)
         .style("left", (event.pageX + 16) + "px")
         .style("top", (event.pageY + 12) + "px")
@@ -450,11 +450,34 @@ window.NFV_COVERAGE_DATA={"schema_version":1,"updated_at":"2026-10-04T06:41:56.5
       return new Map([...counts.entries()].sort());
     }
 
+    function evidenceLinks(p) {
+      const links = [];
+      function append(url, label) {
+        const link = document.createElement("a");
+        link.href = url;
+        link.textContent = label;
+        link.target = "_blank";
+        link.rel = "noopener";
+        links.push(link.outerHTML);
+      }
+      if (/^[0-9a-f]{40}$/.test(p.source_sha || "")
+          && typeof p.source_file === "string" && p.source_file.startsWith("src/")
+          && !p.source_file.split("/").includes("..")) {
+        const path = p.source_file.split("/").map(encodeURIComponent).join("/");
+        const line = Number.isInteger(p.source_line) && p.source_line > 0 ? `#L${p.source_line}` : "";
+        append(`https://github.com/Z3Prover/z3/blob/${p.source_sha}/${path}${line}`, "Pinned source");
+      }
+      if (/^https:\/\/github\.com\/Z3Prover\/bench\/blob\//.test(p.evidence_url || "")) {
+        append(p.evidence_url, "Model and gates");
+      }
+      return links.length ? " " + links.join(" | ") : "";
+    }
+
     function renderProps(label, items, className) {
       if (!items.length) return "";
       return items.map(p =>
         `<div class="prop ${className}">${label} <b>${p.property}</b> \u2014 ${p.detail} ` +
-        `<i>(<a href="${p.pr_url}" target="_blank" rel="noopener">${p.pr}</a>)</i></div>`
+        `<i>(<a href="${p.pr_url}" target="_blank" rel="noopener">${p.pr}</a>)</i>${evidenceLinks(p)}</div>`
       ).join("");
     }
 
