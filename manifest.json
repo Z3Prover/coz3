@@ -1166,6 +1166,7 @@
     "run-1163-z3test-regressions-nta-t10-stats.md",
     "run-1164-regexes-c3mv-20260930-stats.md",
     "run-1165-qf-s-c3mv-20260930-stats.md",
-    "run-1166-qf-slia-c3mv-20260930-stats.md"
+    "run-1166-qf-slia-c3mv-20260930-stats.md",
+    "run-1167-qf-slia-c3mv-stats.md"
   ]
 }
