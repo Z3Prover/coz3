@@ -1239,6 +1239,7 @@
     "run-1236-qsat-lagrange-30s-20261020-c44a3851-lra-recursive-stats.md",
     "run-1237-qsat-lagrange-30s-20261020-c44a3851-lia-master-stats.md",
     "run-1238-qsat-lagrange-30s-20261020-c44a3851-lia-recursive-stats.md",
-    "run-1239-compact8-20261021-t10-qf-lia-master-stats.md"
+    "run-1239-compact8-20261021-t10-qf-lia-master-stats.md",
+    "run-1240-compact8-20261021-t10-qf-nia-branch-stats.md"
   ]
 }
