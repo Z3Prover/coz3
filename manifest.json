@@ -1247,6 +1247,7 @@
     "run-1244-compact8-20261021-t10-qf-lra-branch-stats.md",
     "run-1245-z3-master-11277-qflra-600s-stats.md",
     "run-1246-yices-2.7.0-qflra-600s-stats.md",
-    "run-1247-z3-5.3.1-qflra-600s-stats.md"
+    "run-1247-z3-5.3.1-qflra-600s-stats.md",
+    "run-1248-pr11334-qflra-600s-master-stats.md"
   ]
 }
