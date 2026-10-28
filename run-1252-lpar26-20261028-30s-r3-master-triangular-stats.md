@@ -2,10 +2,10 @@
 
 * SAT 0
 * UNSAT 12
-* TIMEOUT 0
+* TIMEOUT 15
 * UNKNOWN 4
 
-* ERRORS 18 (signal-15:15, error-1:3)
+* ERRORS 3 (error-1:3)
 
 # Meta data
 
@@ -329,6 +329,7 @@ the
   `smtlib-sample` scans have not been rerun for this submission.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
+Report correction: regenerated from original raw logs with Z3Prover/bench@1250328d4; explicit Ramon time limits count as timeouts.
 </pre>
 
 
@@ -337,7 +338,7 @@ the
 |------------|----------:|---------:|-------------:| ----------:|------|
 |limit/lim_square.smt2                                        |    0.013s | 20.804MiB| error-1 | 1 | line 40 column 1: logic does not support nonlinear arithmetic |
 |triangular/triangular02.smt2                                 |    0.013s | 20.036MiB| unsat | 0 |  |
-|limit/lim_div.smt2                                           |    0.014s | 20.56MiB| error-1 | 1 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
+|limit/lim_div.smt2                                           |    0.014s | 20.56MiB| error-1 | 1 | line 64 column 1: logic does not support nonlinear arithmetic |
 |limit/lim_product.smt2                                       |    0.014s | 20.348MiB| error-1 | 1 | line 83 column 1: logic does not support nonlinear arithmetic |
 |triangular/triangular11.smt2                                 |    0.015s | 20.8MiB| unsat | 0 |  |
 |triangular/triangular05.smt2                                 |    0.015s | 20.856MiB| unsat | 0 |  |
@@ -354,18 +355,18 @@ the
 |motivating-example/example4.smt2                             |    7.203s | 32.18MiB| unknown | 0 |  |
 |motivating-example/example5.smt2                             |   24.997s | 62.028MiB| unknown | 0 |  |
 |motivating-example/example10.smt2                            |   26.368s | 101.0MiB| unknown | 0 |  |
-|limit/lim_k_fx.smt2                                          |   30.003s | 30.96MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|motivating-example/example1.smt2                             |   30.005s | 43.804MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|motivating-example/example2.smt2                             |   30.006s | 64.596MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|limit/lim_fgx.smt2                                           |   30.006s | 66.816MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|motivating-example/example12.smt2                            |   30.007s | 66.56MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|motivating-example/example11.smt2                            |   30.007s | 89.012MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|motivating-example/example8.smt2                             |   30.007s | 81.04MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|motivating-example/example7.smt2                             |   30.007s | 87.732MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|limit/lim_sub.smt2                                           |   30.007s | 78.112MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|motivating-example/example3.smt2                             |   30.008s | 96.708MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|limit/lim_sum.smt2                                           |   30.011s | 152.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|limit/lim_x.smt2                                             |   30.011s | 167.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|limit/lim_fxy.smt2                                           |   30.012s | 192.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|limit/lim_f_greater_lim_greater.smt2                         |   30.014s | 246.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
-|limit/limit-composite-continous.smt2                         |   30.043s | 1044.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711522559-1-run-all-CJ9DK0 |
+|limit/lim_k_fx.smt2                                          |   30.003s | 30.96MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|motivating-example/example1.smt2                             |   30.005s | 43.804MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|motivating-example/example2.smt2                             |   30.006s | 64.596MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|limit/lim_fgx.smt2                                           |   30.006s | 66.816MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|motivating-example/example12.smt2                            |   30.007s | 66.56MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|motivating-example/example11.smt2                            |   30.007s | 89.012MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|motivating-example/example8.smt2                             |   30.007s | 81.04MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|motivating-example/example7.smt2                             |   30.007s | 87.732MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|limit/lim_sub.smt2                                           |   30.007s | 78.112MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|motivating-example/example3.smt2                             |   30.008s | 96.708MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|limit/lim_sum.smt2                                           |   30.011s | 152.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|limit/lim_x.smt2                                             |   30.011s | 167.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|limit/lim_fxy.smt2                                           |   30.012s | 192.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|limit/lim_f_greater_lim_greater.smt2                         |   30.014s | 246.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|limit/limit-composite-continous.smt2                         |   30.043s | 1044.0MiB| timeout | 143 | Ramon wall-clock time limit reached |

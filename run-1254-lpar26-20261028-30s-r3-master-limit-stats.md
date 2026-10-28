@@ -2,10 +2,10 @@
 
 * SAT 0
 * UNSAT 82
-* TIMEOUT 0
+* TIMEOUT 205
 * UNKNOWN 0
 
-* ERRORS 205 (signal-15:205)
+* ERRORS 0
 
 # Meta data
 
@@ -329,6 +329,7 @@ the
   `smtlib-sample` scans have not been rerun for this submission.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
+Report correction: regenerated from original raw logs with Z3Prover/bench@1250328d4; explicit Ramon time limits count as timeouts.
 </pre>
 
 
@@ -417,208 +418,208 @@ the
 |irrelevant_vars/lim_irrelevant_var_sz16_f8_a3_c16_v8__2.smt2 |    0.037s | 20.8MiB| unsat | 0 |  |
 |irrelevant_vars/lim_irrelevant_var_sz16_f4_a3_c8_v2__1.smt2  |    0.037s | 20.552MiB| unsat | 0 |  |
 |const_mul/lim_-20_84_x.smt2                                  |    0.404s | 29.092MiB| unsat | 0 |  |
-|crafted/lim_k_fx.smt2                                        |   30.003s | 30.756MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz16__4.smt2          |   30.006s | 69.04MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz8__1.smt2           |   30.006s | 71.052MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m128__2.smt2                    |   30.006s | 62.108MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_-79_8_x.smt2                                   |   30.007s | 81.992MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz32__8.smt2          |   30.007s | 90.168MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz16__7.smt2          |   30.007s | 66.14MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz32__6.smt2          |   30.007s | 75.036MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz16__9.smt2          |   30.007s | 69.332MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz16__6.smt2          |   30.007s | 76.192MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz16__1.smt2          |   30.007s | 76.944MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz16__5.smt2          |   30.007s | 81.772MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz8__7.smt2           |   30.007s | 79.652MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz16__2.smt2          |   30.007s | 69.212MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz32__4.smt2          |   30.007s | 70.72MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz32__3.smt2          |   30.007s | 68.916MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz32__9.smt2          |   30.007s | 75.5MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz8__6.smt2           |   30.007s | 71.516MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz64__3.smt2          |   30.007s | 84.78MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m128__5.smt2                    |   30.007s | 72.348MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m32__6.smt2                     |   30.007s | 80.356MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m32__8.smt2                     |   30.007s | 61.3MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m64__0.smt2                     |   30.007s | 82.224MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m8__2.smt2                      |   30.007s | 78.484MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m16__1.smt2                     |   30.007s | 76.16MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m32__8.smt2                     |   30.007s | 75.704MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m8__6.smt2                      |   30.007s | 80.772MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m64__2.smt2                     |   30.007s | 69.408MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m32__5.smt2                     |   30.007s | 74.212MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m32__6.smt2                     |   30.007s | 69.424MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m32__7.smt2                     |   30.007s | 83.26MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m32__3.smt2                     |   30.007s | 81.06MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m8__0.smt2                      |   30.007s | 70.512MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_-43_100_x.smt2                                 |   30.008s | 86.3MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_-90_24_x.smt2                                  |   30.008s | 90.688MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_-3_64_x.smt2                                   |   30.008s | 88.596MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_96_82_x.smt2                                   |   30.008s | 84.076MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz16__6.smt2          |   30.008s | 87.476MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz64__1.smt2          |   30.008s | 83.832MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz32__5.smt2          |   30.008s | 88.568MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz8__0.smt2           |   30.008s | 75.604MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz16__3.smt2          |   30.008s | 77.492MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz32__0.smt2          |   30.008s | 86.832MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz16__5.smt2          |   30.008s | 86.176MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz64__6.smt2          |   30.008s | 83.064MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz64__2.smt2          |   30.008s | 79.544MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz32__7.smt2          |   30.008s | 81.4MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz16__2.smt2          |   30.008s | 89.42MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz16__8.smt2          |   30.008s | 69.404MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz16__4.smt2          |   30.008s | 92.364MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz64__9.smt2          |   30.008s | 84.86MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz32__5.smt2          |   30.008s | 88.72MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz16__0.smt2          |   30.008s | 77.268MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz8__8.smt2           |   30.008s | 85.376MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz32__8.smt2          |   30.008s | 84.672MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz64__4.smt2          |   30.008s | 84.796MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz64__5.smt2          |   30.008s | 83.576MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|crafted/lim_fgx.smt2                                         |   30.008s | 96.468MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m32__3.smt2                     |   30.008s | 86.848MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m64__7.smt2                     |   30.008s | 90.972MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m32__2.smt2                     |   30.008s | 81.236MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m16__9.smt2                     |   30.008s | 87.016MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m128__6.smt2                    |   30.008s | 91.356MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m64__6.smt2                     |   30.008s | 91.216MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m8__3.smt2                      |   30.008s | 80.488MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m16__5.smt2                     |   30.008s | 77.8MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m32__7.smt2                     |   30.008s | 81.588MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m8__8.smt2                      |   30.008s | 83.932MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m64__4.smt2                     |   30.008s | 87.588MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m64__0.smt2                     |   30.008s | 87.264MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m128__7.smt2                    |   30.008s | 94.984MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m64__3.smt2                     |   30.008s | 95.3MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m64__2.smt2                     |   30.008s | 99.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m64__1.smt2                     |   30.008s | 77.18MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_14_100_x.smt2                                  |   30.009s | 93.564MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_68_92_x.smt2                                   |   30.009s | 128.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_-75_89_x.smt2                                  |   30.009s | 107.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_44_17_x.smt2                                   |   30.009s | 97.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz16__3.smt2          |   30.009s | 110.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz32__1.smt2          |   30.009s | 91.808MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz16__8.smt2          |   30.009s | 90.012MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz16__1.smt2          |   30.009s | 85.676MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz8__5.smt2           |   30.009s | 80.952MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz64__0.smt2          |   30.009s | 81.528MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz16__7.smt2          |   30.009s | 90.74MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz16__0.smt2          |   30.009s | 99.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz8__4.smt2           |   30.009s | 100.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz16__9.smt2          |   30.009s | 99.884MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz32__1.smt2          |   30.009s | 89.596MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz8__3.smt2           |   30.009s | 88.688MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz64__7.smt2          |   30.009s | 80.76MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz32__7.smt2          |   30.009s | 86.34MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz32__2.smt2          |   30.009s | 87.872MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz32__9.smt2          |   30.009s | 91.232MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz8__9.smt2           |   30.009s | 98.108MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz64__8.smt2          |   30.009s | 86.328MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz32__2.smt2          |   30.009s | 89.692MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz32__0.smt2          |   30.009s | 93.88MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m16__7.smt2                     |   30.009s | 99.032MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m16__8.smt2                     |   30.009s | 91.344MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m64__1.smt2                     |   30.009s | 97.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m64__5.smt2                     |   30.009s | 100.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m32__1.smt2                     |   30.009s | 98.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m64__6.smt2                     |   30.009s | 97.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m16__6.smt2                     |   30.009s | 86.56MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m32__3.smt2                     |   30.009s | 98.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m128__4.smt2                    |   30.009s | 100.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m32__5.smt2                     |   30.009s | 98.356MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m16__7.smt2                     |   30.009s | 92.052MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m128__3.smt2                    |   30.009s | 104.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m64__9.smt2                     |   30.009s | 102.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m16__6.smt2                     |   30.009s | 98.548MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m64__9.smt2                     |   30.009s | 107.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m128__9.smt2                    |   30.009s | 86.648MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m16__0.smt2                     |   30.009s | 97.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m32__7.smt2                     |   30.009s | 106.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_-6_88_x.smt2                                   |   30.010s | 119.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_67_79_x.smt2                                   |   30.010s | 120.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz64__1.smt2          |   30.010s | 114.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz8__2.smt2           |   30.010s | 98.252MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz32__6.smt2          |   30.010s | 100.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz64__4.smt2          |   30.010s | 117.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz64__5.smt2          |   30.010s | 116.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz64__3.smt2          |   30.010s | 119.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz32__4.smt2          |   30.010s | 96.66MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz64__6.smt2          |   30.010s | 118.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz32__3.smt2          |   30.010s | 108.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m64__7.smt2                     |   30.010s | 100.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m32__0.smt2                     |   30.010s | 107.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m16__1.smt2                     |   30.010s | 113.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m64__3.smt2                     |   30.010s | 109.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m32__8.smt2                     |   30.010s | 111.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m16__5.smt2                     |   30.010s | 134.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m16__3.smt2                     |   30.010s | 123.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m16__4.smt2                     |   30.010s | 107.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m64__5.smt2                     |   30.010s | 121.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m32__4.smt2                     |   30.010s | 132.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m64__8.smt2                     |   30.010s | 142.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_-70_86_x.smt2                                  |   30.011s | 132.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz64__8.smt2          |   30.011s | 118.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz32__0.smt2          |   30.011s | 119.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz64__0.smt2          |   30.011s | 122.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz64__7.smt2          |   30.011s | 117.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz32__5.smt2          |   30.011s | 125.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz32__8.smt2          |   30.011s | 136.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz64__2.smt2          |   30.011s | 118.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f4_sz64__9.smt2          |   30.011s | 118.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|crafted/lim_sum.smt2                                         |   30.011s | 142.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|crafted/lim_x.smt2                                           |   30.011s | 167.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m8__5.smt2                      |   30.011s | 124.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m128__1.smt2                    |   30.011s | 152.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m32__1.smt2                     |   30.011s | 118.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m64__8.smt2                     |   30.011s | 120.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m16__0.smt2                     |   30.011s | 109.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m32__5.smt2                     |   30.011s | 141.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m32__9.smt2                     |   30.011s | 133.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m16__3.smt2                     |   30.011s | 139.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m8__4.smt2                      |   30.011s | 143.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m32__4.smt2                     |   30.011s | 127.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz32__2.smt2          |   30.012s | 135.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz32__9.smt2          |   30.012s | 145.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz32__7.smt2          |   30.012s | 109.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m128__8.smt2                    |   30.012s | 153.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m32__6.smt2                     |   30.012s | 137.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m32__0.smt2                     |   30.012s | 156.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m32__1.smt2                     |   30.012s | 142.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m32__4.smt2                     |   30.012s | 140.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m16__2.smt2                     |   30.012s | 150.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m16__4.smt2                     |   30.012s | 150.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m32__9.smt2                     |   30.012s | 157.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_-93_47_x.smt2                                  |   30.013s | 151.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_-26_59_x.smt2                                  |   30.013s | 208.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz32__4.smt2          |   30.013s | 162.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz32__1.smt2          |   30.013s | 171.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz32__6.smt2          |   30.013s | 144.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f2_sz32__3.smt2          |   30.013s | 128.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m32__9.smt2                     |   30.013s | 147.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m32__2.smt2                     |   30.013s | 164.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m8__9.smt2                      |   30.013s | 145.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m16__8.smt2                     |   30.013s | 180.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_69_40_x.smt2                                   |   30.014s | 173.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m16__9.smt2                     |   30.014s | 155.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m128__0.smt2                    |   30.014s | 170.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m32__0.smt2                     |   30.014s | 169.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n8_m64__4.smt2                     |   30.014s | 166.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_81_56_x.smt2                                   |   30.015s | 222.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_-70_41_x.smt2                                  |   30.015s | 228.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_-98_53_x.smt2                                  |   30.015s | 226.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|crafted/lim_fxy.smt2                                         |   30.015s | 196.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz128__5.smt2         |   30.016s | 216.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz128__0.smt2         |   30.016s | 215.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz128__7.smt2         |   30.016s | 221.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz128__4.smt2         |   30.016s | 213.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m16__2.smt2                     |   30.016s | 246.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m8__7.smt2                      |   30.016s | 239.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n2_m8__1.smt2                      |   30.016s | 239.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|const_mul/lim_87_76_x.smt2                                   |   30.017s | 228.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz128__8.smt2         |   30.017s | 215.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz128__9.smt2         |   30.017s | 202.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz128__3.smt2         |   30.017s | 214.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz128__6.smt2         |   30.017s | 200.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|linear_limit/linear_limit_n4_m32__2.smt2                     |   30.017s | 245.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz128__1.smt2         |   30.018s | 210.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|composition_tower/composition_tower_f8_sz128__2.smt2         |   30.018s | 211.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
-|crafted/lim_f_greater_lim_greater.smt2                       |   30.018s | 235.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711929234-1-run-all-gq6IyU |
+|crafted/lim_k_fx.smt2                                        |   30.003s | 30.756MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz16__4.smt2          |   30.006s | 69.04MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz8__1.smt2           |   30.006s | 71.052MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m128__2.smt2                    |   30.006s | 62.108MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_-79_8_x.smt2                                   |   30.007s | 81.992MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz32__8.smt2          |   30.007s | 90.168MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz16__7.smt2          |   30.007s | 66.14MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz32__6.smt2          |   30.007s | 75.036MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz16__9.smt2          |   30.007s | 69.332MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz16__6.smt2          |   30.007s | 76.192MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz16__1.smt2          |   30.007s | 76.944MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz16__5.smt2          |   30.007s | 81.772MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz8__7.smt2           |   30.007s | 79.652MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz16__2.smt2          |   30.007s | 69.212MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz32__4.smt2          |   30.007s | 70.72MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz32__3.smt2          |   30.007s | 68.916MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz32__9.smt2          |   30.007s | 75.5MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz8__6.smt2           |   30.007s | 71.516MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz64__3.smt2          |   30.007s | 84.78MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m128__5.smt2                    |   30.007s | 72.348MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m32__6.smt2                     |   30.007s | 80.356MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m32__8.smt2                     |   30.007s | 61.3MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m64__0.smt2                     |   30.007s | 82.224MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m8__2.smt2                      |   30.007s | 78.484MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m16__1.smt2                     |   30.007s | 76.16MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m32__8.smt2                     |   30.007s | 75.704MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m8__6.smt2                      |   30.007s | 80.772MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m64__2.smt2                     |   30.007s | 69.408MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m32__5.smt2                     |   30.007s | 74.212MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m32__6.smt2                     |   30.007s | 69.424MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m32__7.smt2                     |   30.007s | 83.26MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m32__3.smt2                     |   30.007s | 81.06MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m8__0.smt2                      |   30.007s | 70.512MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_-43_100_x.smt2                                 |   30.008s | 86.3MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_-90_24_x.smt2                                  |   30.008s | 90.688MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_-3_64_x.smt2                                   |   30.008s | 88.596MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_96_82_x.smt2                                   |   30.008s | 84.076MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz16__6.smt2          |   30.008s | 87.476MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz64__1.smt2          |   30.008s | 83.832MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz32__5.smt2          |   30.008s | 88.568MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz8__0.smt2           |   30.008s | 75.604MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz16__3.smt2          |   30.008s | 77.492MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz32__0.smt2          |   30.008s | 86.832MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz16__5.smt2          |   30.008s | 86.176MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz64__6.smt2          |   30.008s | 83.064MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz64__2.smt2          |   30.008s | 79.544MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz32__7.smt2          |   30.008s | 81.4MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz16__2.smt2          |   30.008s | 89.42MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz16__8.smt2          |   30.008s | 69.404MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz16__4.smt2          |   30.008s | 92.364MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz64__9.smt2          |   30.008s | 84.86MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz32__5.smt2          |   30.008s | 88.72MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz16__0.smt2          |   30.008s | 77.268MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz8__8.smt2           |   30.008s | 85.376MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz32__8.smt2          |   30.008s | 84.672MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz64__4.smt2          |   30.008s | 84.796MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz64__5.smt2          |   30.008s | 83.576MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|crafted/lim_fgx.smt2                                         |   30.008s | 96.468MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m32__3.smt2                     |   30.008s | 86.848MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m64__7.smt2                     |   30.008s | 90.972MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m32__2.smt2                     |   30.008s | 81.236MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m16__9.smt2                     |   30.008s | 87.016MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m128__6.smt2                    |   30.008s | 91.356MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m64__6.smt2                     |   30.008s | 91.216MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m8__3.smt2                      |   30.008s | 80.488MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m16__5.smt2                     |   30.008s | 77.8MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m32__7.smt2                     |   30.008s | 81.588MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m8__8.smt2                      |   30.008s | 83.932MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m64__4.smt2                     |   30.008s | 87.588MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m64__0.smt2                     |   30.008s | 87.264MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m128__7.smt2                    |   30.008s | 94.984MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m64__3.smt2                     |   30.008s | 95.3MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m64__2.smt2                     |   30.008s | 99.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m64__1.smt2                     |   30.008s | 77.18MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_14_100_x.smt2                                  |   30.009s | 93.564MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_68_92_x.smt2                                   |   30.009s | 128.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_-75_89_x.smt2                                  |   30.009s | 107.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_44_17_x.smt2                                   |   30.009s | 97.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz16__3.smt2          |   30.009s | 110.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz32__1.smt2          |   30.009s | 91.808MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz16__8.smt2          |   30.009s | 90.012MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz16__1.smt2          |   30.009s | 85.676MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz8__5.smt2           |   30.009s | 80.952MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz64__0.smt2          |   30.009s | 81.528MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz16__7.smt2          |   30.009s | 90.74MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz16__0.smt2          |   30.009s | 99.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz8__4.smt2           |   30.009s | 100.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz16__9.smt2          |   30.009s | 99.884MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz32__1.smt2          |   30.009s | 89.596MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz8__3.smt2           |   30.009s | 88.688MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz64__7.smt2          |   30.009s | 80.76MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz32__7.smt2          |   30.009s | 86.34MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz32__2.smt2          |   30.009s | 87.872MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz32__9.smt2          |   30.009s | 91.232MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz8__9.smt2           |   30.009s | 98.108MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz64__8.smt2          |   30.009s | 86.328MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz32__2.smt2          |   30.009s | 89.692MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz32__0.smt2          |   30.009s | 93.88MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m16__7.smt2                     |   30.009s | 99.032MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m16__8.smt2                     |   30.009s | 91.344MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m64__1.smt2                     |   30.009s | 97.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m64__5.smt2                     |   30.009s | 100.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m32__1.smt2                     |   30.009s | 98.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m64__6.smt2                     |   30.009s | 97.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m16__6.smt2                     |   30.009s | 86.56MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m32__3.smt2                     |   30.009s | 98.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m128__4.smt2                    |   30.009s | 100.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m32__5.smt2                     |   30.009s | 98.356MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m16__7.smt2                     |   30.009s | 92.052MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m128__3.smt2                    |   30.009s | 104.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m64__9.smt2                     |   30.009s | 102.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m16__6.smt2                     |   30.009s | 98.548MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m64__9.smt2                     |   30.009s | 107.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m128__9.smt2                    |   30.009s | 86.648MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m16__0.smt2                     |   30.009s | 97.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m32__7.smt2                     |   30.009s | 106.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_-6_88_x.smt2                                   |   30.010s | 119.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_67_79_x.smt2                                   |   30.010s | 120.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz64__1.smt2          |   30.010s | 114.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz8__2.smt2           |   30.010s | 98.252MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz32__6.smt2          |   30.010s | 100.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz64__4.smt2          |   30.010s | 117.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz64__5.smt2          |   30.010s | 116.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz64__3.smt2          |   30.010s | 119.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz32__4.smt2          |   30.010s | 96.66MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz64__6.smt2          |   30.010s | 118.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz32__3.smt2          |   30.010s | 108.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m64__7.smt2                     |   30.010s | 100.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m32__0.smt2                     |   30.010s | 107.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m16__1.smt2                     |   30.010s | 113.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m64__3.smt2                     |   30.010s | 109.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m32__8.smt2                     |   30.010s | 111.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m16__5.smt2                     |   30.010s | 134.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m16__3.smt2                     |   30.010s | 123.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m16__4.smt2                     |   30.010s | 107.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m64__5.smt2                     |   30.010s | 121.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m32__4.smt2                     |   30.010s | 132.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m64__8.smt2                     |   30.010s | 142.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_-70_86_x.smt2                                  |   30.011s | 132.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz64__8.smt2          |   30.011s | 118.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz32__0.smt2          |   30.011s | 119.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz64__0.smt2          |   30.011s | 122.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz64__7.smt2          |   30.011s | 117.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz32__5.smt2          |   30.011s | 125.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz32__8.smt2          |   30.011s | 136.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz64__2.smt2          |   30.011s | 118.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f4_sz64__9.smt2          |   30.011s | 118.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|crafted/lim_sum.smt2                                         |   30.011s | 142.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|crafted/lim_x.smt2                                           |   30.011s | 167.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m8__5.smt2                      |   30.011s | 124.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m128__1.smt2                    |   30.011s | 152.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m32__1.smt2                     |   30.011s | 118.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m64__8.smt2                     |   30.011s | 120.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m16__0.smt2                     |   30.011s | 109.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m32__5.smt2                     |   30.011s | 141.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m32__9.smt2                     |   30.011s | 133.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m16__3.smt2                     |   30.011s | 139.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m8__4.smt2                      |   30.011s | 143.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m32__4.smt2                     |   30.011s | 127.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz32__2.smt2          |   30.012s | 135.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz32__9.smt2          |   30.012s | 145.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz32__7.smt2          |   30.012s | 109.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m128__8.smt2                    |   30.012s | 153.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m32__6.smt2                     |   30.012s | 137.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m32__0.smt2                     |   30.012s | 156.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m32__1.smt2                     |   30.012s | 142.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m32__4.smt2                     |   30.012s | 140.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m16__2.smt2                     |   30.012s | 150.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m16__4.smt2                     |   30.012s | 150.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m32__9.smt2                     |   30.012s | 157.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_-93_47_x.smt2                                  |   30.013s | 151.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_-26_59_x.smt2                                  |   30.013s | 208.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz32__4.smt2          |   30.013s | 162.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz32__1.smt2          |   30.013s | 171.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz32__6.smt2          |   30.013s | 144.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f2_sz32__3.smt2          |   30.013s | 128.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m32__9.smt2                     |   30.013s | 147.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m32__2.smt2                     |   30.013s | 164.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m8__9.smt2                      |   30.013s | 145.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m16__8.smt2                     |   30.013s | 180.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_69_40_x.smt2                                   |   30.014s | 173.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m16__9.smt2                     |   30.014s | 155.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m128__0.smt2                    |   30.014s | 170.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m32__0.smt2                     |   30.014s | 169.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n8_m64__4.smt2                     |   30.014s | 166.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_81_56_x.smt2                                   |   30.015s | 222.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_-70_41_x.smt2                                  |   30.015s | 228.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_-98_53_x.smt2                                  |   30.015s | 226.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|crafted/lim_fxy.smt2                                         |   30.015s | 196.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz128__5.smt2         |   30.016s | 216.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz128__0.smt2         |   30.016s | 215.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz128__7.smt2         |   30.016s | 221.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz128__4.smt2         |   30.016s | 213.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m16__2.smt2                     |   30.016s | 246.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m8__7.smt2                      |   30.016s | 239.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n2_m8__1.smt2                      |   30.016s | 239.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|const_mul/lim_87_76_x.smt2                                   |   30.017s | 228.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz128__8.smt2         |   30.017s | 215.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz128__9.smt2         |   30.017s | 202.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz128__3.smt2         |   30.017s | 214.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz128__6.smt2         |   30.017s | 200.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|linear_limit/linear_limit_n4_m32__2.smt2                     |   30.017s | 245.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz128__1.smt2         |   30.018s | 210.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|composition_tower/composition_tower_f8_sz128__2.smt2         |   30.018s | 211.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|crafted/lim_f_greater_lim_greater.smt2                       |   30.018s | 235.0MiB| timeout | 143 | Ramon wall-clock time limit reached |

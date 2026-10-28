@@ -2,10 +2,10 @@
 
 * SAT 0
 * UNSAT 28
-* TIMEOUT 0
+* TIMEOUT 3
 * UNKNOWN 0
 
-* ERRORS 6 (signal-15:3, error-1:3)
+* ERRORS 3 (error-1:3)
 
 # Meta data
 
@@ -24,6 +24,7 @@ Ramon options: "--limit-time 30"
 Input preset: alasca-lpar-2026
 Z3 inputs: https://github.com/vprover/vampire_benchmarks/archive/6563baa75aea885cee14db5d6dfcff1cf3b50a1c.tar.gz alasca-lpar-2026/triangular
 Z3 commit message: Add F* NFV audit for #11415 at 3082d1f94779
+Report correction: regenerated from original raw logs with Z3Prover/bench@1250328d4; explicit Ramon time limits count as timeouts.
 </pre>
 
 
@@ -48,7 +49,7 @@ Z3 commit message: Add F* NFV audit for #11415 at 3082d1f94779
 |motivating-example/example11.smt2                            |    0.026s | 20.04MiB| unsat | 0 |  |
 |limit/lim_k_fx.smt2                                          |    0.026s | 20.556MiB| unsat | 0 |  |
 |motivating-example/example7.smt2                             |    0.027s | 20.316MiB| unsat | 0 |  |
-|limit/lim_div.smt2                                           |    0.027s | 21.0MiB| error-1 | 1 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711924420-1-run-all-WhwKyo |
+|limit/lim_div.smt2                                           |    0.027s | 21.0MiB| error-1 | 1 | line 64 column 1: logic does not support nonlinear arithmetic |
 |motivating-example/example4.smt2                             |    0.028s | 20.044MiB| unsat | 0 |  |
 |limit/lim_x.smt2                                             |    0.029s | 20.816MiB| unsat | 0 |  |
 |limit/lim_product.smt2                                       |    0.029s | 20.804MiB| error-1 | 1 | line 83 column 1: logic does not support nonlinear arithmetic |
@@ -61,6 +62,6 @@ Z3 commit message: Add F* NFV audit for #11415 at 3082d1f94779
 |limit/lim_c.smt2                                             |    0.033s | 21.064MiB| unsat | 0 |  |
 |triangular/triangular06.smt2                                 |    0.033s | 21.104MiB| unsat | 0 |  |
 |triangular/triangular01.smt2                                 |    0.041s | 19.792MiB| unsat | 0 |  |
-|limit/lim_fgx.smt2                                           |   30.006s | 65.552MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711924420-1-run-all-WhwKyo |
-|limit/lim_fxy.smt2                                           |   30.013s | 199.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711924420-1-run-all-WhwKyo |
-|limit/lim_f_greater_lim_greater.smt2                         |   30.015s | 207.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711924420-1-run-all-WhwKyo |
+|limit/lim_fgx.smt2                                           |   30.006s | 65.552MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|limit/lim_fxy.smt2                                           |   30.013s | 199.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|limit/lim_f_greater_lim_greater.smt2                         |   30.015s | 207.0MiB| timeout | 143 | Ramon wall-clock time limit reached |

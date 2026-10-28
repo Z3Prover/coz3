@@ -2,10 +2,10 @@
 
 * SAT 2
 * UNSAT 10
-* TIMEOUT 0
+* TIMEOUT 3
 * UNKNOWN 0
 
-* ERRORS 3 (signal-15:3)
+* ERRORS 0
 
 # Meta data
 
@@ -329,6 +329,7 @@ the
   `smtlib-sample` scans have not been rerun for this submission.
 
 🤖 Generated with [Claude Code](https://claude.com/claude-code)
+Report correction: regenerated from original raw logs with Z3Prover/bench@1250328d4; explicit Ramon time limits count as timeouts.
 </pre>
 
 
@@ -347,6 +348,6 @@ the
 |FFT/smtlib.627457.smt2                                       |    0.032s | 20.112MiB| unsat | 0 |  |
 |misc/set16.smt2                                              |    2.287s | 39.82MiB| sat | 0 |  |
 |misc/set9.smt2                                               |   12.201s | 87.908MiB| sat | 0 |  |
-|misc/set14.smt2                                              |   30.010s | 169.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711942025-1-run-all-nmv5vR |
-|misc/set19.smt2                                              |   30.011s | 181.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711942025-1-run-all-nmv5vR |
-|misc/list2.smt2                                              |   30.018s | 287.0MiB| signal-15 | 143 | ramon: cwd /home/ghrunner/actions-runner/_work/_temp/ramon-40711942025-1-run-all-nmv5vR |
+|misc/set14.smt2                                              |   30.010s | 169.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|misc/set19.smt2                                              |   30.011s | 181.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
+|misc/list2.smt2                                              |   30.018s | 287.0MiB| timeout | 143 | Ramon wall-clock time limit reached |
