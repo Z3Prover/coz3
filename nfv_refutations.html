@@ -5836,7 +5836,7 @@ m_change gets set if the functor returns an expression n that is different from 
     </td>
   </tr>
 </tbody>
-<tbody class="finding" id="finding-130c29dde7be81db" data-assessment="unreviewed" data-author="pending" data-search="Z3Prover/z3#11400 arith_restart_schedule_uses_clamped_base updt_params The proposition is refuted by `params.restart_base == 0`. On first initialization, line 13 clamps `restart_base` to 1, but line 14 assigns the unclamped value 0 to `restart_next`; subsequent lines do not modify either field, so the asserted equality and positivity fail at exit. Not yet triaged. A refutation of the generated model is not a confirmed Z3 defect. qe/qe.cpp  !pre.m_config.config_initialized result.post.m_config.restart_next == result.post.m_config.restart_base &amp;&amp; result.post.m_config.restart_next &gt;= 1 ctx.params.restartBase == 0  https://github.com/Z3Prover/bench/discussions/7496 https://github.com/Z3Prover/z3/pull/11400">
+<tbody class="finding" id="finding-130c29dde7be81db" data-assessment="unreviewed" data-author="pending" data-search="Z3Prover/z3#11400 arith_restart_schedule_uses_clamped_base updt_params The proposition is refuted by `params.restart_base == 0`. On first initialization, line 13 clamps `restart_base` to 1, but line 14 assigns the unclamped value 0 to `restart_next`; subsequent lines do not modify either field, so the asserted equality and positivity fail at exit. Not yet triaged. A refutation of the generated model is not a confirmed Z3 defect. tactic/tactical.cpp  !pre.m_config.config_initialized result.post.m_config.restart_next == result.post.m_config.restart_base &amp;&amp; result.post.m_config.restart_next &gt;= 1 ctx.params.restartBase == 0  https://github.com/Z3Prover/bench/discussions/7496 https://github.com/Z3Prover/z3/pull/11400">
   <tr class="summary-row">
     <th scope="row"><span class="preview" title="The proposition is refuted by `params.restart_base == 0`. On first initialization, line 13 clamps `restart_base` to 1, but line 14 assigns the unclamped value 0 to `restart_next`; subsequent lines do not modify either field, so the asserted equality and positivity fail at exit.">The proposition is refuted by `params.restart_base == 0`. On first initialization, line 13 clamps `restart_base` to 1, but line 14 assigns the unclamped value 0 to `restart_next`; subsequent lines do not modify either field, so the asserted equality and positivity fail at exit.</span></th>
     <td><span class="badge unreviewed">Not yet triaged</span></td>
@@ -5856,7 +5856,7 @@ m_change gets set if the functor returns an expression n that is different from 
       <h2>The proposition is refuted by `params.restart_base == 0`. On first initialization, line 13 clamps `restart_base` to 1, but line 14 assigns the unclamped value 0 to `restart_next`; subsequent lines do not modify either field, so the asserted equality and positivity fail at exit.</h2>
       <p class="identity"><code>arith_restart_schedule_uses_clamped_base</code><br>
         Z3Prover/z3#11400 &middot; <code>updt_params</code><br>
-        qe/qe.cpp (Coverage resolver (heuristic))</p>
+        tactic/tactical.cpp (Coverage resolver (heuristic))</p>
       <h3>Assessment and caveats</h3>
       <p class="explanation">Not yet triaged. A refutation of the generated model is not a confirmed Z3 defect.</p>
 
