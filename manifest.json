@@ -1278,6 +1278,7 @@
     "run-1275-qf-s-c3mv-stats.md",
     "run-1276-qf-s-master-stats.md",
     "run-1277-qf-slia-master-stats.md",
-    "run-1278-qf-slia-c3mv-stats.md"
+    "run-1278-qf-slia-c3mv-stats.md",
+    "run-1279-qf-slia-c3mv-nseq-model-coherence-stats.md"
   ]
 }
