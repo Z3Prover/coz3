@@ -1306,6 +1306,7 @@
     "run-1303-qf-slia-master-stats.md",
     "run-1304-qf-slia-c3mv-stats.md",
     "run-1305-c3mv-issue-backlog-master-5s-20261113-stats.md",
-    "run-1306-qf-slia-c3mv-qfslia-contains-stats.md"
+    "run-1306-qf-slia-c3mv-qfslia-contains-stats.md",
+    "run-1307-qf-slia-c3mv-deb2177de-5s-post-merge-stats.md"
   ]
 }
