@@ -1309,6 +1309,7 @@
     "run-1306-qf-slia-c3mv-qfslia-contains-stats.md",
     "run-1307-qf-slia-c3mv-deb2177de-5s-post-merge-stats.md",
     "run-1308-c3mv-issue-backlog-c3mv-5s-20261113-stats.md",
-    "run-1309-qf-slia-c3mv-144b5bfe8-5s-needle-fix-stats.md"
+    "run-1309-qf-slia-c3mv-144b5bfe8-5s-needle-fix-stats.md",
+    "run-1310-qf-slia-c3mv-c2509114c-5s-decimal-regex-stats.md"
   ]
 }
