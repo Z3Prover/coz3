@@ -1338,6 +1338,7 @@
     "run-1335-qf-slia-nseq-ambient-fresh-var-cache-stats.md",
     "run-1336-qf-slia-c3mv-backlog-fixes-stats.md",
     "run-1337-c3mv-issue-backlog-c3mv-backlog-fixes-5s-stats.md",
-    "run-1338-c3mv-issue-backlog-c3mv-backlog-fixes-5s-stats.md"
+    "run-1338-c3mv-issue-backlog-c3mv-backlog-fixes-5s-stats.md",
+    "run-1339-qf-slia-c3mv-5df4ad1dc-5s-stats.md"
   ]
 }
