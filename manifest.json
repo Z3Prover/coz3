@@ -1370,6 +1370,7 @@
     "run-1367-qf-bv-master-f6091f9a9-10s-stats.md",
     "run-1368-qf-slia-fix-move-replace-contains-to-seq-rewriter-stats.md",
     "run-1369-qf-slia-fix-move-replace-contains-to-seq-rewriter-stats.md",
-    "run-1370-qf-slia-remove-nseq-lhs-8ddf66f20-5s-20261122T031648Z-stats.md"
+    "run-1370-qf-slia-remove-nseq-lhs-8ddf66f20-5s-20261122T031648Z-stats.md",
+    "run-1371-qf-s-seq-regular-rewriter-port-5s-20261122T220840Z-stats.md"
   ]
 }
