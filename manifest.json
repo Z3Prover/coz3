@@ -1386,6 +1386,7 @@
     "run-1383-qf-s-seq-regular-rewriter-fix-5s-20261123T023500Z-stats.md",
     "run-1384-regexes-seq-regular-rewriter-fix-5s-20261123T023500Z-stats.md",
     "run-1385-qf-slia-disabled-regex-simplifier-5s-20261123T023700Z-stats.md",
-    "run-1386-extra-strings-disabled-regex-simplifier-5s-20261123T023700Z-stats.md"
+    "run-1386-extra-strings-disabled-regex-simplifier-5s-20261123T023700Z-stats.md",
+    "run-1387-qf-s-disabled-regex-simplifier-5s-20261123T023700Z-stats.md"
   ]
 }
