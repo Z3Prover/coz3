@@ -1381,6 +1381,7 @@
     "run-1378-qf-slia-remove-nseq-lhs-8ddf66f20-5s-20261122T031648Z-stats.md",
     "run-1379-c3mv-regexes-nov22-2026-stats.md",
     "run-1380-z3-tacas-regexes-nov22-2026-stats.md",
-    "run-1381-extra-strings-seq-regular-rewriter-fix-5s-20261123T023500Z-stats.md"
+    "run-1381-extra-strings-seq-regular-rewriter-fix-5s-20261123T023500Z-stats.md",
+    "run-1382-qf-slia-seq-regular-rewriter-fix-5s-20261123T023500Z-stats.md"
   ]
 }
