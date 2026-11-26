@@ -384,7 +384,7 @@
         // allFiles: [{ name, runNum, metadata?: {...} }]
         let allFiles = [];
         let metadataCache = {};
-        const METADATA_CACHE_KEY = 'compare_stats.metadataCache.v3';
+        const METADATA_CACHE_KEY = 'compare_stats.metadataCache.v4';
         let metaLoadedCount = 0;
         const META_CONCURRENCY = 8;
         // Only fetch the first chunk of each stats file. The <pre>...</pre>
@@ -438,6 +438,7 @@
                 ? body.substring(preStart + 5, preEnd)
                 : body.substring(preStart + 5);
             const lines = block.split('\n');
+            const aliases = ['Inputs', 'Solver options', 'Z3 ref'];
             const map = {
                 'Experiment date and time': 'experimentDate',
                 'Job description': 'description',
@@ -458,6 +459,7 @@
                 if (idx <= 0) continue;
                 const key = line.substring(0, idx).trim();
                 if (!(key in map)) continue;
+                if (aliases.includes(key) && meta[map[key]] !== undefined) continue;
                 meta[map[key]] = line.substring(idx + 1).trim();
             }
             return meta;
@@ -480,6 +482,7 @@
                     ? body.substring(preStart + 5, preEnd)
                     : body.substring(preStart + 5);
                 const lines = block.split('\\n');
+                const aliases = ['Inputs', 'Solver options', 'Z3 ref'];
                 const map = {
                     'Experiment date and time': 'experimentDate',
                     'Job description': 'description',
@@ -500,6 +503,7 @@
                     if (idx <= 0) continue;
                     const key = line.substring(0, idx).trim();
                     if (!(key in map)) continue;
+                    if (aliases.includes(key) && meta[map[key]] !== undefined) continue;
                     meta[map[key]] = line.substring(idx + 1).trim();
                 }
                 return meta;
