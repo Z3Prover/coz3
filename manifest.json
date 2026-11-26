@@ -1415,6 +1415,7 @@
     "run-1412-strings-QF-S-zenodo-validated-z3-stats.md",
     "run-1413-strings-QF-S-zenodo-validated-z3-noodler-stats.md",
     "run-1414-strings-QF-S-shared-archive-cvc5-stats.md",
-    "run-1415-strings-QF-S-shared-archive-z3-stats.md"
+    "run-1415-strings-QF-S-shared-archive-z3-stats.md",
+    "run-1416-strings-QF-S-shared-archive-z3-noodler-stats.md"
   ]
 }
