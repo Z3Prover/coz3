@@ -1408,6 +1408,7 @@
     "run-1405-c3mv-extra-strings-nov26-stats.md",
     "run-1406-c3mv-qf-slia-nov26-stats.md",
     "run-1407-c3mv-regexes-nov26-stats.md",
-    "run-1408-strings-regexes-final-cvc5-stats.md"
+    "run-1408-strings-regexes-final-cvc5-stats.md",
+    "run-1409-strings-regexes-final-z3-stats.md"
   ]
 }
