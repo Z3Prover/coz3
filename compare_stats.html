@@ -338,7 +338,7 @@
                 <option value="none">No grouping</option>
                 <option value="date">Date (run #)</option>
                 <option value="repo">User (Z3 repo)</option>
-                <option value="inputs">Benchmark (Z3 inputs)</option>
+                <option value="inputs">Benchmark (inputs)</option>
                 <option value="branch">Z3 branch</option>
                 <option value="runner">Runner</option>
                 <option value="commit">Z3 commit (short)</option>
@@ -384,7 +384,7 @@
         // allFiles: [{ name, runNum, metadata?: {...} }]
         let allFiles = [];
         let metadataCache = {};
-        const METADATA_CACHE_KEY = 'compare_stats.metadataCache.v2';
+        const METADATA_CACHE_KEY = 'compare_stats.metadataCache.v3';
         let metaLoadedCount = 0;
         const META_CONCURRENCY = 8;
         // Only fetch the first chunk of each stats file. The <pre>...</pre>
@@ -448,6 +448,9 @@
                 'Z3 branch': 'branch',
                 'Z3 options': 'options',
                 'Z3 inputs': 'inputs',
+                'Inputs': 'inputs',
+                'Solver options': 'options',
+                'Z3 ref': 'branch',
                 'Z3 commit message': 'commitMessage'
             };
             for (const line of lines) {
@@ -487,6 +490,9 @@
                     'Z3 branch': 'branch',
                     'Z3 options': 'options',
                     'Z3 inputs': 'inputs',
+                    'Inputs': 'inputs',
+                    'Solver options': 'options',
+                    'Z3 ref': 'branch',
                     'Z3 commit message': 'commitMessage'
                 };
                 for (const line of lines) {
