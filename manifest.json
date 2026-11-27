@@ -1420,6 +1420,7 @@
     "run-1417-strings-c3mv-5s-regexes-cvc5-stats.md",
     "run-1418-strings-c3mv-5s-regexes-z3-stats.md",
     "run-1419-strings-c3mv-5s-regexes-z3-noodler-stats.md",
-    "run-1420-strings-c3mv-5s-QF-S-cvc5-stats.md"
+    "run-1420-strings-c3mv-5s-QF-S-cvc5-stats.md",
+    "run-1421-strings-c3mv-5s-QF-S-z3-stats.md"
   ]
 }
