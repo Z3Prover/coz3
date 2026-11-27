@@ -1417,6 +1417,7 @@
     "run-1414-strings-QF-S-shared-archive-cvc5-stats.md",
     "run-1415-strings-QF-S-shared-archive-z3-stats.md",
     "run-1416-strings-QF-S-shared-archive-z3-noodler-stats.md",
-    "run-1417-strings-c3mv-5s-regexes-cvc5-stats.md"
+    "run-1417-strings-c3mv-5s-regexes-cvc5-stats.md",
+    "run-1418-strings-c3mv-5s-regexes-z3-stats.md"
   ]
 }
