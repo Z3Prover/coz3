@@ -1423,6 +1423,7 @@
     "run-1420-strings-c3mv-5s-QF-S-cvc5-stats.md",
     "run-1421-strings-c3mv-5s-QF-S-z3-stats.md",
     "run-1422-strings-c3mv-5s-QF-S-z3-noodler-stats.md",
-    "run-1423-strings-c3mv-5s-QF-SLIA-cvc5-stats.md"
+    "run-1423-strings-c3mv-5s-QF-SLIA-cvc5-stats.md",
+    "run-1424-strings-c3mv-5s-QF-SLIA-z3-stats.md"
   ]
 }
